@@ -1,0 +1,769 @@
+import Fastify from 'fastify';
+import WebSocket from 'ws';
+import dotenv from 'dotenv';
+import fastifyFormBody from '@fastify/formbody';
+import fastifyWs from '@fastify/websocket';
+import fastifyStatic from '@fastify/static';
+import twilio from 'twilio';
+import { promises as fs } from 'fs';
+import crypto from 'crypto';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config();
+
+const { OPENAI_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER } = process.env;
+
+if (!OPENAI_API_KEY || !TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_PHONE_NUMBER) {
+    console.error('Missing required environment variables.');
+    process.exit(1);
+}
+
+const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+const fastify = Fastify();
+fastify.register(fastifyFormBody);
+fastify.register(fastifyWs);
+fastify.register(fastifyStatic, {
+    root: __dirname,
+    prefix: '/'
+});
+
+// Constants
+const PORT = process.env.PORT || 5051;
+const VOICE = 'alloy';
+const TEMPERATURE = 0.6;
+
+// Enhanced Patient Manager with MRN and Call Transcripts
+class PatientManager {
+    constructor() {
+        this.patients = new Map();
+        this.mrnIndex = new Map(); // MRN to patient ID mapping
+        this.callSessions = new Map();
+        this.callTranscripts = new Map(); // Store full transcripts
+        this.loadData();
+    }
+
+    async loadData() {
+        // Load patients
+        try {
+            const data = await fs.readFile('patients-v2.json', 'utf8');
+            const patientsData = JSON.parse(data);
+            patientsData.patients.forEach(patient => {
+                this.patients.set(patient.id, patient);
+                if (patient.mrn) {
+                    this.mrnIndex.set(patient.mrn, patient.id);
+                }
+            });
+            console.log(`Loaded ${this.patients.size} patients`);
+        } catch (error) {
+            console.log('Creating new patient database');
+            this.saveData();
+        }
+
+        // Load call transcripts
+        try {
+            const transcriptData = await fs.readFile('call-transcripts.json', 'utf8');
+            const transcripts = JSON.parse(transcriptData);
+            Object.entries(transcripts).forEach(([callId, transcript]) => {
+                this.callTranscripts.set(callId, transcript);
+            });
+            console.log(`Loaded ${this.callTranscripts.size} call transcripts`);
+        } catch (error) {
+            console.log('No call transcripts found');
+        }
+    }
+
+    async saveData() {
+        const patientsData = {
+            patients: Array.from(this.patients.values()),
+            lastUpdated: new Date().toISOString()
+        };
+        await fs.writeFile('patients-v2.json', JSON.stringify(patientsData, null, 2));
+    }
+
+    async saveTranscripts() {
+        const transcripts = Object.fromEntries(this.callTranscripts);
+        await fs.writeFile('call-transcripts.json', JSON.stringify(transcripts, null, 2));
+    }
+
+    validateMRN(mrn, excludePatientId = null) {
+        const existingPatientId = this.mrnIndex.get(mrn);
+        if (existingPatientId && existingPatientId !== excludePatientId) {
+            return { valid: false, message: `MRN ${mrn} already exists for another patient` };
+        }
+        return { valid: true };
+    }
+
+    addPatient(patientData) {
+        // Validate MRN
+        if (patientData.mrn) {
+            const mrnValidation = this.validateMRN(patientData.mrn);
+            if (!mrnValidation.valid) {
+                throw new Error(mrnValidation.message);
+            }
+        }
+
+        const id = crypto.randomUUID();
+        const newPatient = {
+            id,
+            mrn: patientData.mrn || `AUTO-${Date.now()}`,
+            ...patientData,
+            createdAt: new Date().toISOString(),
+            lastModified: new Date().toISOString(),
+            lastContact: null,
+            callHistory: [],
+            customPrompt: patientData.customPrompt || this.getDefaultPrompt(patientData),
+            callObjectives: patientData.callObjectives || []
+        };
+
+        this.patients.set(id, newPatient);
+        this.mrnIndex.set(newPatient.mrn, id);
+        this.saveData();
+        return newPatient;
+    }
+
+    updatePatient(id, updates) {
+        const patient = this.patients.get(id);
+        if (!patient) return null;
+
+        // Validate MRN if being updated
+        if (updates.mrn && updates.mrn !== patient.mrn) {
+            const mrnValidation = this.validateMRN(updates.mrn, id);
+            if (!mrnValidation.valid) {
+                throw new Error(mrnValidation.message);
+            }
+            // Update MRN index
+            this.mrnIndex.delete(patient.mrn);
+            this.mrnIndex.set(updates.mrn, id);
+        }
+
+        const updatedPatient = {
+            ...patient,
+            ...updates,
+            lastModified: new Date().toISOString()
+        };
+        this.patients.set(id, updatedPatient);
+        this.saveData();
+        return updatedPatient;
+    }
+
+    deletePatient(id) {
+        const patient = this.patients.get(id);
+        if (!patient) return false;
+
+        // Remove from MRN index
+        if (patient.mrn) {
+            this.mrnIndex.delete(patient.mrn);
+        }
+
+        // Archive call history before deletion (optional)
+        if (patient.callHistory.length > 0) {
+            this.archivePatientCalls(patient);
+        }
+
+        this.patients.delete(id);
+        this.saveData();
+        return true;
+    }
+
+    async archivePatientCalls(patient) {
+        const archiveData = {
+            patient: {
+                id: patient.id,
+                mrn: patient.mrn,
+                name: patient.name
+            },
+            archivedAt: new Date().toISOString(),
+            callHistory: patient.callHistory,
+            transcripts: patient.callHistory.map(call =>
+                this.callTranscripts.get(call.callId)
+            ).filter(Boolean)
+        };
+
+        try {
+            const existingArchive = await fs.readFile('archived-patients.json', 'utf8')
+                .then(data => JSON.parse(data))
+                .catch(() => []);
+
+            existingArchive.push(archiveData);
+            await fs.writeFile('archived-patients.json', JSON.stringify(existingArchive, null, 2));
+        } catch (error) {
+            console.error('Error archiving patient data:', error);
+        }
+    }
+
+    getPatient(id) {
+        return this.patients.get(id);
+    }
+
+    getPatientByMRN(mrn) {
+        const id = this.mrnIndex.get(mrn);
+        return id ? this.patients.get(id) : null;
+    }
+
+    getAllPatients() {
+        return Array.from(this.patients.values());
+    }
+
+    getDefaultPrompt(patient) {
+        return `You are a compassionate medical AI assistant conducting a wellness check.
+        Be empathetic, speak clearly, and document important health information.
+        Ask about symptoms, medication adherence, and overall wellbeing.
+        If emergency symptoms are mentioned, advise calling 911.`;
+    }
+
+    generateSystemPrompt(patient) {
+        // Use custom prompt if available, otherwise generate based on patient data
+        if (patient.customPrompt) {
+            return patient.customPrompt;
+        }
+
+        const basePrompt = `You are a compassionate and professional medical AI assistant conducting a wellness check call.
+        You are speaking with ${patient.name}, a ${patient.age}-year-old ${patient.gender} patient.
+        MRN: ${patient.mrn}
+
+        Medical Context:
+        - Conditions: ${patient.conditions?.join(', ') || 'None specified'}
+        - Medications: ${patient.medications?.join(', ') || 'None specified'}
+        - Last appointment: ${patient.lastAppointment || 'Not specified'}
+        - Primary concern: ${patient.primaryConcern || 'General wellness'}
+
+        Call Objectives:
+        ${patient.callObjectives?.join('\n') || 'General wellness check'}
+
+        Guidelines:
+        1. Be empathetic and patient-focused
+        2. Speak clearly and at a moderate pace
+        3. Ask open-ended questions about their health
+        4. Listen for any concerning symptoms
+        5. Remind about medication adherence if applicable
+        6. Document any important health information
+        7. If emergency symptoms are mentioned, advise calling 911
+        8. Maintain HIPAA compliance - verify identity before discussing health information
+
+        Start by greeting the patient warmly and verifying their identity with their date of birth.`;
+
+        return basePrompt;
+    }
+
+    recordCallSession(patientId, sessionData) {
+        const patient = this.patients.get(patientId);
+        if (!patient) return;
+
+        const callRecord = {
+            callId: sessionData.callId || crypto.randomUUID(),
+            timestamp: new Date().toISOString(),
+            ...sessionData
+        };
+
+        patient.callHistory.push(callRecord);
+        patient.lastContact = new Date().toISOString();
+
+        // Save transcript separately for efficient storage
+        if (sessionData.transcript) {
+            this.callTranscripts.set(callRecord.callId, {
+                patientId,
+                mrn: patient.mrn,
+                patientName: patient.name,
+                ...sessionData.transcript,
+                savedAt: new Date().toISOString()
+            });
+            this.saveTranscripts();
+        }
+
+        this.saveData();
+        return callRecord.callId;
+    }
+
+    getCallHistory(patientId) {
+        const patient = this.patients.get(patientId);
+        if (!patient) return [];
+
+        return patient.callHistory.map(call => ({
+            ...call,
+            transcript: this.callTranscripts.get(call.callId)
+        }));
+    }
+
+    getCallTranscript(callId) {
+        return this.callTranscripts.get(callId);
+    }
+}
+
+const patientManager = new PatientManager();
+
+// Call Recording Configuration
+const ENABLE_RECORDING = process.env.ENABLE_RECORDING === 'true';
+
+// Audit logging
+const auditLog = [];
+const logAuditEvent = (event, details) => {
+    const entry = {
+        timestamp: new Date().toISOString(),
+        event,
+        ...details,
+        sessionId: crypto.randomUUID()
+    };
+    auditLog.push(entry);
+    console.log('[AUDIT]', entry);
+};
+
+// Outbound Call Function with Recording
+async function makeOutboundCall(patient) {
+    if (!patient.phoneNumber) {
+        throw new Error(`No phone number for patient ${patient.mrn}`);
+    }
+
+    // Format phone number to E.164 if needed
+    let formattedPhone = patient.phoneNumber;
+    if (!formattedPhone.startsWith('+')) {
+        // Assume US number if no country code
+        if (formattedPhone.length === 10) {
+            formattedPhone = `+1${formattedPhone}`;
+        } else if (formattedPhone.length === 11 && formattedPhone.startsWith('1')) {
+            formattedPhone = `+${formattedPhone}`;
+        }
+    }
+
+    const callId = crypto.randomUUID();
+    const baseUrl = process.env.BASE_URL || `https://${process.env.NGROK_URL}`;
+
+    logAuditEvent('OUTBOUND_CALL_INITIATED', {
+        patientId: patient.id,
+        mrn: patient.mrn,
+        callId
+    });
+
+    try {
+        const callOptions = {
+            from: TWILIO_PHONE_NUMBER,
+            to: formattedPhone,
+            url: `${baseUrl}/outbound-twiml/${patient.id}?callId=${callId}`,
+            statusCallback: `${baseUrl}/call-status`,
+            statusCallbackEvent: ['initiated', 'ringing', 'answered', 'completed']
+        };
+
+        // Add recording if enabled and consent is given
+        if (ENABLE_RECORDING && patient.consentToRecord) {
+            callOptions.record = true;
+            callOptions.recordingStatusCallback = `${baseUrl}/recording-status`;
+        }
+
+        const call = await client.calls.create(callOptions);
+
+        console.log(`Call initiated to patient ${patient.name} (MRN: ${patient.mrn}): ${call.sid}`);
+        patientManager.callSessions.set(call.sid, { patientId: patient.id, callId });
+
+        return { callSid: call.sid, callId };
+    } catch (error) {
+        console.error('Error making outbound call:', error);
+        logAuditEvent('OUTBOUND_CALL_FAILED', {
+            patientId: patient.id,
+            mrn: patient.mrn,
+            error: error.message
+        });
+        throw error;
+    }
+}
+
+// Routes
+fastify.get('/', async (request, reply) => {
+    reply.send({
+        message: 'Medical Outbound Calling System V2',
+        version: '2.0.0',
+        features: [
+            'MRN management with duplicate prevention',
+            'Full CRUD operations for patients',
+            'Custom prompt editing per patient',
+            'Call recording and transcripts',
+            'Complete call history',
+            'Enhanced UI/UX'
+        ]
+    });
+});
+
+// API Routes - Patients
+fastify.get('/api/patients', async (request, reply) => {
+    const patients = patientManager.getAllPatients();
+    reply.send(patients.map(p => ({
+        ...p,
+        phoneNumber: p.phoneNumber ? `***-***-${p.phoneNumber.slice(-4)}` : null,
+        callCount: p.callHistory?.length || 0
+    })));
+});
+
+fastify.get('/api/patients/:id', async (request, reply) => {
+    const patient = patientManager.getPatient(request.params.id);
+    if (!patient) {
+        reply.status(404).send({ error: 'Patient not found' });
+        return;
+    }
+    reply.send(patient);
+});
+
+fastify.post('/api/patients', async (request, reply) => {
+    try {
+        const patient = patientManager.addPatient(request.body);
+        logAuditEvent('PATIENT_CREATED', { patientId: patient.id, mrn: patient.mrn });
+        reply.send(patient);
+    } catch (error) {
+        reply.status(400).send({ error: error.message });
+    }
+});
+
+fastify.put('/api/patients/:id', async (request, reply) => {
+    try {
+        const patient = patientManager.updatePatient(request.params.id, request.body);
+        if (!patient) {
+            reply.status(404).send({ error: 'Patient not found' });
+            return;
+        }
+        logAuditEvent('PATIENT_UPDATED', { patientId: patient.id, mrn: patient.mrn });
+        reply.send(patient);
+    } catch (error) {
+        reply.status(400).send({ error: error.message });
+    }
+});
+
+fastify.delete('/api/patients/:id', async (request, reply) => {
+    const deleted = patientManager.deletePatient(request.params.id);
+    if (!deleted) {
+        reply.status(404).send({ error: 'Patient not found' });
+        return;
+    }
+    logAuditEvent('PATIENT_DELETED', { patientId: request.params.id });
+    reply.send({ success: true });
+});
+
+// Get patient by MRN
+fastify.get('/api/patients/mrn/:mrn', async (request, reply) => {
+    const patient = patientManager.getPatientByMRN(request.params.mrn);
+    if (!patient) {
+        reply.status(404).send({ error: 'Patient not found with this MRN' });
+        return;
+    }
+    reply.send(patient);
+});
+
+// Call History
+fastify.get('/api/patients/:id/calls', async (request, reply) => {
+    const history = patientManager.getCallHistory(request.params.id);
+    reply.send(history);
+});
+
+fastify.get('/api/calls/:callId/transcript', async (request, reply) => {
+    const transcript = patientManager.getCallTranscript(request.params.callId);
+    if (!transcript) {
+        reply.status(404).send({ error: 'Transcript not found' });
+        return;
+    }
+    reply.send(transcript);
+});
+
+// Initiate Call
+fastify.post('/api/call', async (request, reply) => {
+    const { patientId } = request.body;
+    const patient = patientManager.getPatient(patientId);
+
+    if (!patient) {
+        reply.status(404).send({ error: 'Patient not found' });
+        return;
+    }
+
+    try {
+        const result = await makeOutboundCall(patient);
+        reply.send({ success: true, ...result });
+    } catch (error) {
+        reply.status(500).send({ error: error.message });
+    }
+});
+
+// TwiML for outbound calls
+fastify.all('/outbound-twiml/:patientId', async (request, reply) => {
+    const { patientId } = request.params;
+    const { callId } = request.query;
+    const patient = patientManager.getPatient(patientId);
+
+    if (!patient) {
+        reply.status(404).send('Patient not found');
+        return;
+    }
+
+    const twimlResponse = `<?xml version="1.0" encoding="UTF-8"?>
+        <Response>
+            <Say voice="Google.en-US-Chirp3-HD-Aoede">Hello, this is an automated wellness check from your healthcare provider.</Say>
+            <Pause length="1"/>
+            <Say voice="Google.en-US-Chirp3-HD-Aoede">Connecting you now.</Say>
+            <Connect>
+                <Stream url="wss://${request.headers.host}/media-stream/${patientId}?callId=${callId}" />
+            </Connect>
+        </Response>`;
+
+    reply.type('text/xml').send(twimlResponse);
+});
+
+// WebSocket for media streams with enhanced transcript capture
+fastify.register(async (fastify) => {
+    fastify.get('/media-stream/:patientId', { websocket: true }, (connection, req) => {
+        const { patientId } = req.params;
+        const { callId } = req.query;
+        const patient = patientManager.getPatient(patientId);
+
+        if (!patient) {
+            console.error(`Patient ${patientId} not found`);
+            connection.close();
+            return;
+        }
+
+        console.log(`Patient ${patient.name} (MRN: ${patient.mrn}) connected for call ${callId}`);
+        logAuditEvent('CALL_CONNECTED', { patientId, mrn: patient.mrn, callId });
+
+        let streamSid = null;
+        let callTranscript = [];
+        let conversationBuffer = [];
+
+        const openAiWs = new WebSocket(`wss://api.openai.com/v1/realtime?model=gpt-realtime&temperature=${TEMPERATURE}`, {
+            headers: {
+                Authorization: `Bearer ${OPENAI_API_KEY}`,
+            }
+        });
+
+        const initializeSession = () => {
+            const systemPrompt = patientManager.generateSystemPrompt(patient);
+
+            const sessionUpdate = {
+                type: 'session.update',
+                session: {
+                    type: 'realtime',
+                    model: "gpt-realtime",
+                    output_modalities: ["audio"],
+                    audio: {
+                        input: { format: { type: 'audio/pcmu' }, turn_detection: { type: "server_vad" } },
+                        output: { format: { type: 'audio/pcmu' }, voice: VOICE },
+                    },
+                    instructions: systemPrompt,
+                },
+            };
+
+            openAiWs.send(JSON.stringify(sessionUpdate));
+
+            // Initial greeting
+            const greeting = {
+                type: 'conversation.item.create',
+                item: {
+                    type: 'message',
+                    role: 'user',
+                    content: [{
+                        type: 'input_text',
+                        text: `Please greet ${patient.name} warmly, verify their identity by asking for their date of birth, and then proceed with the wellness check based on the objectives.`
+                    }]
+                }
+            };
+
+            openAiWs.send(JSON.stringify(greeting));
+            openAiWs.send(JSON.stringify({ type: 'response.create' }));
+        };
+
+        openAiWs.on('open', () => {
+            console.log('Connected to OpenAI Realtime API');
+            setTimeout(initializeSession, 100);
+        });
+
+        openAiWs.on('message', (data) => {
+            try {
+                const response = JSON.parse(data);
+
+                if (response.type === 'response.output_audio.delta' && response.delta) {
+                    const audioDelta = {
+                        event: 'media',
+                        streamSid: streamSid,
+                        media: { payload: response.delta }
+                    };
+                    connection.send(JSON.stringify(audioDelta));
+                }
+
+                // Capture conversation for transcript
+                if (response.type === 'conversation.item.created') {
+                    conversationBuffer.push({
+                        role: response.item.role,
+                        content: response.item.content,
+                        timestamp: new Date().toISOString()
+                    });
+                }
+
+                // Capture text responses for transcript
+                if (response.type === 'response.content.done' && response.content) {
+                    callTranscript.push({
+                        role: 'assistant',
+                        content: response.content,
+                        timestamp: new Date().toISOString()
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error processing OpenAI message:', error);
+            }
+        });
+
+        connection.on('message', (message) => {
+            try {
+                const data = JSON.parse(message);
+
+                switch (data.event) {
+                    case 'media':
+                        if (openAiWs.readyState === WebSocket.OPEN) {
+                            const audioAppend = {
+                                type: 'input_audio_buffer.append',
+                                audio: data.media.payload
+                            };
+                            openAiWs.send(JSON.stringify(audioAppend));
+                        }
+                        break;
+                    case 'start':
+                        streamSid = data.start.streamSid;
+                        console.log('Media stream started:', streamSid);
+                        break;
+                }
+            } catch (error) {
+                console.error('Error parsing message:', error);
+            }
+        });
+
+        connection.on('close', () => {
+            if (openAiWs.readyState === WebSocket.OPEN) openAiWs.close();
+
+            // Save call session with transcript
+            const sessionData = {
+                callId,
+                transcript: {
+                    conversation: callTranscript,
+                    buffer: conversationBuffer,
+                    summary: generateCallSummary(callTranscript)
+                },
+                duration: null, // Will be updated from call status
+                endTime: new Date().toISOString()
+            };
+
+            patientManager.recordCallSession(patientId, sessionData);
+
+            logAuditEvent('CALL_ENDED', {
+                patientId,
+                mrn: patient.mrn,
+                callId,
+                transcriptLength: callTranscript.length
+            });
+
+            console.log(`Patient ${patient.name} disconnected`);
+        });
+
+        openAiWs.on('error', (error) => {
+            console.error('OpenAI WebSocket error:', error);
+        });
+    });
+});
+
+// Helper function to generate call summary
+function generateCallSummary(transcript) {
+    // Basic summary - in production, you might use AI to generate this
+    return {
+        totalExchanges: transcript.length,
+        topics: extractTopics(transcript),
+        generatedAt: new Date().toISOString()
+    };
+}
+
+function extractTopics(transcript) {
+    // Simple keyword extraction - enhance as needed
+    const keywords = ['medication', 'pain', 'symptom', 'appointment', 'feeling', 'blood pressure', 'glucose'];
+    const topics = new Set();
+
+    transcript.forEach(entry => {
+        if (entry.content) {
+            const content = JSON.stringify(entry.content).toLowerCase();
+            keywords.forEach(keyword => {
+                if (content.includes(keyword)) {
+                    topics.add(keyword);
+                }
+            });
+        }
+    });
+
+    return Array.from(topics);
+}
+
+// Call status webhook
+fastify.post('/call-status', async (request, reply) => {
+    const { CallSid, CallStatus, CallDuration } = request.body;
+    console.log(`Call ${CallSid} status: ${CallStatus}`);
+
+    const sessionData = patientManager.callSessions.get(CallSid);
+    if (sessionData) {
+        logAuditEvent('CALL_STATUS_UPDATE', {
+            ...sessionData,
+            status: CallStatus,
+            duration: CallDuration
+        });
+
+        if (CallStatus === 'completed' && CallDuration) {
+            // Update call record with duration
+            const patient = patientManager.getPatient(sessionData.patientId);
+            if (patient) {
+                const callRecord = patient.callHistory.find(c => c.callId === sessionData.callId);
+                if (callRecord) {
+                    callRecord.duration = CallDuration;
+                    patientManager.saveData();
+                }
+            }
+            patientManager.callSessions.delete(CallSid);
+        }
+    }
+
+    reply.send({ received: true });
+});
+
+// Recording status webhook
+fastify.post('/recording-status', async (request, reply) => {
+    const { RecordingSid, RecordingUrl, CallSid } = request.body;
+
+    const sessionData = patientManager.callSessions.get(CallSid);
+    if (sessionData) {
+        logAuditEvent('RECORDING_COMPLETED', {
+            ...sessionData,
+            recordingSid: RecordingSid,
+            recordingUrl: RecordingUrl
+        });
+
+        // Store recording URL with call record
+        const patient = patientManager.getPatient(sessionData.patientId);
+        if (patient) {
+            const callRecord = patient.callHistory.find(c => c.callId === sessionData.callId);
+            if (callRecord) {
+                callRecord.recordingUrl = RecordingUrl;
+                callRecord.recordingSid = RecordingSid;
+                patientManager.saveData();
+            }
+        }
+    }
+
+    reply.send({ received: true });
+});
+
+// Audit log endpoint
+fastify.get('/api/audit', async (request, reply) => {
+    // In production, add authentication
+    reply.send(auditLog.slice(-100)); // Last 100 entries
+});
+
+// Start server
+fastify.listen({ port: PORT, host: '0.0.0.0' }, (err) => {
+    if (err) {
+        console.error(err);
+        process.exit(1);
+    }
+    console.log(`Medical Outbound Calling System V2 running on port ${PORT}`);
+    console.log(`Dashboard: http://localhost:${PORT}/patient-dashboard-v2.html`);
+});

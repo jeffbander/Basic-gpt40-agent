@@ -1,0 +1,41 @@
+# Environment variables - NEVER commit these
+.env
+.env.local
+.env.production
+
+# Patient data - Contains PHI/PII
+patients-v2.json
+patients.json
+call-transcripts.json
+archived-patients.json
+
+# Node modules
+node_modules/
+npm-debug.log*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Test coverage
+coverage/
+.nyc_output
+
+# Build outputs
+dist/
+build/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# OS files
+Thumbs.db

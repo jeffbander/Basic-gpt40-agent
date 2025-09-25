@@ -1,0 +1,28 @@
+{
+  "patients": [
+    {
+      "id": "sample-patient-001",
+      "mrn": "MRN-SAMPLE-001",
+      "name": "Sample Patient One",
+      "phoneNumber": "+1234567890",
+      "dateOfBirth": "1950-01-01",
+      "age": 74,
+      "gender": "male",
+      "conditions": ["Hypertension", "Type 2 Diabetes"],
+      "medications": ["Medication A", "Medication B"],
+      "primaryConcern": "Blood pressure management",
+      "customPrompt": "",
+      "callObjectives": [
+        "Check medication adherence",
+        "Monitor symptoms",
+        "Schedule follow-up if needed"
+      ],
+      "consentToRecord": true,
+      "createdAt": "2025-01-01T00:00:00Z",
+      "lastModified": "2025-01-01T00:00:00Z",
+      "lastContact": null,
+      "callHistory": []
+    }
+  ],
+  "lastUpdated": "2025-01-01T00:00:00Z"
+}

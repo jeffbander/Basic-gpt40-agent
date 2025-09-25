@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Call Management System V2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ed8936;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .patient-grid {
+            display: grid;
+            gap: 10px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .patient-card {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+        }
+
+        .patient-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .patient-card.selected {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-color: #667eea;
+        }
+
+        .patient-info {
+            display: grid;
+            gap: 5px;
+        }
+
+        .patient-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #2d3748;
+        }
+
+        .patient-mrn {
+            font-size: 12px;
+            color: #718096;
+            font-family: monospace;
+        }
+
+        .patient-details {
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .patient-actions {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        .detail-section {
+            margin-bottom: 25px;
+        }
+
+        .detail-section h3 {
+            font-size: 14px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .detail-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            width: 140px;
+            color: #4a5568;
+            font-size: 13px;
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #2d3748;
+            font-size: 13px;
+        }
+
+        .prompt-editor {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+
+        .call-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .call-history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .call-entry {
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+        }
+
+        .call-entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .call-timestamp {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 13px;
+        }
+
+        .call-duration {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        .call-transcript-btn {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #718096;
+            font-size: 12px;
+        }
+
+        .required {
+            color: #f56565;
+        }
+
+        .tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            min-height: 40px;
+        }
+
+        .tag {
+            background: #edf2f7;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .tag-remove:hover {
+            color: #f56565;
+        }
+
+        .transcript-content {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transcript-entry {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .transcript-role {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .transcript-text {
+            color: #2d3748;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-completed {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        .status-failed {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 10px;
+            opacity: 0.3;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2d3748;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: #48bb78;
+        }
+
+        .toast.error {
+            background: #f56565;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .call-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>🏥 Medical Call Management System V2</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalPatients">0</div>
+                <div class="stat-label">Total Patients</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalCalls">0</div>
+                <div class="stat-label">Total Calls</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="todayCalls">0</div>
+                <div class="stat-label">Today's Calls</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="activeCalls">0</div>
+                <div class="stat-label">Active Calls</div>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by name, MRN, or phone...">
+                <button class="btn btn-secondary btn-sm" onclick="searchPatients()">Search</button>
+            </div>
+            <button class="btn btn-primary" onclick="openAddPatientModal()">
+                ➕ Add New Patient
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Patient List -->
+            <div class="card">
+                <div class="card-header">
+                    <span>Patient Registry</span>
+                    <span id="patientCount" style="font-size: 12px; color: #718096;">0 patients</span>
+                </div>
+                <div class="card-body">
+                    <div class="patient-grid" id="patientGrid">
+                        <div class="empty-state">
+                            <p>Loading patients...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Details -->
+            <div class="card">
+                <div class="card-header">
+                    <span>Patient Details</span>
+                    <div id="patientActionButtons" style="display: none;">
+                        <button class="btn btn-warning btn-sm" onclick="editPatient()">✏️ Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deletePatient()">🗑️ Delete</button>
+                    </div>
+                </div>
+                <div class="card-body" id="patientDetailsContainer">
+                    <div class="empty-state">
+                        <p>Select a patient to view details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call History Section -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <span>Call History & Transcripts</span>
+            </div>
+            <div class="card-body">
+                <div id="callHistoryContainer" class="call-history">
+                    <div class="empty-state">
+                        <p>No call history available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Patient Modal -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Patient</h2>
+                <span style="cursor: pointer;" onclick="closeModal('patientModal')">✕</span>
+            </div>
+            <div class="modal-body">
+                <form id="patientForm">
+                    <div class="form-group">
+                        <label>MRN (Medical Record Number) <span class="required">*</span></label>
+                        <input type="text" id="mrn" required>
+                        <small>Unique identifier for the patient</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phoneNumber" required placeholder="+1234567890">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="dateOfBirth">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" id="age" min="0" max="150">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="gender">
+                            <option value="">Select...</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Medical Conditions</label>
+                        <input type="text" id="conditionsInput" placeholder="Type condition and press Enter">
+                        <div id="conditionsList" class="tags-input"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Medications</label>
+                        <input type="text" id="medicationsInput" placeholder="Type medication and press Enter">
+                        <div id="medicationsList" class="tags-input"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Primary Concern</label>
+                        <input type="text" id="primaryConcern">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Custom AI Prompt</label>
+                        <textarea id="customPrompt" class="prompt-editor"
+                                  placeholder="Leave empty for default prompt, or customize the AI's behavior for this patient"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Call Objectives</label>
+                        <textarea id="callObjectives" rows="4"
+                                  placeholder="Enter each objective on a new line"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="consentToRecord">
+                            Consent to record calls
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('patientModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="savePatient()">Save Patient</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transcript Modal -->
+    <div id="transcriptModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Call Transcript</h2>
+                <span style="cursor: pointer;" onclick="closeModal('transcriptModal')">✕</span>
+            </div>
+            <div class="modal-body">
+                <div id="transcriptContent" class="transcript-content">
+                    Loading transcript...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('transcriptModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:5051';
+        let patients = [];
+        let selectedPatient = null;
+        let editMode = false;
+        let conditions = [];
+        let medications = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPatients();
+            setupEventListeners();
+            updateStats();
+            setInterval(updateStats, 30000); // Update stats every 30 seconds
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Conditions input
+            document.getElementById('conditionsInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addCondition(e.target.value);
+                    e.target.value = '';
+                }
+            });
+
+            // Medications input
+            document.getElementById('medicationsInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addMedication(e.target.value);
+                    e.target.value = '';
+                }
+            });
+
+            // Search on enter
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchPatients();
+                }
+            });
+        }
+
+        // Load patients
+        async function loadPatients() {
+            try {
+                const response = await fetch(`${API_BASE}/api/patients`);
+                patients = await response.json();
+                renderPatientGrid();
+                document.getElementById('patientCount').textContent = `${patients.length} patients`;
+            } catch (error) {
+                console.error('Error loading patients:', error);
+                showToast('Error loading patients', 'error');
+            }
+        }
+
+        // Render patient grid
+        function renderPatientGrid() {
+            const grid = document.getElementById('patientGrid');
+
+            if (patients.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <p>No patients found</p>
+                        <button class="btn btn-primary btn-sm" onclick="openAddPatientModal()">Add First Patient</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = patients.map(patient => `
+                <div class="patient-card ${selectedPatient?.id === patient.id ? 'selected' : ''}"
+                     onclick="selectPatient('${patient.id}')">
+                    <div class="patient-info">
+                        <div class="patient-name">${patient.name}</div>
+                        <div class="patient-mrn">MRN: ${patient.mrn}</div>
+                        <div class="patient-details">
+                            ${patient.age ? `Age: ${patient.age}` : ''}
+                            ${patient.gender ? `• ${patient.gender}` : ''}
+                        </div>
+                        <div class="patient-details">
+                            ${patient.conditions?.length ? `Conditions: ${patient.conditions.slice(0, 2).join(', ')}${patient.conditions.length > 2 ? '...' : ''}` : ''}
+                        </div>
+                        <div class="patient-details">
+                            Calls: ${patient.callCount || 0} • Last: ${patient.lastContact ? new Date(patient.lastContact).toLocaleDateString() : 'Never'}
+                        </div>
+                    </div>
+                    <div class="patient-actions">
+                        <button class="icon-btn" onclick="event.stopPropagation(); makeCall('${patient.id}')" title="Call Now">
+                            📞
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Select patient
+        async function selectPatient(patientId) {
+            try {
+                const response = await fetch(`${API_BASE}/api/patients/${patientId}`);
+                selectedPatient = await response.json();
+
+                // Update UI
+                renderPatientGrid();
+                renderPatientDetails();
+                loadCallHistory();
+
+                document.getElementById('patientActionButtons').style.display = 'flex';
+            } catch (error) {
+                console.error('Error loading patient details:', error);
+                showToast('Error loading patient details', 'error');
+            }
+        }
+
+        // Render patient details
+        function renderPatientDetails() {
+            if (!selectedPatient) return;
+
+            const container = document.getElementById('patientDetailsContainer');
+            container.innerHTML = `
+                <div class="detail-section">
+                    <h3>Basic Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <span class="detail-label">MRN:</span>
+                            <span class="detail-value">${selectedPatient.mrn}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Name:</span>
+                            <span class="detail-value">${selectedPatient.name}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Phone:</span>
+                            <span class="detail-value">${selectedPatient.phoneNumber || 'Not provided'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Age:</span>
+                            <span class="detail-value">${selectedPatient.age || 'Not specified'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Gender:</span>
+                            <span class="detail-value">${selectedPatient.gender || 'Not specified'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Medical Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <span class="detail-label">Conditions:</span>
+                            <span class="detail-value">${selectedPatient.conditions?.join(', ') || 'None'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Medications:</span>
+                            <span class="detail-value">${selectedPatient.medications?.join(', ') || 'None'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Primary Concern:</span>
+                            <span class="detail-value">${selectedPatient.primaryConcern || 'General wellness'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Call Configuration</h3>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <span class="detail-label">Custom Prompt:</span>
+                            <span class="detail-value">${selectedPatient.customPrompt ? 'Configured' : 'Using default'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Recording Consent:</span>
+                            <span class="detail-value">${selectedPatient.consentToRecord ? 'Yes' : 'No'}</span>
+                        </div>
+                    </div>
+                    ${selectedPatient.callObjectives?.length ? `
+                        <div style="margin-top: 10px;">
+                            <strong>Call Objectives:</strong>
+                            <ul style="margin: 5px 0 0 20px;">
+                                ${selectedPatient.callObjectives.map(obj => `<li>${obj}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="call-actions">
+                    <button class="btn btn-primary" onclick="makeCall('${selectedPatient.id}')">
+                        📞 Call Now
+                    </button>
+                    <button class="btn btn-success" onclick="scheduleCall('${selectedPatient.id}')">
+                        📅 Schedule Call
+                    </button>
+                </div>
+            `;
+        }
+
+        // Load call history
+        async function loadCallHistory() {
+            if (!selectedPatient) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/patients/${selectedPatient.id}/calls`);
+                const history = await response.json();
+
+                const container = document.getElementById('callHistoryContainer');
+
+                if (history.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <p>No call history for this patient</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = history.map(call => `
+                    <div class="call-entry">
+                        <div class="call-entry-header">
+                            <div>
+                                <div class="call-timestamp">${new Date(call.timestamp).toLocaleString()}</div>
+                                <div class="call-duration">
+                                    Duration: ${call.duration ? `${call.duration}s` : 'N/A'} •
+                                    Call ID: ${call.callId}
+                                </div>
+                            </div>
+                            ${call.transcript ? `
+                                <button class="btn btn-secondary call-transcript-btn"
+                                        onclick="viewTranscript('${call.callId}')">
+                                    📄 View Transcript
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading call history:', error);
+            }
+        }
+
+        // Make call
+        async function makeCall(patientId) {
+            try {
+                const patient = patients.find(p => p.id === patientId);
+                if (!patient.phoneNumber || patient.phoneNumber === '+1234567890') {
+                    showToast('Please update patient phone number first', 'error');
+                    return;
+                }
+
+                showToast('Initiating call...', 'success');
+
+                const response = await fetch(`${API_BASE}/api/call`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ patientId })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast(`Call initiated! Call ID: ${result.callId}`, 'success');
+                    setTimeout(() => loadCallHistory(), 5000);
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                showToast(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // View transcript
+        async function viewTranscript(callId) {
+            try {
+                const response = await fetch(`${API_BASE}/api/calls/${callId}/transcript`);
+                const transcript = await response.json();
+
+                const content = document.getElementById('transcriptContent');
+
+                if (transcript.conversation && transcript.conversation.length > 0) {
+                    content.innerHTML = transcript.conversation.map(entry => `
+                        <div class="transcript-entry">
+                            <div class="transcript-role">${entry.role}</div>
+                            <div class="transcript-text">${JSON.stringify(entry.content)}</div>
+                            <div style="font-size: 11px; color: #718096; margin-top: 5px;">
+                                ${new Date(entry.timestamp).toLocaleString()}
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    content.innerHTML = '<p>No transcript content available</p>';
+                }
+
+                openModal('transcriptModal');
+            } catch (error) {
+                showToast('Error loading transcript', 'error');
+            }
+        }
+
+        // Open add patient modal
+        function openAddPatientModal() {
+            editMode = false;
+            document.getElementById('modalTitle').textContent = 'Add New Patient';
+            document.getElementById('patientForm').reset();
+            conditions = [];
+            medications = [];
+            renderTags();
+            openModal('patientModal');
+        }
+
+        // Edit patient
+        function editPatient() {
+            if (!selectedPatient) return;
+
+            editMode = true;
+            document.getElementById('modalTitle').textContent = 'Edit Patient';
+
+            // Populate form
+            document.getElementById('mrn').value = selectedPatient.mrn;
+            document.getElementById('name').value = selectedPatient.name;
+            document.getElementById('phoneNumber').value = selectedPatient.phoneNumber || '';
+            document.getElementById('dateOfBirth').value = selectedPatient.dateOfBirth || '';
+            document.getElementById('age').value = selectedPatient.age || '';
+            document.getElementById('gender').value = selectedPatient.gender || '';
+            document.getElementById('primaryConcern').value = selectedPatient.primaryConcern || '';
+            document.getElementById('customPrompt').value = selectedPatient.customPrompt || '';
+            document.getElementById('callObjectives').value = selectedPatient.callObjectives?.join('\n') || '';
+            document.getElementById('consentToRecord').checked = selectedPatient.consentToRecord || false;
+
+            conditions = selectedPatient.conditions || [];
+            medications = selectedPatient.medications || [];
+            renderTags();
+
+            openModal('patientModal');
+        }
+
+        // Delete patient
+        async function deletePatient() {
+            if (!selectedPatient) return;
+
+            if (!confirm(`Are you sure you want to delete patient ${selectedPatient.name} (MRN: ${selectedPatient.mrn})? This will archive their call history.`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/patients/${selectedPatient.id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showToast('Patient deleted successfully', 'success');
+                    selectedPatient = null;
+                    document.getElementById('patientDetailsContainer').innerHTML = `
+                        <div class="empty-state">
+                            <p>Select a patient to view details</p>
+                        </div>
+                    `;
+                    document.getElementById('patientActionButtons').style.display = 'none';
+                    loadPatients();
+                } else {
+                    throw new Error('Failed to delete patient');
+                }
+            } catch (error) {
+                showToast(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Save patient
+        async function savePatient() {
+            const patientData = {
+                mrn: document.getElementById('mrn').value,
+                name: document.getElementById('name').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                age: parseInt(document.getElementById('age').value) || null,
+                gender: document.getElementById('gender').value,
+                primaryConcern: document.getElementById('primaryConcern').value,
+                customPrompt: document.getElementById('customPrompt').value,
+                conditions,
+                medications,
+                callObjectives: document.getElementById('callObjectives').value.split('\n').filter(o => o.trim()),
+                consentToRecord: document.getElementById('consentToRecord').checked
+            };
+
+            try {
+                const url = editMode
+                    ? `${API_BASE}/api/patients/${selectedPatient.id}`
+                    : `${API_BASE}/api/patients`;
+
+                const method = editMode ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(patientData)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to save patient');
+                }
+
+                const savedPatient = await response.json();
+
+                showToast(`Patient ${editMode ? 'updated' : 'created'} successfully`, 'success');
+                closeModal('patientModal');
+                loadPatients();
+
+                if (editMode && selectedPatient?.id === savedPatient.id) {
+                    selectPatient(savedPatient.id);
+                }
+            } catch (error) {
+                showToast(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Add condition
+        function addCondition(value) {
+            if (value && !conditions.includes(value)) {
+                conditions.push(value);
+                renderTags();
+            }
+        }
+
+        // Add medication
+        function addMedication(value) {
+            if (value && !medications.includes(value)) {
+                medications.push(value);
+                renderTags();
+            }
+        }
+
+        // Render tags
+        function renderTags() {
+            document.getElementById('conditionsList').innerHTML = conditions.map(c => `
+                <span class="tag">
+                    ${c}
+                    <span class="tag-remove" onclick="removeCondition('${c}')">×</span>
+                </span>
+            `).join('');
+
+            document.getElementById('medicationsList').innerHTML = medications.map(m => `
+                <span class="tag">
+                    ${m}
+                    <span class="tag-remove" onclick="removeMedication('${m}')">×</span>
+                </span>
+            `).join('');
+        }
+
+        // Remove condition
+        function removeCondition(value) {
+            conditions = conditions.filter(c => c !== value);
+            renderTags();
+        }
+
+        // Remove medication
+        function removeMedication(value) {
+            medications = medications.filter(m => m !== value);
+            renderTags();
+        }
+
+        // Search patients
+        function searchPatients() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+
+            if (!query) {
+                loadPatients();
+                return;
+            }
+
+            const filtered = patients.filter(p =>
+                p.name.toLowerCase().includes(query) ||
+                p.mrn.toLowerCase().includes(query) ||
+                (p.phoneNumber && p.phoneNumber.includes(query))
+            );
+
+            patients = filtered;
+            renderPatientGrid();
+        }
+
+        // Update stats
+        async function updateStats() {
+            try {
+                document.getElementById('totalPatients').textContent = patients.length;
+
+                // Calculate total calls
+                const totalCalls = patients.reduce((sum, p) => sum + (p.callCount || 0), 0);
+                document.getElementById('totalCalls').textContent = totalCalls;
+
+                // Today's calls (would need backend support for accurate data)
+                document.getElementById('todayCalls').textContent = '0';
+
+                // Active calls
+                document.getElementById('activeCalls').textContent = '0';
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Schedule call (placeholder)
+        function scheduleCall(patientId) {
+            showToast('Call scheduling coming soon!', 'success');
+        }
+    </script>
+</body>
+</html>
