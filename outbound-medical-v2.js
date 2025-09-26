@@ -312,6 +312,106 @@ const logAuditEvent = (event, details) => {
     console.log('[AUDIT]', entry);
 };
 
+// PPD Demo Parser Function
+function parsePPDDemo(ppdDemoText) {
+    const parsed = {
+        name: '',
+        mrn: '',
+        dateOfBirth: '',
+        phoneNumber: '',
+        gender: '',
+        conditions: [],
+        medications: []
+    };
+
+    if (!ppdDemoText) return parsed;
+
+    // Parse Patient Name
+    const nameMatch = ppdDemoText.match(/Patient Name:\s*([^\n]+)/i);
+    if (nameMatch) {
+        parsed.name = nameMatch[1].trim();
+    }
+
+    // Parse MRN
+    const mrnMatch = ppdDemoText.match(/MRN:\s*([^\n]+)/i);
+    if (mrnMatch) {
+        parsed.mrn = mrnMatch[1].trim();
+    }
+
+    // Parse Date of Birth
+    const dobMatch = ppdDemoText.match(/(?:Date of Birth|DOB):\s*([^\n]+)/i);
+    if (dobMatch) {
+        const dobStr = dobMatch[1].trim();
+        // Try to parse date in various formats
+        const dateFormats = [
+            /(\d{1,2})\/(\d{1,2})\/(\d{4})/, // MM/DD/YYYY
+            /(\d{4})-(\d{2})-(\d{2})/,       // YYYY-MM-DD
+        ];
+
+        for (const format of dateFormats) {
+            const match = dobStr.match(format);
+            if (match) {
+                if (format === dateFormats[0]) {
+                    parsed.dateOfBirth = `${match[3]}-${match[1].padStart(2, '0')}-${match[2].padStart(2, '0')}`;
+                } else {
+                    parsed.dateOfBirth = match[0];
+                }
+                break;
+            }
+        }
+    }
+
+    // Parse Phone Number
+    const phoneMatch = ppdDemoText.match(/(?:Phone|Phone Number|Contact):\s*([^\n]+)/i);
+    if (phoneMatch) {
+        // Clean phone number - remove non-digits except + at start
+        const phone = phoneMatch[1].trim();
+        parsed.phoneNumber = phone.replace(/\D/g, '');
+    }
+
+    // Parse Gender
+    const genderMatch = ppdDemoText.match(/(?:Gender|Sex):\s*([^\n]+)/i);
+    if (genderMatch) {
+        const gender = genderMatch[1].trim().toLowerCase();
+        parsed.gender = gender.startsWith('m') ? 'male' : gender.startsWith('f') ? 'female' : 'other';
+    }
+
+    // Parse Conditions/Diagnoses
+    const conditionsMatch = ppdDemoText.match(/(?:Conditions?|Diagnos[ie]s|Medical History):\s*([^\n]+)/i);
+    if (conditionsMatch) {
+        parsed.conditions = conditionsMatch[1]
+            .split(/[,;]/)
+            .map(c => c.trim())
+            .filter(c => c.length > 0);
+    }
+
+    // Parse Medications
+    const medsMatch = ppdDemoText.match(/(?:Medications?|Current Medications?):\s*([^\n]+)/i);
+    if (medsMatch) {
+        parsed.medications = medsMatch[1]
+            .split(/[,;]/)
+            .map(m => m.trim())
+            .filter(m => m.length > 0);
+    }
+
+    // Calculate age if DOB is provided
+    if (parsed.dateOfBirth) {
+        const dob = new Date(parsed.dateOfBirth);
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+        parsed.age = age;
+    }
+
+    return parsed;
+}
+
+// Store active webhook calls to track completion
+const activeWebhookCalls = new Map();
+
 // Outbound Call Function with Recording
 async function makeOutboundCall(patient) {
     if (!patient.phoneNumber) {
@@ -510,7 +610,9 @@ fastify.all('/outbound-twiml/:patientId', async (request, reply) => {
 fastify.register(async (fastify) => {
     fastify.get('/media-stream/:patientId', { websocket: true }, (connection, req) => {
         const { patientId } = req.params;
-        const { callId } = req.query;
+        // Fix: Parse callId from query string properly
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const callId = url.searchParams.get('callId');
         const patient = patientManager.getPatient(patientId);
 
         if (!patient) {
@@ -587,12 +689,13 @@ fastify.register(async (fastify) => {
                 }
 
                 // Capture conversation for transcript
-                if (response.type === 'conversation.item.created') {
+                if (response.type === 'conversation.item.created' && response.item) {
                     conversationBuffer.push({
                         role: response.item.role,
                         content: response.item.content,
                         timestamp: new Date().toISOString()
                     });
+                    console.log('Conversation item captured:', response.item.role);
                 }
 
                 // Capture text responses for transcript
@@ -602,6 +705,24 @@ fastify.register(async (fastify) => {
                         content: response.content,
                         timestamp: new Date().toISOString()
                     });
+                    console.log('Assistant response captured');
+                }
+
+                // Also capture response.done events which contain the full message
+                if (response.type === 'response.done' && response.response) {
+                    const output = response.response.output;
+                    if (output && output.length > 0) {
+                        output.forEach(item => {
+                            if (item.type === 'message' && item.content) {
+                                callTranscript.push({
+                                    role: item.role || 'assistant',
+                                    content: item.content,
+                                    timestamp: new Date().toISOString()
+                                });
+                                console.log('Response content captured from response.done');
+                            }
+                        });
+                    }
                 }
 
             } catch (error) {
@@ -718,6 +839,34 @@ fastify.post('/call-status', async (request, reply) => {
                     patientManager.saveData();
                 }
             }
+
+            // Check if this is a webhook-triggered call
+            activeWebhookCalls.forEach((webhookCall, webhookCallId) => {
+                if (webhookCall.callSid === CallSid) {
+                    // Get the transcript for this call
+                    const transcript = patientManager.callTranscripts.get(sessionData.callId);
+
+                    // Store the transcript with the webhook call ID
+                    if (transcript) {
+                        patientManager.callTranscripts.set(webhookCallId, transcript);
+                        patientManager.saveTranscripts();
+                    }
+
+                    // Resolve the webhook promise
+                    if (webhookCall.resolve) {
+                        webhookCall.resolve({
+                            callSid: CallSid,
+                            duration: CallDuration,
+                            transcript: transcript || null
+                        });
+                    }
+
+                    // Clean up
+                    activeWebhookCalls.delete(webhookCallId);
+                    console.log(`[WEBHOOK] Call completed for webhook ${webhookCallId}`);
+                }
+            });
+
             patientManager.callSessions.delete(CallSid);
         }
     }
@@ -750,6 +899,192 @@ fastify.post('/recording-status', async (request, reply) => {
     }
 
     reply.send({ received: true });
+});
+
+// Webhook endpoint for external agents to trigger calls
+fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
+    const { call_objectives, Master_note, PPD_demo } = request.body;
+
+    console.log('[WEBHOOK] Received agent trigger request');
+
+    try {
+        // Parse patient demographics from PPD_demo
+        const parsedData = parsePPDDemo(PPD_demo);
+
+        if (!parsedData.phoneNumber) {
+            return reply.status(400).send({
+                error: 'No phone number found in PPD_demo',
+                parsed: parsedData
+            });
+        }
+
+        // Generate a unique MRN if not provided
+        if (!parsedData.mrn) {
+            parsedData.mrn = `AUTO-${Date.now()}`;
+        }
+
+        // Check if patient exists by MRN
+        let patient = patientManager.getPatientByMRN(parsedData.mrn);
+
+        if (!patient) {
+            // Create new patient
+            const patientId = crypto.randomUUID();
+            patient = {
+                id: patientId,
+                mrn: parsedData.mrn,
+                name: parsedData.name || 'Unknown Patient',
+                phoneNumber: parsedData.phoneNumber,
+                dateOfBirth: parsedData.dateOfBirth,
+                age: parsedData.age,
+                gender: parsedData.gender || 'unknown',
+                conditions: parsedData.conditions,
+                medications: parsedData.medications,
+                primaryConcern: Master_note ? Master_note.substring(0, 200) : '',
+                customPrompt: '',
+                callObjectives: call_objectives || [],
+                consentToRecord: true,
+                createdAt: new Date().toISOString(),
+                lastModified: new Date().toISOString(),
+                callHistory: []
+            };
+
+            // Set custom prompt based on Master_note and call_objectives
+            if (Master_note || call_objectives) {
+                let customPrompt = 'You are conducting a medical wellness check. ';
+
+                if (Master_note) {
+                    customPrompt += `\n\nClinical Context:\n${Master_note}\n\n`;
+                }
+
+                if (call_objectives && call_objectives.length > 0) {
+                    customPrompt += 'During this call, please ensure you:\n';
+                    call_objectives.forEach((objective, i) => {
+                        customPrompt += `${i + 1}. ${objective}\n`;
+                    });
+                }
+
+                patient.customPrompt = customPrompt;
+            }
+
+            // Add patient to system
+            patientManager.addPatient(patient);
+            console.log(`[WEBHOOK] Created new patient: ${patient.mrn}`);
+        } else {
+            // Update existing patient with new information
+            if (call_objectives) {
+                patient.callObjectives = call_objectives;
+            }
+
+            if (Master_note) {
+                patient.primaryConcern = Master_note.substring(0, 200);
+
+                // Update custom prompt
+                let customPrompt = 'You are conducting a medical wellness check. ';
+                customPrompt += `\n\nClinical Context:\n${Master_note}\n\n`;
+
+                if (call_objectives && call_objectives.length > 0) {
+                    customPrompt += 'During this call, please ensure you:\n';
+                    call_objectives.forEach((objective, i) => {
+                        customPrompt += `${i + 1}. ${objective}\n`;
+                    });
+                }
+
+                patient.customPrompt = customPrompt;
+            }
+
+            patient.lastModified = new Date().toISOString();
+            patientManager.updatePatient(patient.id, patient);
+            console.log(`[WEBHOOK] Updated existing patient: ${patient.mrn}`);
+        }
+
+        // Generate unique webhook call ID to track this specific call
+        const webhookCallId = `webhook-${crypto.randomUUID()}`;
+
+        // Create a promise that will resolve when the call completes
+        const callCompletePromise = new Promise((resolve, reject) => {
+            activeWebhookCalls.set(webhookCallId, { resolve, reject, startTime: Date.now() });
+
+            // Set timeout of 5 minutes for the call
+            setTimeout(() => {
+                if (activeWebhookCalls.has(webhookCallId)) {
+                    activeWebhookCalls.delete(webhookCallId);
+                    reject(new Error('Call timeout - exceeded 5 minutes'));
+                }
+            }, 5 * 60 * 1000);
+        });
+
+        // Initiate the outbound call
+        const callResult = await makeOutboundCall(patient);
+
+        // Store the webhook call ID with the Twilio call SID
+        if (callResult.callSid) {
+            const webhookCall = activeWebhookCalls.get(webhookCallId);
+            if (webhookCall) {
+                webhookCall.callSid = callResult.callSid;
+                webhookCall.patientId = patient.id;
+            }
+        }
+
+        console.log(`[WEBHOOK] Call initiated: ${callResult.callSid}`);
+
+        // Wait for call to complete and transcript to be available
+        console.log('[WEBHOOK] Waiting for call to complete...');
+
+        // For now, return immediate response with call initiation details
+        // In a production system, you might want to implement a callback URL
+        // or use webhooks to notify when the call completes
+
+        reply.send({
+            success: true,
+            message: 'Call initiated successfully',
+            patientId: patient.id,
+            patientMRN: patient.mrn,
+            callSid: callResult.callSid,
+            webhookCallId: webhookCallId,
+            status: 'Call initiated. Use the webhookCallId to check status.',
+            checkStatusUrl: `/api/webhook/status/${webhookCallId}`,
+            estimatedDuration: '2-5 minutes'
+        });
+
+    } catch (error) {
+        console.error('[WEBHOOK] Error processing request:', error);
+        reply.status(500).send({
+            error: 'Failed to process webhook request',
+            message: error.message
+        });
+    }
+});
+
+// Webhook status check endpoint
+fastify.get('/api/webhook/status/:webhookCallId', async (request, reply) => {
+    const { webhookCallId } = request.params;
+
+    const webhookCall = activeWebhookCalls.get(webhookCallId);
+
+    if (!webhookCall) {
+        // Check if we have a completed transcript
+        const transcript = patientManager.callTranscripts.get(webhookCallId);
+
+        if (transcript) {
+            return reply.send({
+                status: 'completed',
+                transcript: transcript
+            });
+        }
+
+        return reply.status(404).send({
+            error: 'Webhook call not found or already completed'
+        });
+    }
+
+    // Call is still in progress
+    const duration = Date.now() - webhookCall.startTime;
+    reply.send({
+        status: 'in_progress',
+        callSid: webhookCall.callSid,
+        duration: Math.round(duration / 1000) + ' seconds',
+        message: 'Call is still in progress'
+    });
 });
 
 // Audit log endpoint

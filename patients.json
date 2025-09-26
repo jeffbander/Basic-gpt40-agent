@@ -1,0 +1,56 @@
+[
+  {
+    "id": "patient-001",
+    "name": "John Smith",
+    "age": 72,
+    "gender": "male",
+    "phoneNumber": "+1234567890",
+    "dateOfBirth": "1952-03-15",
+    "conditions": ["Type 2 Diabetes", "Hypertension", "Mild COPD"],
+    "medications": ["Metformin 1000mg twice daily", "Lisinopril 20mg once daily", "Albuterol inhaler as needed"],
+    "lastAppointment": "2025-08-15",
+    "primaryConcern": "Blood glucose monitoring and medication adherence",
+    "callObjectives": [
+      "Check blood glucose levels and trends",
+      "Verify medication compliance",
+      "Ask about any breathing difficulties",
+      "Remind about upcoming appointment if needed",
+      "Document any new symptoms or concerns"
+    ],
+    "emergencyContact": {
+      "name": "Mary Smith",
+      "relationship": "Wife",
+      "phone": "+1234567891"
+    },
+    "createdAt": "2025-01-01T10:00:00Z",
+    "lastContact": null,
+    "callHistory": []
+  },
+  {
+    "id": "patient-002",
+    "name": "Sarah Johnson",
+    "age": 68,
+    "gender": "female",
+    "phoneNumber": "+1234567892",
+    "dateOfBirth": "1956-07-22",
+    "conditions": ["Congestive Heart Failure", "Atrial Fibrillation"],
+    "medications": ["Furosemide 40mg once daily", "Carvedilol 12.5mg twice daily", "Warfarin 5mg once daily"],
+    "lastAppointment": "2025-09-01",
+    "primaryConcern": "Heart failure symptom monitoring and weight tracking",
+    "callObjectives": [
+      "Ask about daily weight measurements",
+      "Check for swelling in legs or ankles",
+      "Inquire about shortness of breath or chest pain",
+      "Verify INR monitoring schedule",
+      "Assess activity tolerance"
+    ],
+    "emergencyContact": {
+      "name": "Tom Johnson",
+      "relationship": "Son",
+      "phone": "+1234567893"
+    },
+    "createdAt": "2025-01-01T10:00:00Z",
+    "lastContact": null,
+    "callHistory": []
+  }
+]
