@@ -949,14 +949,25 @@
                             <span class="detail-value">${selectedPatient.consentToRecord ? 'Yes' : 'No'}</span>
                         </div>
                     </div>
-                    ${selectedPatient.callObjectives?.length ? `
-                        <div style="margin-top: 10px;">
-                            <strong>Call Objectives:</strong>
-                            <ul style="margin: 5px 0 0 20px;">
-                                ${selectedPatient.callObjectives.map(obj => `<li>${obj}</li>`).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
+                    ${(() => {
+                        const objectives = Array.isArray(selectedPatient.callObjectives)
+                            ? selectedPatient.callObjectives
+                            : (typeof selectedPatient.callObjectives === 'string' && selectedPatient.callObjectives.trim()
+                                ? [selectedPatient.callObjectives]
+                                : []);
+                        return objectives.length ? `
+                            <div style="margin-top: 10px;">
+                                <strong>Call Objectives:</strong>
+                                ${objectives.length === 1 && objectives[0].includes('\n') ? `
+                                    <div style="margin: 5px 0 0 20px; white-space: pre-wrap;">${objectives[0]}</div>
+                                ` : `
+                                    <ul style="margin: 5px 0 0 20px;">
+                                        ${objectives.map(obj => `<li>${obj}</li>`).join('')}
+                                    </ul>
+                                `}
+                            </div>
+                        ` : '';
+                    })()}
                 </div>
 
                 <div class="call-actions">
@@ -1052,15 +1063,38 @@
                 const content = document.getElementById('transcriptContent');
 
                 if (transcript.conversation && transcript.conversation.length > 0) {
-                    content.innerHTML = transcript.conversation.map(entry => `
-                        <div class="transcript-entry">
-                            <div class="transcript-role">${entry.role}</div>
-                            <div class="transcript-text">${JSON.stringify(entry.content)}</div>
-                            <div style="font-size: 11px; color: #718096; margin-top: 5px;">
-                                ${new Date(entry.timestamp).toLocaleString()}
+                    content.innerHTML = transcript.conversation.map(entry => {
+                        // Extract text from content array
+                        let text = '';
+                        if (Array.isArray(entry.content)) {
+                            entry.content.forEach(item => {
+                                if (item.type === 'output_audio' && item.transcript) {
+                                    text += item.transcript;
+                                } else if (item.type === 'input_audio' && item.transcript) {
+                                    text += item.transcript;
+                                } else if (typeof item === 'string') {
+                                    text += item;
+                                }
+                            });
+                        } else if (typeof entry.content === 'string') {
+                            text = entry.content;
+                        } else {
+                            text = JSON.stringify(entry.content);
+                        }
+
+                        const roleLabel = entry.role === 'assistant' ? '🤖 AI' : '👤 User';
+                        const roleClass = entry.role === 'assistant' ? 'assistant' : 'user';
+
+                        return `
+                            <div class="transcript-entry ${roleClass}">
+                                <div class="transcript-role">${roleLabel}</div>
+                                <div class="transcript-text">${text || '(No text content)'}</div>
+                                <div style="font-size: 11px; color: #718096; margin-top: 5px;">
+                                    ${new Date(entry.timestamp).toLocaleString()}
+                                </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 } else {
                     content.innerHTML = '<p>No transcript content available</p>';
                 }
@@ -1098,7 +1132,11 @@
             document.getElementById('gender').value = selectedPatient.gender || '';
             document.getElementById('primaryConcern').value = selectedPatient.primaryConcern || '';
             document.getElementById('customPrompt').value = selectedPatient.customPrompt || '';
-            document.getElementById('callObjectives').value = selectedPatient.callObjectives?.join('\n') || '';
+            // Handle callObjectives as either array or string
+            const objectives = Array.isArray(selectedPatient.callObjectives)
+                ? selectedPatient.callObjectives.join('\n')
+                : (typeof selectedPatient.callObjectives === 'string' ? selectedPatient.callObjectives : '');
+            document.getElementById('callObjectives').value = objectives;
             document.getElementById('consentToRecord').checked = selectedPatient.consentToRecord || false;
 
             conditions = selectedPatient.conditions || [];

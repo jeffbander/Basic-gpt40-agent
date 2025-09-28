@@ -9,6 +9,7 @@ import { promises as fs } from 'fs';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fetch from 'node-fetch';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -285,12 +286,25 @@ class PatientManager {
 
         return patient.callHistory.map(call => ({
             ...call,
-            transcript: this.callTranscripts.get(call.callId)
+            // Use embedded transcript if available, otherwise check separate transcripts file
+            transcript: call.transcript || this.callTranscripts.get(call.callId)
         }));
     }
 
     getCallTranscript(callId) {
-        return this.callTranscripts.get(callId);
+        // First check the separate transcripts Map
+        let transcript = this.callTranscripts.get(callId);
+        if (transcript) return transcript;
+
+        // If not found, search for embedded transcript in patient call history
+        for (const patient of this.patients.values()) {
+            const call = patient.callHistory.find(c => c.callId === callId);
+            if (call && call.transcript) {
+                return call.transcript;
+            }
+        }
+
+        return null;
     }
 }
 
@@ -450,7 +464,9 @@ async function makeOutboundCall(patient) {
         // Add recording if enabled and consent is given
         if (ENABLE_RECORDING && patient.consentToRecord) {
             callOptions.record = true;
+            callOptions.recordingChannels = 'dual'; // Records both sides separately
             callOptions.recordingStatusCallback = `${baseUrl}/recording-status`;
+            callOptions.recordingStatusCallbackEvent = ['completed'];
         }
 
         const call = await client.calls.create(callOptions);
@@ -841,7 +857,7 @@ fastify.post('/call-status', async (request, reply) => {
             }
 
             // Check if this is a webhook-triggered call
-            activeWebhookCalls.forEach((webhookCall, webhookCallId) => {
+            activeWebhookCalls.forEach(async (webhookCall, webhookCallId) => {
                 if (webhookCall.callSid === CallSid) {
                     // Get the transcript for this call
                     const transcript = patientManager.callTranscripts.get(sessionData.callId);
@@ -852,16 +868,34 @@ fastify.post('/call-status', async (request, reply) => {
                         patientManager.saveTranscripts();
                     }
 
-                    // Resolve the webhook promise
-                    if (webhookCall.resolve) {
-                        webhookCall.resolve({
-                            callSid: CallSid,
-                            duration: CallDuration,
-                            transcript: transcript || null
-                        });
+                    // Send completion webhook if callback URL was provided
+                    if (webhookCall.callbackUrl) {
+                        try {
+                            const callbackData = {
+                                webhookCallId: webhookCallId,
+                                status: 'completed',
+                                patientMRN: webhookCall.patientMRN,
+                                callSid: CallSid,
+                                duration: CallDuration,
+                                transcript: transcript || null,
+                                completedAt: new Date().toISOString()
+                            };
+
+                            console.log(`[WEBHOOK] Sending completion callback to ${webhookCall.callbackUrl}`);
+
+                            await fetch(webhookCall.callbackUrl, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(callbackData)
+                            });
+
+                            console.log(`[WEBHOOK] Completion callback sent successfully for ${webhookCallId}`);
+                        } catch (error) {
+                            console.error('[WEBHOOK] Error sending completion callback:', error);
+                        }
                     }
 
-                    // Clean up
+                    // Clean up the webhook call tracking
                     activeWebhookCalls.delete(webhookCallId);
                     console.log(`[WEBHOOK] Call completed for webhook ${webhookCallId}`);
                 }
@@ -873,6 +907,60 @@ fastify.post('/call-status', async (request, reply) => {
 
     reply.send({ received: true });
 });
+
+// Function to transcribe recording using OpenAI Whisper
+async function transcribeRecording(recordingUrl) {
+    try {
+        console.log('[TRANSCRIPTION] Starting transcription for recording:', recordingUrl);
+
+        // Download the recording from Twilio
+        const recordingResponse = await fetch(recordingUrl + '.mp3', {
+            headers: {
+                'Authorization': 'Basic ' + Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64')
+            }
+        });
+
+        if (!recordingResponse.ok) {
+            throw new Error(`Failed to download recording: ${recordingResponse.statusText}`);
+        }
+
+        const audioBuffer = await recordingResponse.buffer();
+
+        // Create form data for Whisper API
+        const FormData = (await import('form-data')).default;
+        const formData = new FormData();
+        formData.append('file', audioBuffer, {
+            filename: 'recording.mp3',
+            contentType: 'audio/mpeg'
+        });
+        formData.append('model', 'whisper-1');
+        formData.append('response_format', 'verbose_json');
+        formData.append('timestamp_granularities', '["word"]');
+
+        // Send to OpenAI Whisper API
+        const whisperResponse = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                ...formData.getHeaders()
+            },
+            body: formData
+        });
+
+        if (!whisperResponse.ok) {
+            const error = await whisperResponse.text();
+            throw new Error(`Whisper API error: ${error}`);
+        }
+
+        const transcription = await whisperResponse.json();
+        console.log('[TRANSCRIPTION] Completed successfully');
+
+        return transcription;
+    } catch (error) {
+        console.error('[TRANSCRIPTION] Error:', error);
+        throw error;
+    }
+}
 
 // Recording status webhook
 fastify.post('/recording-status', async (request, reply) => {
@@ -893,6 +981,31 @@ fastify.post('/recording-status', async (request, reply) => {
             if (callRecord) {
                 callRecord.recordingUrl = RecordingUrl;
                 callRecord.recordingSid = RecordingSid;
+
+                // Transcribe the recording asynchronously
+                transcribeRecording(RecordingUrl)
+                    .then(transcription => {
+                        // Update the call transcript with the full conversation
+                        if (callRecord.transcript) {
+                            callRecord.transcript.fullTranscription = transcription;
+                            callRecord.transcript.text = transcription.text;
+
+                            // Also update the saved transcript
+                            const savedTranscript = patientManager.callTranscripts.get(sessionData.callId);
+                            if (savedTranscript) {
+                                savedTranscript.fullTranscription = transcription;
+                                savedTranscript.completeText = transcription.text;
+                                patientManager.saveTranscripts();
+                            }
+
+                            patientManager.saveData();
+                            console.log(`[TRANSCRIPTION] Saved full transcript for call ${sessionData.callId}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('[TRANSCRIPTION] Failed to transcribe recording:', error);
+                    });
+
                 patientManager.saveData();
             }
         }
@@ -903,18 +1016,36 @@ fastify.post('/recording-status', async (request, reply) => {
 
 // Webhook endpoint for external agents to trigger calls
 fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
-    const { call_objectives, Master_note, PPD_demo } = request.body;
+    // Handle both PPD_demo and PPD_Demo (case variations)
+    const { call_objectives, Master_note, Master_Note } = request.body;
+    const PPD_demo = request.body.PPD_demo || request.body.PPD_Demo;
+    const masterNote = Master_note || Master_Note;
 
     console.log('[WEBHOOK] Received agent trigger request');
+    console.log('[WEBHOOK] Request body:', JSON.stringify(request.body, null, 2));
+
+    // Check if PPD_demo exists
+    if (!PPD_demo) {
+        console.log('[WEBHOOK ERROR] No PPD_demo provided in request');
+        return reply.status(400).send({
+            error: 'PPD_demo is required',
+            message: 'Please provide patient demographics in PPD_demo or PPD_Demo field',
+            received: request.body
+        });
+    }
 
     try {
         // Parse patient demographics from PPD_demo
         const parsedData = parsePPDDemo(PPD_demo);
+        console.log('[WEBHOOK] Parsed data:', JSON.stringify(parsedData, null, 2));
 
         if (!parsedData.phoneNumber) {
+            console.log('[WEBHOOK ERROR] No phone number parsed from PPD_demo');
             return reply.status(400).send({
                 error: 'No phone number found in PPD_demo',
-                parsed: parsedData
+                message: 'Please include a phone number in the patient demographics',
+                parsed: parsedData,
+                ppd_demo_received: PPD_demo
             });
         }
 
@@ -927,66 +1058,84 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
         let patient = patientManager.getPatientByMRN(parsedData.mrn);
 
         if (!patient) {
-            // Create new patient
-            const patientId = crypto.randomUUID();
-            patient = {
-                id: patientId,
+            // Create new patient (don't include id - let addPatient generate it)
+            const patientData = {
                 mrn: parsedData.mrn,
                 name: parsedData.name || 'Unknown Patient',
                 phoneNumber: parsedData.phoneNumber,
                 dateOfBirth: parsedData.dateOfBirth,
                 age: parsedData.age,
                 gender: parsedData.gender || 'unknown',
-                conditions: parsedData.conditions,
-                medications: parsedData.medications,
-                primaryConcern: Master_note ? Master_note.substring(0, 200) : '',
+                conditions: parsedData.conditions || [],
+                medications: parsedData.medications || [],
+                primaryConcern: masterNote ? masterNote.substring(0, 200) : '',
+                clinicalNotes: masterNote || '',  // Store full Master_Note here
                 customPrompt: '',
-                callObjectives: call_objectives || [],
+                callObjectives: call_objectives || [],  // Store raw call_objectives
                 consentToRecord: true,
-                createdAt: new Date().toISOString(),
-                lastModified: new Date().toISOString(),
                 callHistory: []
             };
 
-            // Set custom prompt based on Master_note and call_objectives
-            if (Master_note || call_objectives) {
+            // Set custom prompt based on masterNote and call_objectives
+            if (masterNote || call_objectives) {
                 let customPrompt = 'You are conducting a medical wellness check. ';
 
-                if (Master_note) {
-                    customPrompt += `\n\nClinical Context:\n${Master_note}\n\n`;
+                // Add clinical context from Master_Note
+                if (masterNote) {
+                    customPrompt += `\n\nClinical Context:\n${masterNote}\n\n`;
                 }
 
-                if (call_objectives && call_objectives.length > 0) {
-                    customPrompt += 'During this call, please ensure you:\n';
-                    call_objectives.forEach((objective, i) => {
-                        customPrompt += `${i + 1}. ${objective}\n`;
-                    });
+                // Handle call_objectives - these are the questions/tasks for the call
+                if (call_objectives) {
+                    if (typeof call_objectives === 'string') {
+                        // If it's a string, parse it as questions/objectives
+                        customPrompt += '\nQuestions to ask during this call:\n' + call_objectives + '\n';
+                        customPrompt += '\nMake sure to ask each question and document the responses.\n';
+                    } else if (Array.isArray(call_objectives) && call_objectives.length > 0) {
+                        // If it's an array, iterate through the questions
+                        customPrompt += '\nQuestions to ask during this call:\n';
+                        call_objectives.forEach((objective, i) => {
+                            customPrompt += `${i + 1}. ${objective}\n`;
+                        });
+                        customPrompt += '\nMake sure to ask each question and document the responses.\n';
+                    }
                 }
 
-                patient.customPrompt = customPrompt;
+                patientData.customPrompt = customPrompt;
             }
 
             // Add patient to system
-            patientManager.addPatient(patient);
+            patient = patientManager.addPatient(patientData);
             console.log(`[WEBHOOK] Created new patient: ${patient.mrn}`);
         } else {
             // Update existing patient with new information
             if (call_objectives) {
+                // Store call_objectives as-is (string or array)
                 patient.callObjectives = call_objectives;
             }
 
-            if (Master_note) {
-                patient.primaryConcern = Master_note.substring(0, 200);
+            if (masterNote) {
+                patient.primaryConcern = masterNote.substring(0, 200);
+                patient.clinicalNotes = masterNote; // Also update clinicalNotes for existing patients
 
                 // Update custom prompt
                 let customPrompt = 'You are conducting a medical wellness check. ';
-                customPrompt += `\n\nClinical Context:\n${Master_note}\n\n`;
+                customPrompt += `\n\nClinical Context:\n${masterNote}\n\n`;
 
-                if (call_objectives && call_objectives.length > 0) {
-                    customPrompt += 'During this call, please ensure you:\n';
-                    call_objectives.forEach((objective, i) => {
-                        customPrompt += `${i + 1}. ${objective}\n`;
-                    });
+                // Handle call_objectives - these are the questions/tasks for the call
+                if (call_objectives) {
+                    if (typeof call_objectives === 'string') {
+                        // If it's a string, parse it as questions/objectives
+                        customPrompt += '\nQuestions to ask during this call:\n' + call_objectives + '\n';
+                        customPrompt += '\nMake sure to ask each question and document the responses.\n';
+                    } else if (Array.isArray(call_objectives) && call_objectives.length > 0) {
+                        // If it's an array, iterate through the questions
+                        customPrompt += '\nQuestions to ask during this call:\n';
+                        call_objectives.forEach((objective, i) => {
+                            customPrompt += `${i + 1}. ${objective}\n`;
+                        });
+                        customPrompt += '\nMake sure to ask each question and document the responses.\n';
+                    }
                 }
 
                 patient.customPrompt = customPrompt;
@@ -1000,50 +1149,57 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
         // Generate unique webhook call ID to track this specific call
         const webhookCallId = `webhook-${crypto.randomUUID()}`;
 
-        // Create a promise that will resolve when the call completes
-        const callCompletePromise = new Promise((resolve, reject) => {
-            activeWebhookCalls.set(webhookCallId, { resolve, reject, startTime: Date.now() });
-
-            // Set timeout of 5 minutes for the call
-            setTimeout(() => {
-                if (activeWebhookCalls.has(webhookCallId)) {
-                    activeWebhookCalls.delete(webhookCallId);
-                    reject(new Error('Call timeout - exceeded 5 minutes'));
-                }
-            }, 5 * 60 * 1000);
-        });
-
-        // Initiate the outbound call
-        const callResult = await makeOutboundCall(patient);
-
-        // Store the webhook call ID with the Twilio call SID
-        if (callResult.callSid) {
-            const webhookCall = activeWebhookCalls.get(webhookCallId);
-            if (webhookCall) {
-                webhookCall.callSid = callResult.callSid;
-                webhookCall.patientId = patient.id;
-            }
-        }
-
-        console.log(`[WEBHOOK] Call initiated: ${callResult.callSid}`);
-
-        // Wait for call to complete and transcript to be available
-        console.log('[WEBHOOK] Waiting for call to complete...');
-
-        // For now, return immediate response with call initiation details
-        // In a production system, you might want to implement a callback URL
-        // or use webhooks to notify when the call completes
-
+        // Send immediate acknowledgement to prevent retries
         reply.send({
             success: true,
-            message: 'Call initiated successfully',
+            message: 'Webhook received and processing',
             patientId: patient.id,
             patientMRN: patient.mrn,
-            callSid: callResult.callSid,
             webhookCallId: webhookCallId,
-            status: 'Call initiated. Use the webhookCallId to check status.',
-            checkStatusUrl: `/api/webhook/status/${webhookCallId}`,
-            estimatedDuration: '2-5 minutes'
+            status: 'Processing call request'
+        });
+
+        // Process the call asynchronously after sending acknowledgement
+        setImmediate(async () => {
+            try {
+                // Initiate the outbound call
+                const callResult = await makeOutboundCall(patient);
+
+                console.log(`[WEBHOOK] Call initiated: ${callResult.callSid}`);
+
+                // Store the webhook call info
+                activeWebhookCalls.set(webhookCallId, {
+                    callSid: callResult.callSid,
+                    patientId: patient.id,
+                    patientMRN: patient.mrn,
+                    startTime: Date.now(),
+                    callbackUrl: request.body.callback_url || null
+                });
+
+                // If a callback URL was provided, we'll send completion notification there
+                // This will be handled in the call-status endpoint when call completes
+
+            } catch (error) {
+                console.error(`[WEBHOOK] Error initiating call for ${patient.mrn}:`, error);
+
+                // If there's a callback URL, notify of the error
+                if (request.body.callback_url) {
+                    try {
+                        await fetch(request.body.callback_url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                webhookCallId: webhookCallId,
+                                status: 'failed',
+                                error: error.message,
+                                patientMRN: patient.mrn
+                            })
+                        });
+                    } catch (callbackError) {
+                        console.error('[WEBHOOK] Error sending callback:', callbackError);
+                    }
+                }
+            }
         });
 
     } catch (error) {

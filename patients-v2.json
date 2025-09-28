@@ -30,7 +30,7 @@
       "consentToRecord": true,
       "createdAt": "2025-01-01T10:00:00Z",
       "lastModified": "2025-09-25T09:29:52.085Z",
-      "lastContact": "2025-09-26T10:17:47.640Z",
+      "lastContact": "2025-09-28T02:53:46.247Z",
       "callHistory": [
         {
           "timestamp": "2025-09-25T09:43:11.881Z",
@@ -44,7 +44,8 @@
             }
           },
           "duration": null,
-          "endTime": "2025-09-25T09:43:11.881Z"
+          "endTime": "2025-09-25T09:43:11.881Z",
+          "callId": "b08c92a1-7350-4f1c-9f38-072c97bfcca8"
         },
         {
           "timestamp": "2025-09-26T01:43:34.801Z",
@@ -58,7 +59,8 @@
             }
           },
           "duration": null,
-          "endTime": "2025-09-26T01:43:34.801Z"
+          "endTime": "2025-09-26T01:43:34.801Z",
+          "callId": "b5fe6986-f40a-4fa4-b414-c8504152ea2f"
         },
         {
           "timestamp": "2025-09-26T02:00:17.890Z",
@@ -72,10 +74,11 @@
             }
           },
           "duration": null,
-          "endTime": "2025-09-26T02:00:17.890Z"
+          "endTime": "2025-09-26T02:00:17.890Z",
+          "callId": "0d4de9e0-ba65-4d3e-8c81-10125f03c66d"
         },
         {
-          "callId": null,
+          "callId": "f7a30cad-8cf6-41e3-9e13-6dc7c90375f0",
           "timestamp": "2025-09-26T10:17:47.640Z",
           "transcript": {
             "conversation": [
@@ -99,6 +102,185 @@
           },
           "duration": null,
           "endTime": "2025-09-26T10:17:47.640Z"
+        },
+        {
+          "callId": "d31de3f0-00d1-4c26-a299-7398ebd39309",
+          "timestamp": "2025-09-26T22:42:14.421Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi there, good to talk to you today. This is your wellness check-in call. Could you please confirm your date of birth for me"
+                  }
+                ],
+                "timestamp": "2025-09-26T22:42:09.738Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-26T22:42:14.421Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-26T22:42:14.421Z"
+        },
+        {
+          "callId": "15d29888-ca37-456a-8bfe-a1d1247bfc0f",
+          "timestamp": "2025-09-28T00:31:07.704Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hello, John, it’s great to hear from you today. I hope you’re doing well. Before we begin, could you please confirm your date of birth for me? That way we can make sure everything’s correct."
+                  }
+                ],
+                "timestamp": "2025-09-28T00:30:15.957Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, John. That matches our records. I appreciate you confirming that. Now let’s go ahead and check in on how you’ve been doing. Let’s start with your blood glucose levels. How have your readings been lately?"
+                  }
+                ],
+                "timestamp": "2025-09-28T00:30:29.916Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thanks for letting me know. It sounds like your blood glucose has been on the lower side. Have you noticed any symptoms like dizziness or shakiness when it’s that low?"
+                  }
+                ],
+                "timestamp": "2025-09-28T00:30:47.020Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I’m glad to hear you haven’t had any dizziness or shakiness. Now, let’s talk about your medications. Are you still taking your Metformin and Lisinopril as prescribed, and using your Albuterol inhaler only when needed?"
+                  }
+                ],
+                "timestamp": "2025-09-28T00:30:58.832Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 4,
+              "topics": [
+                "glucose",
+                "symptom",
+                "medication"
+              ],
+              "generatedAt": "2025-09-28T00:31:07.704Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T00:31:07.704Z"
+        },
+        {
+          "callId": "bb29839f-cab3-4b57-becb-d39b8d56162d",
+          "timestamp": "2025-09-28T02:36:32.735Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hey there, John Smith! It's great to talk to you. I just want to make sure I'm speaking with the right person—could you share your date of birth with me? Once we confirm that, we'll dive right into the wellness check and go over everything step-by-step. Sound good?"
+                  }
+                ],
+                "timestamp": "2025-09-28T02:36:25.233Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T02:36:32.735Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T02:36:32.735Z"
+        },
+        {
+          "callId": "206bb095-b111-42b9-b3f9-d40cf7a9285e",
+          "timestamp": "2025-09-28T02:36:53.163Z",
+          "transcript": {
+            "conversation": [],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 0,
+              "topics": [],
+              "generatedAt": "2025-09-28T02:36:53.163Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T02:36:53.163Z"
+        },
+        {
+          "callId": "8cea295d-d78b-4467-88e8-be092b5c010f",
+          "timestamp": "2025-09-28T02:40:50.840Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hello, Mr. Smith. This is your wellness check call. I hope you’re doing well today. Before we begin, could you please confirm your date of birth for me?"
+                  }
+                ],
+                "timestamp": "2025-09-28T02:40:46.456Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T02:40:50.840Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T02:40:50.840Z"
+        },
+        {
+          "callId": "a55fa243-5462-465c-af1b-6b4b1dcd70ec",
+          "timestamp": "2025-09-28T02:53:46.247Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Understood. I'll end the call now. Take care."
+                  }
+                ],
+                "timestamp": "2025-09-28T02:51:48.703Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T02:53:46.247Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T02:53:46.247Z"
         }
       ]
     },
@@ -138,7 +320,8 @@
             }
           },
           "duration": null,
-          "endTime": "2025-09-25T10:02:57.849Z"
+          "endTime": "2025-09-25T10:02:57.849Z",
+          "callId": "5dd98d45-be58-47fb-beea-318dd2cda75c"
         },
         {
           "timestamp": "2025-09-25T10:11:51.270Z",
@@ -152,7 +335,8 @@
             }
           },
           "duration": null,
-          "endTime": "2025-09-25T10:11:51.270Z"
+          "endTime": "2025-09-25T10:11:51.270Z",
+          "callId": "62ff4679-409d-40c3-88c5-a7a67f86f428"
         }
       ]
     },
@@ -177,7 +361,897 @@
       "lastModified": "2025-09-26T02:38:00.651Z",
       "callHistory": [],
       "lastContact": null
+    },
+    {
+      "id": "39ae49c7-777a-4633-8dcf-66bf2681e505",
+      "mrn": "12345678 9",
+      "name": "aaron, aaron",
+      "phoneNumber": "6465565559",
+      "dateOfBirth": "1990-01-01",
+      "age": 35,
+      "gender": "male",
+      "conditions": [],
+      "medications": [],
+      "primaryConcern": "** Patient Information **  \nDate: 09/26/2025  \nPatient Name: Aaron Aaron  \nDOB: 01/01/1990  \nMRN: 123456789  \nAge: 35 y.o.  \nGender: Male  \n\n** HPI (History of Present Illness) **  \nAaron is a 35 y.o.",
+      "customPrompt": "You are conducting a medical wellness check. \n\nClinical Context:\n** Patient Information **  \nDate: 09/26/2025  \nPatient Name: Aaron Aaron  \nDOB: 01/01/1990  \nMRN: 123456789  \nAge: 35 y.o.  \nGender: Male  \n\n** HPI (History of Present Illness) **  \nAaron is a 35 y.o. male with no significant medical history. He presents today for a follow-up cardiovascular evaluation and reports an increasing frequency and intensity of exertional chest discomfort consistent with angina, as previously noted by Dr. Casey Monroe in 03/2024. He describes chest tightness with moderate exertion, relieved by rest. He is currently taking all medications as instructed without any limiting side effects.  \n\n** Past Medical History **  \nAaron has no significant medical history.  \n\n** Family History **  \nNo known family history of early coronary disease.  \n\n** Medications **  \n- Metoprolol succinate 50 mg daily: Take 1 tablet by mouth once daily.  \n- Losartan 100 mg daily: Take 1 tablet by mouth once daily.  \n- Atorvastatin 20 mg daily: Take 1 tablet by mouth once daily.  \n- Furosemide 40 mg daily: Take 1 tablet by mouth once daily.  \n- Aspirin 81 mg daily: Take 1 tablet by mouth once daily.  \n\n** Allergies **  \n(No allergies reported)  \n\n** Review of Symptoms **  \nROS: Reviewed and comprehensively negative, except as indicated in HPI.  \n\n** Physical Exam **  \nBP 148/90 mmHg | Pulse 80 bpm | Ht 5'10\" | Wt 185 lbs  \nConstitutional: Awake, alert, and in no acute distress. Appears stated age, is well developed/nourished.  \nEyes: Anicteric sclera. Intact extraocular movements.  \nENMT: Moist mucous membranes. Throat clear.  \nNeck: Supple. Jugular venous pressure was normal. There were no carotid bruits.  \nCardiovascular: Heart sounds were regular, with normal S1 and S2, and no rubs, gallops or murmurs.  \nRespiratory: Lungs were clear bilaterally, without wheezing or crackles.  \nGastrointestinal: Normal bowel sounds. Soft, non-tender and non-distended.  \nExtremities: Legs were warm and well perfused, with no cyanosis, clubbing or edema.  \nSkin: No rashes  \nNeurologic: Oriented to time, place and person. Grossly non-focal motor examination. Normal speech.  \nPsych: Appropriate mood and affect.  \n\n** Diagnostics **  \n- **Event Monitor**  \n  - Event Monitor [01/20/2025 - 02/03/2025]: 2.4% AF burden [12 episodes, fastest HR 171 bpm]. <1% PVC burden. 2.3% PAC burden. Avg HR 66 bpm [48-189 bpm].  \n\n** Assessment and Plan **  \nRevised Assessment and Plan for Aaron:\n\nAtrial Fibrillation:  \n• Aaron has a 2.4% AF burden as noted in the Event Monitor [01/20/2025 - 02/03/2025]: 12 episodes with the fastest heart rate at 171 bpm, <1% PVC burden, 2.3% PAC burden, and an average HR of 66 bpm (range 48-189 bpm).  \n• CHA2DS2-VASc score: 0 (based on current records).  \n• Continue metoprolol succinate 50 mg daily.  \n• Continue aspirin 81 mg daily.  \n\nHypertension:  \n• Blood pressure upon arrival was 148/90 mmHg with a repeat reading of 140/85 mmHg.  \n• Continue losartan 100 mg daily.  \n• Continue home blood pressure monitoring.  \n\nHyperlipidemia:  \n• Recent LDL of 90 mg/dL from a prior test.  \n• Continue atorvastatin 20 mg daily.  \n\nDyspnea on Exertion/Coronary Workup:  \n• Aaron has had previous episodes of exertional angina per Dr. Casey Monroe’s note [03/2024] with increasing frequency and intensity.  \n• A stress test performed 6 months ago showed borderline ischemic changes per outside physician notes.  \n• Plan to proceed with coronary angiography for further assessment and possible intervention as recommended by Dr. Casey Monroe.  \n\nDiuretic/Volume Management:  \n• In light of symptoms and to address any potential volume overload contributing to dyspnea, increase furosemide to 80 mg daily.  \n  (Medication change to be reviewed in 3 months as part of the overall medication assessment.)  \n\nEchocardiogram & Lifestyle Recommendations:  \n• Order transthoracic echocardiogram in 3 months to assess LV size, function, and valve status.  \n• Recommend exercising for 30-45 minutes on most days of the week, maintaining a healthy weight, and following a low-salt, heart-healthy diet.  \n\nFollow-Up:  \n• Return in 3 months to review medication changes and overall clinical status.  \n• Patient was counseled on acute issues and verbalized understanding.  \n\n** Completion **  \n------------ END OF FILE ------------\n\n\nQuestions to ask during this call:\nBased on the pre-charting information for Aaron's upcoming imaging visit on 09/28/25, here are 4 questions for the Twilio agent to ask:\n\n**Question 1:** \"Hi Aaron, I'm calling to prepare for your imaging appointment tomorrow at 10 AM. Do you have your coronary angiography results with you that we need to review during your visit?\"\n\n**Question 2:** \"Can you confirm the exact location where your coronary angiography was performed and when it was done? We want to make sure we have the complete results.\"\n\n**Question 3:** \"Are you experiencing any current chest pain, shortness of breath, or other cardiac symptoms since your last cardiology visit with Dr. Casey Monroe on September 26th?\"\n\n**Question 4:** \"Do you have any questions about tomorrow's imaging appointment, and is there anything else related to your heart condition that you'd like the doctor to address during your visit?\"\n\nThese questions focus on:\n- Locating the critical coronary angiography results\n- Gathering symptom updates since the recent cardiology visit\n- Ensuring patient preparedness for the appointment\n- Addressing any patient concerns before the visit\n\nMake sure to ask each question and document the responses.\n",
+      "callObjectives": "Based on the pre-charting information for Aaron's upcoming imaging visit on 09/28/25, here are 4 questions for the Twilio agent to ask:\n\n**Question 1:** \"Hi Aaron, I'm calling to prepare for your imaging appointment tomorrow at 10 AM. Do you have your coronary angiography results with you that we need to review during your visit?\"\n\n**Question 2:** \"Can you confirm the exact location where your coronary angiography was performed and when it was done? We want to make sure we have the complete results.\"\n\n**Question 3:** \"Are you experiencing any current chest pain, shortness of breath, or other cardiac symptoms since your last cardiology visit with Dr. Casey Monroe on September 26th?\"\n\n**Question 4:** \"Do you have any questions about tomorrow's imaging appointment, and is there anything else related to your heart condition that you'd like the doctor to address during your visit?\"\n\nThese questions focus on:\n- Locating the critical coronary angiography results\n- Gathering symptom updates since the recent cardiology visit\n- Ensuring patient preparedness for the appointment\n- Addressing any patient concerns before the visit",
+      "consentToRecord": true,
+      "createdAt": "2025-09-28T06:15:22.863Z",
+      "lastModified": "2025-09-28T16:55:54.496Z",
+      "callHistory": [
+        {
+          "callId": "e42d64e0-f584-47e4-8684-73d999754402",
+          "timestamp": "2025-09-28T13:39:52.671Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Aaron, it’s great to talk with you today. Let’s start by confirming some details. Could you please tell me your date of birth? Once we’ve got that, we’ll go through a quick wellness check together."
+                  }
+                ],
+                "timestamp": "2025-09-28T13:37:12.439Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Aaron, can you tell me your date of birth, just to make sure I’ve got everything correct? Then we’ll go"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:37:26.805Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thanks for sharing that, Aaron. I have your date of birth as January 1st, 1990 on file. Could you double-check and confirm your correct date of birth again? That way we can be sure we’ve got the right information."
+                  }
+                ],
+                "timestamp": "2025-09-28T13:37:31.781Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Perfect, thank you for confirming that, Aaron. Let’s dive into the wellness check. First, can you tell me what specific condition or concern we’re following up on from your previous visit?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:37:45.490Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "You're absolutely right, Aaron. Let me guide the conversation. We’re following up on your cardiovascular health. How have you been feeling since your last appointment on September 25th? Any changes in your symptoms or overall condition?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:38:03.336Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm sorry to hear that you're feeling unwell, Aaron. Can you tell me more about what’s been going on? What kind of symptoms are you experiencing right now?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:38:17.870Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for letting me know. Is the chest pain similar to what you've had before,"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:38:28.356Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Aaron. I'm sorry you're dealing with that. Let me ask a few more questions to help. Has the chest pain been happening more frequently or getting stronger since the last visit?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:38:32.420Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Got it. Thank you for sharing that. Are you also noticing any other symptoms, like more shortness of breath or fatigue with daily activities?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:38:44.274Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Aaron. I appreciate your honesty. Let's move on. Are you currently taking all your medications as prescribed, and have you been able to take them regularly without any issues?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:38:56.230Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Good. I'm glad to hear you're keeping up with the medications. Now, do you have any new symptoms, concerns, or questions that you'd like to discuss with your doctor during your upcoming appointment?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:39:08.103Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for letting me know. We’ll make sure to bring up the cost of your medications with your doctor so they can help find a solution. Is there anything else you’d like to address during your visit?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:39:21.575Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "All right, Aaron. Thank you for your time. We’ve got the key information, and we’ll make sure your doctor knows about your symptoms and concerns. Take care, and we’ll see you at your appointment."
+                  }
+                ],
+                "timestamp": "2025-09-28T13:39:36.297Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 13,
+              "topics": [
+                "symptom",
+                "appointment",
+                "feeling",
+                "pain",
+                "medication"
+              ],
+              "generatedAt": "2025-09-28T13:39:52.671Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T13:39:52.671Z"
+        },
+        {
+          "callId": "af89e83b-f2e6-466d-90f1-1979a17a0f34",
+          "timestamp": "2025-09-28T15:41:51.306Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Aaron, this is your medical wellness check call. Great to connect with you today. Before we begin, could you please confirm your date of birth for me? Once we have that confirmed, we’ll go through a few questions about your upcoming appointment and recent tests."
+                  }
+                ],
+                "timestamp": "2025-09-28T15:41:40.442Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Aaron,"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:41:43.894Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Sure, Aaron. Let’s start by confirming"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:41:45.305Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Absolutely. Could you please tell me your date of birth, just to make sure we have everything correct?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:41:47.070Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Aaron. Once you confirm your date of birth, we can proceed with the wellness check questions and help you prepare for your upcoming appointment."
+                  }
+                ],
+                "timestamp": "2025-09-28T15:41:49.697Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 5,
+              "topics": [
+                "appointment"
+              ],
+              "generatedAt": "2025-09-28T15:41:51.305Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T15:41:51.305Z"
+        },
+        {
+          "callId": null,
+          "timestamp": "2025-09-28T16:53:08.797Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Aaron, it’s great to talk with you today. Before we start, could you please confirm your date of birth for me? Then we’ll go through a few important questions about your health and your upcoming appointment."
+                  }
+                ],
+                "timestamp": "2025-09-28T16:52:04.286Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Sure, I understand. We have your date of birth on file as January 1, 1990. Could you confirm that this is correct?"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:52:11.480Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Sure, I understand. We have your date of birth on file as January 1, 1990. Could you confirm that this is correct?"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:52:11.613Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I completely understand. Your date of birth on file is January 1, 1990. Can you please confirm that for me?"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:52:15.841Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Aaron. I'm glad we’ve got that confirmed. Now let’s go through the wellness check. \n\nFirst, about your upcoming imaging appointment tomorrow at 10 AM: we need to review your coronary angiography results from your recent cardiology visit with Dr. Casey Monroe on September 26th. Do you have those results with you, or do you know where they were sent?"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:52:25.500Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Great, thank you for confirming. Now, could you tell me where those coronary angiography results are right now? Are they with you, or were they sent to Dr. Monroe’s office or somewhere else?"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:52:31.859Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "That’s great, Aaron. We’ll need to go over those details in a moment. Next, let me ask: since your cardiology visit on September 26th, have you experienced any new or worsening symptoms, like chest pain, shortness of breath, dizziness, or unusual fatigue?"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:53:04.038Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 7,
+              "topics": [
+                "appointment",
+                "pain",
+                "symptom"
+              ],
+              "generatedAt": "2025-09-28T16:53:08.797Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T16:53:08.797Z"
+        },
+        {
+          "callId": null,
+          "timestamp": "2025-09-28T16:56:17.810Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Aaron, it’s great to connect with you today. Let’s start by confirming your date of birth to make sure everything matches our records. Then we’ll go through a few important questions for your wellness check, including your upcoming appointment details."
+                  }
+                ],
+                "timestamp": "2025-09-28T16:56:17.663Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [
+                "appointment"
+              ],
+              "generatedAt": "2025-09-28T16:56:17.810Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T16:56:17.810Z"
+        }
+      ],
+      "lastContact": "2025-09-28T16:56:17.810Z",
+      "clinicalNotes": "** Patient Information **  \nDate: 09/26/2025  \nPatient Name: Aaron Aaron  \nDOB: 01/01/1990  \nMRN: 123456789  \nAge: 35 y.o.  \nGender: Male  \n\n** HPI (History of Present Illness) **  \nAaron is a 35 y.o. male with no significant medical history. He presents today for a follow-up cardiovascular evaluation and reports an increasing frequency and intensity of exertional chest discomfort consistent with angina, as previously noted by Dr. Casey Monroe in 03/2024. He describes chest tightness with moderate exertion, relieved by rest. He is currently taking all medications as instructed without any limiting side effects.  \n\n** Past Medical History **  \nAaron has no significant medical history.  \n\n** Family History **  \nNo known family history of early coronary disease.  \n\n** Medications **  \n- Metoprolol succinate 50 mg daily: Take 1 tablet by mouth once daily.  \n- Losartan 100 mg daily: Take 1 tablet by mouth once daily.  \n- Atorvastatin 20 mg daily: Take 1 tablet by mouth once daily.  \n- Furosemide 40 mg daily: Take 1 tablet by mouth once daily.  \n- Aspirin 81 mg daily: Take 1 tablet by mouth once daily.  \n\n** Allergies **  \n(No allergies reported)  \n\n** Review of Symptoms **  \nROS: Reviewed and comprehensively negative, except as indicated in HPI.  \n\n** Physical Exam **  \nBP 148/90 mmHg | Pulse 80 bpm | Ht 5'10\" | Wt 185 lbs  \nConstitutional: Awake, alert, and in no acute distress. Appears stated age, is well developed/nourished.  \nEyes: Anicteric sclera. Intact extraocular movements.  \nENMT: Moist mucous membranes. Throat clear.  \nNeck: Supple. Jugular venous pressure was normal. There were no carotid bruits.  \nCardiovascular: Heart sounds were regular, with normal S1 and S2, and no rubs, gallops or murmurs.  \nRespiratory: Lungs were clear bilaterally, without wheezing or crackles.  \nGastrointestinal: Normal bowel sounds. Soft, non-tender and non-distended.  \nExtremities: Legs were warm and well perfused, with no cyanosis, clubbing or edema.  \nSkin: No rashes  \nNeurologic: Oriented to time, place and person. Grossly non-focal motor examination. Normal speech.  \nPsych: Appropriate mood and affect.  \n\n** Diagnostics **  \n- **Event Monitor**  \n  - Event Monitor [01/20/2025 - 02/03/2025]: 2.4% AF burden [12 episodes, fastest HR 171 bpm]. <1% PVC burden. 2.3% PAC burden. Avg HR 66 bpm [48-189 bpm].  \n\n** Assessment and Plan **  \nRevised Assessment and Plan for Aaron:\n\nAtrial Fibrillation:  \n• Aaron has a 2.4% AF burden as noted in the Event Monitor [01/20/2025 - 02/03/2025]: 12 episodes with the fastest heart rate at 171 bpm, <1% PVC burden, 2.3% PAC burden, and an average HR of 66 bpm (range 48-189 bpm).  \n• CHA2DS2-VASc score: 0 (based on current records).  \n• Continue metoprolol succinate 50 mg daily.  \n• Continue aspirin 81 mg daily.  \n\nHypertension:  \n• Blood pressure upon arrival was 148/90 mmHg with a repeat reading of 140/85 mmHg.  \n• Continue losartan 100 mg daily.  \n• Continue home blood pressure monitoring.  \n\nHyperlipidemia:  \n• Recent LDL of 90 mg/dL from a prior test.  \n• Continue atorvastatin 20 mg daily.  \n\nDyspnea on Exertion/Coronary Workup:  \n• Aaron has had previous episodes of exertional angina per Dr. Casey Monroe’s note [03/2024] with increasing frequency and intensity.  \n• A stress test performed 6 months ago showed borderline ischemic changes per outside physician notes.  \n• Plan to proceed with coronary angiography for further assessment and possible intervention as recommended by Dr. Casey Monroe.  \n\nDiuretic/Volume Management:  \n• In light of symptoms and to address any potential volume overload contributing to dyspnea, increase furosemide to 80 mg daily.  \n  (Medication change to be reviewed in 3 months as part of the overall medication assessment.)  \n\nEchocardiogram & Lifestyle Recommendations:  \n• Order transthoracic echocardiogram in 3 months to assess LV size, function, and valve status.  \n• Recommend exercising for 30-45 minutes on most days of the week, maintaining a healthy weight, and following a low-salt, heart-healthy diet.  \n\nFollow-Up:  \n• Return in 3 months to review medication changes and overall clinical status.  \n• Patient was counseled on acute issues and verbalized understanding.  \n\n** Completion **  \n------------ END OF FILE ------------"
+    },
+    {
+      "id": "51126fa5-c410-4321-bc27-966c497f70f9",
+      "mrn": "4707957",
+      "name": "Kohn, Norman",
+      "phoneNumber": "6465565559",
+      "dateOfBirth": "1961-06-28",
+      "age": 64,
+      "gender": "male",
+      "conditions": [],
+      "medications": [],
+      "primaryConcern": "KOHN, Norman DOB: 06/28/1961 (64 yo M) Acc No. 9503.01 DOS: 09/17/2025Cardiology: New Patient Patient: KOHN, NormanAccount Number: 9503.01\tProvider: Jeffrey BanderDOB: 06/28/1961   Age: 64 Y   Sex: Ma",
+      "clinicalNotes": "KOHN, Norman DOB: 06/28/1961 (64 yo M) Acc No. 9503.01 DOS: 09/17/2025Cardiology: New Patient Patient: KOHN, NormanAccount Number: 9503.01\tProvider: Jeffrey BanderDOB: 06/28/1961   Age: 64 Y   Sex: Male\tDate: 09/17/2025Phone: 718-388-2557Address: 258 Marcy Ave, Brooklyn, NY-11211Pcp: PCP Not RequiredStructured Data: Provided Patient Bill of Rights : YesSubjective:Chief Complaints:   1. 831 EKG ON FILE.HPI:    History:       A 64 y/o male Pt c/o chest pain after eating and walking fast while walking , had BW done the sugar level was fine. Advised to see caridologist. No smoking or driking and no SOB. Both borther and sister passed away 57 and 63.Pt does check BP at home and it runs asprin.ROS:     Adult ROS:        Head no headache.  Eye normal vision.  Ear normal hearing.  Nose no nosebleeds.       Medical History:  Gout.Family History:  Father: deceased.  Mother: deceased.  Siblings: alive, diagnosed with Heart Disease.  Spouse: alive.  Children: alive.  3 brother(s) , 2 sister(s) - healthy. 2 son(s) , 7 daughter(s) - healthy. . 1 brother passed away MI1 sister passed away REnal Failure.Medications: Not-Taking/PRN Synjardy XR 12.5-1000 MG Tablet Extended Release 24 Hour 1 tablet with breakfast Orally Once a day , stop date 01/13/2026, Not-Taking/PRN Nortriptyline HCl 25 MG Capsule 1 capsule Orally Once a day , Not-Taking/PRN Reglan 10 MG Tablet 1 tablet before meals Orally Twice a day , Not-Taking/PRN Aspirin 81 MG Tablet Delayed Release 1 tablet Orally Once a day , Not-Taking/PRN Gabapentin 300 MG Capsule 1 capsule Orally Once a dayObjective:Vitals: Ht: 66 in, Wt: 209, Temp: 99.9, BP: 134/80, HR: 75, Oxygen sat %: 96, BMI: 33.73 Index, Taken By:: gb.Examination:   General Examination:       CONSTITUTIONAL: appears well.        RESP: clear to auscultation bilaterally.        CV: RR, normal S1 S2.     Assessment:Assessment:1. Chest pain, unspecified type - R07.9 (Primary)   2. Abnormal EKG - R94.31   3. Type 2 diabetes mellitus without complication, without long-term current use of insulin - E11.9   Plan:Treatment:1. Chest pain, unspecified type Start Aspirin 81 Tablet Delayed Release, 81 MG, 1 tablet, Orally, Once a day, 30 days, 30, Refills 3 ;  Start Lipitor Tablet, 10 MG, 1 tablet, Orally, Once a day, 90 days, 90 Tablet, Refills 3 ;  Start Metoprolol Tartrate Tablet, 25 MG, 1/2 tablet with food, Orally, Twice a day, 30 days, 30, Refills 3 .  Notes: nuclear stress test  Procedure Codes: 94760 MEASURE BLOOD OXYGEN LEVELBilling Information: \tVisit Code:  \tProcedure Codes: 94760 MEASURE BLOOD OXYGEN LEVEL.\nPre Charting  \nEncounter Date: 09/29/2025  \n\nPatient Information  \n- Name: Norman Kohn  \n- DOB: 06/28/1961  \n- MRN: 4707957  \n- Primary Insurance: Fidelis Commercial  \n- Last Cardiology Visit: 09/17/2025  \n- Reason for Follow-Up: Nuclear stress test to evaluate chest pain  \n\nResults Since Last Cardiology Visit [09/17/2025]:  \n- No recent results to review  \n\nReferral  \n- Date of Referral: 09/15/2025  \n- Referring Provider: Amir Mayer MD  \n- Reason for Referral: Consultation to Cardiology  \n- Diagnosis: None specified  \n\nLab Results  \nNo significant trends identified.  \n*09/15/2025*: WBC 6.9 H/H 15.4/45.5 PLT 286 Gluc 182 Na 138 K 4.6 BUN 20 Creat 0.83 TC 162 TG 65 HDL 37 LDL 110 HgbA1c 8.2 TSH 0.90 Vit D 29 Vit B12 321  \n\nLast Echocardiogram Result  \n- No echocardiogram on file  \n\nPrevious Testing  \n- No prior stress echo, exercise stress test, nuclear stress test, CCTA, coronary catheterization, cardiac MRI, event monitor, sleep study, or PYP scan on file  \n\nPhone Encounters  \n- None since last cardiology visit  \n\nOutside Physician Notes  \n09/15/2025 – Amir Mayer MD (Sick Visit)  \n  • Ht 66 in, Wt 209 lb, BP 150/87 (repeat 146/88), HR 67, SpO₂ 97%  \n  • HgbA1c 8.2%, Gluc 182 mg/dL, LDL 110 mg/dL, HDL 37 mg/dL  \n  • Reports SOB on exertion; denies chest pain at that visit  \n  • Referred to Cardiology for consultation  \n\nPast Medical History  \n- Gout  \n- Type 2 diabetes mellitus without complication  \n- Shortness of breath on exertion  \n\nCurrent Medications  \n- Atorvastatin 10 mg orally once daily  \n- Metoprolol tartrate 12.5 mg orally twice daily  \n- Aspirin 81 mg orally once daily  \n\nHyperlipidemia  \n- Recent LDL 110 [09/15/2025]  \n- Continue atorvastatin 10 mg daily  \n\nChest Pain  \n- Substernal chest pain after eating and walking fast [09/17/2025]  \n- ECG 09/15/2025 – abnormal EKG (R94.31)  \n- Plan: nuclear stress test to evaluate for ischemia  \n\nRecommendations  \n- Proceed with nuclear stress test as planned  \n- Consider uptitration of atorvastatin or addition of PCSK9 inhibitor if LDL >70 persists  \n- Continue metoprolol tartrate for chest pain prophylaxis  \n- Continue aspirin 81 mg daily  \n- Monitor glycemic control; consider endocrinology referral for A1c optimization  \n- Reassess blood pressure control; consider initiating antihypertensive therapy if home readings remain elevated  \n\n------------ END OF FILE ------------",
+      "customPrompt": "You are conducting a medical wellness check. \n\nClinical Context:\nKOHN, Norman DOB: 06/28/1961 (64 yo M) Acc No. 9503.01 DOS: 09/17/2025Cardiology: New Patient Patient: KOHN, NormanAccount Number: 9503.01\tProvider: Jeffrey BanderDOB: 06/28/1961   Age: 64 Y   Sex: Male\tDate: 09/17/2025Phone: 718-388-2557Address: 258 Marcy Ave, Brooklyn, NY-11211Pcp: PCP Not RequiredStructured Data: Provided Patient Bill of Rights : YesSubjective:Chief Complaints:   1. 831 EKG ON FILE.HPI:    History:       A 64 y/o male Pt c/o chest pain after eating and walking fast while walking , had BW done the sugar level was fine. Advised to see caridologist. No smoking or driking and no SOB. Both borther and sister passed away 57 and 63.Pt does check BP at home and it runs asprin.ROS:     Adult ROS:        Head no headache.  Eye normal vision.  Ear normal hearing.  Nose no nosebleeds.       Medical History:  Gout.Family History:  Father: deceased.  Mother: deceased.  Siblings: alive, diagnosed with Heart Disease.  Spouse: alive.  Children: alive.  3 brother(s) , 2 sister(s) - healthy. 2 son(s) , 7 daughter(s) - healthy. . 1 brother passed away MI1 sister passed away REnal Failure.Medications: Not-Taking/PRN Synjardy XR 12.5-1000 MG Tablet Extended Release 24 Hour 1 tablet with breakfast Orally Once a day , stop date 01/13/2026, Not-Taking/PRN Nortriptyline HCl 25 MG Capsule 1 capsule Orally Once a day , Not-Taking/PRN Reglan 10 MG Tablet 1 tablet before meals Orally Twice a day , Not-Taking/PRN Aspirin 81 MG Tablet Delayed Release 1 tablet Orally Once a day , Not-Taking/PRN Gabapentin 300 MG Capsule 1 capsule Orally Once a dayObjective:Vitals: Ht: 66 in, Wt: 209, Temp: 99.9, BP: 134/80, HR: 75, Oxygen sat %: 96, BMI: 33.73 Index, Taken By:: gb.Examination:   General Examination:       CONSTITUTIONAL: appears well.        RESP: clear to auscultation bilaterally.        CV: RR, normal S1 S2.     Assessment:Assessment:1. Chest pain, unspecified type - R07.9 (Primary)   2. Abnormal EKG - R94.31   3. Type 2 diabetes mellitus without complication, without long-term current use of insulin - E11.9   Plan:Treatment:1. Chest pain, unspecified type Start Aspirin 81 Tablet Delayed Release, 81 MG, 1 tablet, Orally, Once a day, 30 days, 30, Refills 3 ;  Start Lipitor Tablet, 10 MG, 1 tablet, Orally, Once a day, 90 days, 90 Tablet, Refills 3 ;  Start Metoprolol Tartrate Tablet, 25 MG, 1/2 tablet with food, Orally, Twice a day, 30 days, 30, Refills 3 .  Notes: nuclear stress test  Procedure Codes: 94760 MEASURE BLOOD OXYGEN LEVELBilling Information: \tVisit Code:  \tProcedure Codes: 94760 MEASURE BLOOD OXYGEN LEVEL.\nPre Charting  \nEncounter Date: 09/29/2025  \n\nPatient Information  \n- Name: Norman Kohn  \n- DOB: 06/28/1961  \n- MRN: 4707957  \n- Primary Insurance: Fidelis Commercial  \n- Last Cardiology Visit: 09/17/2025  \n- Reason for Follow-Up: Nuclear stress test to evaluate chest pain  \n\nResults Since Last Cardiology Visit [09/17/2025]:  \n- No recent results to review  \n\nReferral  \n- Date of Referral: 09/15/2025  \n- Referring Provider: Amir Mayer MD  \n- Reason for Referral: Consultation to Cardiology  \n- Diagnosis: None specified  \n\nLab Results  \nNo significant trends identified.  \n*09/15/2025*: WBC 6.9 H/H 15.4/45.5 PLT 286 Gluc 182 Na 138 K 4.6 BUN 20 Creat 0.83 TC 162 TG 65 HDL 37 LDL 110 HgbA1c 8.2 TSH 0.90 Vit D 29 Vit B12 321  \n\nLast Echocardiogram Result  \n- No echocardiogram on file  \n\nPrevious Testing  \n- No prior stress echo, exercise stress test, nuclear stress test, CCTA, coronary catheterization, cardiac MRI, event monitor, sleep study, or PYP scan on file  \n\nPhone Encounters  \n- None since last cardiology visit  \n\nOutside Physician Notes  \n09/15/2025 – Amir Mayer MD (Sick Visit)  \n  • Ht 66 in, Wt 209 lb, BP 150/87 (repeat 146/88), HR 67, SpO₂ 97%  \n  • HgbA1c 8.2%, Gluc 182 mg/dL, LDL 110 mg/dL, HDL 37 mg/dL  \n  • Reports SOB on exertion; denies chest pain at that visit  \n  • Referred to Cardiology for consultation  \n\nPast Medical History  \n- Gout  \n- Type 2 diabetes mellitus without complication  \n- Shortness of breath on exertion  \n\nCurrent Medications  \n- Atorvastatin 10 mg orally once daily  \n- Metoprolol tartrate 12.5 mg orally twice daily  \n- Aspirin 81 mg orally once daily  \n\nHyperlipidemia  \n- Recent LDL 110 [09/15/2025]  \n- Continue atorvastatin 10 mg daily  \n\nChest Pain  \n- Substernal chest pain after eating and walking fast [09/17/2025]  \n- ECG 09/15/2025 – abnormal EKG (R94.31)  \n- Plan: nuclear stress test to evaluate for ischemia  \n\nRecommendations  \n- Proceed with nuclear stress test as planned  \n- Consider uptitration of atorvastatin or addition of PCSK9 inhibitor if LDL >70 persists  \n- Continue metoprolol tartrate for chest pain prophylaxis  \n- Continue aspirin 81 mg daily  \n- Monitor glycemic control; consider endocrinology referral for A1c optimization  \n- Reassess blood pressure control; consider initiating antihypertensive therapy if home readings remain elevated  \n\n------------ END OF FILE ------------\n\n\nQuestions to ask during this call:\nBased on the pre-charting information for Norman Kohn's imaging appointment tomorrow, here are 4 questions to ask during the Twilio call:\n\n**Question 1: Preparation Confirmation**\n\"Hi Mr. Kohn, this is [Agent Name] calling about your imaging appointment tomorrow at 9 AM at Quality Health Center on Bedford Avenue. Have you received and followed any specific preparation instructions for your imaging study?\"\n\n**Question 2: Current Medications**\n\"Are you currently taking any medications, especially blood thinners or diabetes medications, that we should be aware of before your imaging procedure?\"\n\n**Question 3: Medical History & Allergies**\n\"Do you have any allergies to contrast dye, iodine, or any medications? Also, do you have any kidney problems or history of kidney disease?\"\n\n**Question 4: Transportation & Arrival**\n\"Do you have reliable transportation to get to Quality Health Center at 432 Bedford Avenue tomorrow by 9 AM, and do you know where to check in for your imaging appointment?\"\n\nThese questions will help ensure the patient is properly prepared for their imaging study and identify any potential contraindications or logistical issues before the appointment.\n\nMake sure to ask each question and document the responses.\n",
+      "callObjectives": "Based on the pre-charting information for Norman Kohn's imaging appointment tomorrow, here are 4 questions to ask during the Twilio call:\n\n**Question 1: Preparation Confirmation**\n\"Hi Mr. Kohn, this is [Agent Name] calling about your imaging appointment tomorrow at 9 AM at Quality Health Center on Bedford Avenue. Have you received and followed any specific preparation instructions for your imaging study?\"\n\n**Question 2: Current Medications**\n\"Are you currently taking any medications, especially blood thinners or diabetes medications, that we should be aware of before your imaging procedure?\"\n\n**Question 3: Medical History & Allergies**\n\"Do you have any allergies to contrast dye, iodine, or any medications? Also, do you have any kidney problems or history of kidney disease?\"\n\n**Question 4: Transportation & Arrival**\n\"Do you have reliable transportation to get to Quality Health Center at 432 Bedford Avenue tomorrow by 9 AM, and do you know where to check in for your imaging appointment?\"\n\nThese questions will help ensure the patient is properly prepared for their imaging study and identify any potential contraindications or logistical issues before the appointment.",
+      "consentToRecord": true,
+      "createdAt": "2025-09-28T13:48:12.061Z",
+      "lastModified": "2025-09-28T15:56:03.282Z",
+      "callHistory": [
+        {
+          "callId": "f3d6d4e9-d658-4db6-97dc-7c8af75f32fe",
+          "timestamp": "2025-09-28T14:01:08.883Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Sure, I can help with that.\n\nHello Mr. Kohn, this is a wellness check call. To make sure I have the right person, could you please confirm your date of birth? Once we verify that, we’ll go through a few important questions to get you ready for your imaging appointment tomorrow."
+                  }
+                ],
+                "timestamp": "2025-09-28T13:58:57.996Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Of course, I can help with that. We have your date of birth on file as June 28, 1961. Could you confirm that for me, please?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:59:09.601Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Mr. Kohn. I appreciate that confirmation. Now let’s proceed with the wellness check.\n\nFirst, I want to remind you about your imaging appointment tomorrow at 9 AM at Quality Health Center on Bedford Avenue. Have you received and followed any specific preparation instructions, such as fasting or adjusting any medications?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:59:26.828Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Great. That’s good to hear. Now, do you have reliable transportation to get to your appointment at 432 Bedford Avenue in Brooklyn tomorrow morning, and do you plan to arrive about 15 minutes early for check-in?"
+                  }
+                ],
+                "timestamp": "2025-09-28T13:59:46.469Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Perfect. Next, please confirm that you'll be bringing your current Fidelis Commercial insurance card and a valid photo ID. Have there been any recent changes to your insurance coverage?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:00:02.387Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for letting me know. We’ll make a note of that insurance change from Fidelis to Healthfirst. It’s important to bring your new Healthfirst insurance card and your photo ID tomorrow. \n\nNow, one last question: since your last visit, have you experienced any new symptoms, changes in your condition, or any specific concerns you’d like to discuss during tomorrow’s imaging appointment?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:00:21.171Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm sorry to hear that you lost your glasses. That’s important information. Thank you for sharing. Now, aside from that, have you noticed any changes in your chest pain, breathing, or any other new symptoms you'd like the care team to know about ahead of the test?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:00:45.351Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for confirming that. So, to recap: you've followed the preparation instructions, you have transportation arranged and plan to arrive early, we’ll update your insurance to Healthfirst, and you haven’t had any new symptoms besides losing your glasses. \n\nEverything sounds on track for your appointment tomorrow. If you have any other questions or concerns before then, feel free to reach out. We look forward to seeing you at your imaging appointment."
+                  }
+                ],
+                "timestamp": "2025-09-28T14:01:06.035Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 8,
+              "topics": [
+                "appointment",
+                "medication",
+                "symptom",
+                "pain"
+              ],
+              "generatedAt": "2025-09-28T14:01:08.882Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T14:01:08.882Z"
+        },
+        {
+          "callId": "540e6899-7860-4782-b6be-c3b59c8477b9",
+          "timestamp": "2025-09-28T14:03:42.731Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi, Norman, this is Dr. Lewis calling. I hope you're doing well today. Could you please confirm your date of birth for me? Once we’ve got that confirmed, we’ll go through a few questions to prepare for your appointment tomorrow."
+                  }
+                ],
+                "timestamp": "2025-09-28T14:02:18.172Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Of course, Norman, let’s take it step by step. First, could you please confirm your date of birth for me? Once we’ve got that, we’ll go through the key questions about your preparation and tomorrow’s appointment."
+                  }
+                ],
+                "timestamp": "2025-09-28T14:02:29.186Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Norman. Now, let’s get started."
+                  }
+                ],
+                "timestamp": "2025-09-28T14:02:35.848Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I can help with that. Based on the information I have, your date of birth is June 28, 1961. Could you please confirm that for me?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:02:39.732Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Norman. Let’s move forward with the wellness check. First question: have you received and followed any specific preparation instructions for your imaging appointment, such as fasting or adjusting your medications?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:02:49.634Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Great, Norman. Now the next question: can you confirm all your current medications for me, and let me know if you have any"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:02:59.963Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "That’s great to hear. Just to be sure, let’s quickly confirm your medications. I have listed: Atorvastatin 10 mg once daily, Metoprolol tartrate 12.5 mg twice daily, and Aspirin 81 mg once daily. Does that sound correct?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:03:05.272Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Perfect. Now, do you have any allergies, especially to contrast dye or iodine, that we should know about for your imaging?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:03:25.254Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Norman. That’s good to know. Next, please remember to bring your Fidelis Commercial insurance card and a valid photo ID to your appointment at the Quality Health Center on Bedford Avenue. Are you all set with those documents?"
+                  }
+                ],
+                "timestamp": "2025-09-28T14:03:35.467Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 9,
+              "topics": [
+                "appointment",
+                "medication"
+              ],
+              "generatedAt": "2025-09-28T14:03:42.731Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T14:03:42.731Z"
+        },
+        {
+          "callId": "04cb40d4-5311-4cd6-a6e0-53c3d9e25639",
+          "timestamp": "2025-09-28T15:42:38.733Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Sure. Let’s begin.\n\nHello, Mr. Norman Kohn, it’s great to speak with you today. Could you kindly confirm your date of birth for me, so we can make sure everything’s correct before we move forward with the wellness check?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:42:31.654Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T15:42:38.733Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T15:42:38.733Z"
+        },
+        {
+          "callId": "3d637b9e-ecbf-4cac-9f3d-406e1a76f4dc",
+          "timestamp": "2025-09-28T15:57:24.244Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [],
+                "timestamp": "2025-09-28T15:56:23.634Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hello, Mr. Kohn! It’s great to speak with you today. Could you please confirm your date of birth for me, just to make sure we have the right information?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:56:28.242Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Mr. Kohn. Your date of birth on file is June 28, 1961. Could you please confirm that for me?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:56:41.374Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for confirming, Mr. Kohn. Now let’s proceed with the wellness check. \n\nFirst, have you received and followed any specific preparation instructions for your imaging appointment tomorrow at 9 AM at Quality Health Center on Bedford Avenue?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:56:52.094Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Great. Can you tell me a bit more about what instructions you followed? For example, did they ask you to avoid eating or drinking, or to stop taking certain medications?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:57:00.887Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "That’s good to hear. Next, I’d like to check about your current medications. Are you currently taking any medications, especially blood thinners or diabetes medications, that we should be aware of before your imaging procedure?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:57:08.277Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 6,
+              "topics": [
+                "appointment",
+                "medication"
+              ],
+              "generatedAt": "2025-09-28T15:57:24.244Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T15:57:24.244Z"
+        }
+      ],
+      "lastContact": "2025-09-28T15:57:24.244Z"
+    },
+    {
+      "id": "fb387780-bccc-40f7-8973-01054ced9b93",
+      "mrn": "DOB: 01/19/1985",
+      "name": "Visions, MultiTech",
+      "phoneNumber": "3194812331",
+      "dateOfBirth": "1985-01-19",
+      "age": 40,
+      "gender": "other",
+      "conditions": [],
+      "medications": [],
+      "primaryConcern": "Pre Charting\n\nPatient Information: N/A\n\nInsurance Details: N/A\n\nCardiac History: N/A\n\nAdvised Tests: N/A\n\nMedications: N/A\n\nEchocardiogram Details: N/A\n\nTTE Prior Authorization: N/A\n\nEKG Details: N/A\n",
+      "clinicalNotes": "Pre Charting\n\nPatient Information: N/A\n\nInsurance Details: N/A\n\nCardiac History: N/A\n\nAdvised Tests: N/A\n\nMedications: N/A\n\nEchocardiogram Details: N/A\n\nTTE Prior Authorization: N/A\n\nEKG Details: N/A\n\nLab Results: N/A\n\nOther Testing Summaries: N/A\n\nPhone Note Summaries: N/A\n\nAdditional Testing or Specialist Referral: N/A\n\nBased on the provided information, there are no recent updates or details to include in the precharting document for the upcoming visit. All sections are marked as not applicable (N/A) due to the lack of recent diagnostic information or patient details provided in the prompt.",
+      "customPrompt": "You are conducting a medical wellness check. \n\nClinical Context:\nPre Charting\n\nPatient Information: N/A\n\nInsurance Details: N/A\n\nCardiac History: N/A\n\nAdvised Tests: N/A\n\nMedications: N/A\n\nEchocardiogram Details: N/A\n\nTTE Prior Authorization: N/A\n\nEKG Details: N/A\n\nLab Results: N/A\n\nOther Testing Summaries: N/A\n\nPhone Note Summaries: N/A\n\nAdditional Testing or Specialist Referral: N/A\n\nBased on the provided information, there are no recent updates or details to include in the precharting document for the upcoming visit. All sections are marked as not applicable (N/A) due to the lack of recent diagnostic information or patient details provided in the prompt.\n\n\nQuestions to ask during this call:\nBased on the pre-charting information for this new patient visit, here are 4 essential questions to ask via the Twilio agent:\n\n**Question 1:** \"Hi, this is [Agent Name] calling from Mount Sinai to prepare for your appointment today at 9:40 AM. Can you please confirm your full legal name and date of birth for our records?\"\n\n**Question 2:** \"What is your current insurance information? Please provide the insurance company name and your member ID number.\"\n\n**Question 3:** \"What is the main reason for your visit today? Are there any specific symptoms or concerns you'd like the doctor to address?\"\n\n**Question 4:** \"Do you have any current medications you're taking, known allergies, or significant medical history that the doctor should be aware of before your appointment?\"\n\nThese questions will help gather the missing essential information (full name, gender, insurance details) and clinical context needed for the new patient visit scheduled in just a few minutes.\n\nMake sure to ask each question and document the responses.\n",
+      "callObjectives": "Based on the pre-charting information for this new patient visit, here are 4 essential questions to ask via the Twilio agent:\n\n**Question 1:** \"Hi, this is [Agent Name] calling from Mount Sinai to prepare for your appointment today at 9:40 AM. Can you please confirm your full legal name and date of birth for our records?\"\n\n**Question 2:** \"What is your current insurance information? Please provide the insurance company name and your member ID number.\"\n\n**Question 3:** \"What is the main reason for your visit today? Are there any specific symptoms or concerns you'd like the doctor to address?\"\n\n**Question 4:** \"Do you have any current medications you're taking, known allergies, or significant medical history that the doctor should be aware of before your appointment?\"\n\nThese questions will help gather the missing essential information (full name, gender, insurance details) and clinical context needed for the new patient visit scheduled in just a few minutes.",
+      "consentToRecord": true,
+      "callHistory": [
+        {
+          "callId": "3d6600f8-7923-4895-8272-58ec3c9a7d02",
+          "timestamp": "2025-09-28T15:41:36.341Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi there! It’s great to connect with you today. Let’s start by confirming your identity. Could you please tell me your full legal name and your date of birth?"
+                  }
+                ],
+                "timestamp": "2025-09-28T15:38:36.026Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T15:41:36.341Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T15:41:36.341Z"
+        },
+        {
+          "callId": "d5596981-50aa-4ac3-98d0-775c40a824e5",
+          "timestamp": "2025-09-28T15:44:58.606Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hello, thank you for reaching out. I'd be happy to assist. Let’s get started."
+                  }
+                ],
+                "timestamp": "2025-09-28T15:41:56.784Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T15:44:58.606Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T15:44:58.606Z"
+        }
+      ],
+      "createdAt": "2025-09-28T15:37:38.665Z",
+      "lastModified": "2025-09-28T15:41:10.127Z",
+      "lastContact": "2025-09-28T15:44:58.606Z"
+    },
+    {
+      "id": "d06c2d2a-75cd-4611-adfb-b5a35715d5ab",
+      "mrn": "J474995",
+      "name": "kaller, pincus",
+      "phoneNumber": "8458378147",
+      "dateOfBirth": "2000-05-26",
+      "age": 25,
+      "gender": "male",
+      "conditions": [],
+      "medications": [],
+      "primaryConcern": "Zoe Ozols \nScribe\n \nProgress Notes    \nSigned\n \nEncounter Date: 9/9/2025\n\nSigned\t\n\n\nCARDIOLOGY AMBULATORY PROGRESS NOTE\n \n\nDate: 9/9/2025 \nPatient Name: Pincus Kaller\nDOB: 5/26/2000\nMRN: J474995\n \nCon",
+      "clinicalNotes": "Zoe Ozols \nScribe\n \nProgress Notes    \nSigned\n \nEncounter Date: 9/9/2025\n\nSigned\t\n\n\nCARDIOLOGY AMBULATORY PROGRESS NOTE\n \n\nDate: 9/9/2025 \nPatient Name: Pincus Kaller\nDOB: 5/26/2000\nMRN: J474995\n \nContact Information:\nTelephone: 845-837-8147\nPCP: No primary care provider on file.\tAge: 25 y.o.\nGender: male\n \n \n \n \nHistory of Present Illness: Pincus Kaller is a 25 y.o. male with history significant for myopericarditis. he presents today to establish cardiovascular care after his ED visit [no report on file].\n \nPincus  presented to Bon Secours Health System ED on 08/28/2025 with severe chest pain. Earlier that we, Pincus reports feeling weak, having diarrhea, vomiting and a fever [102 degrees Farenheit]. Pincus thought he was dehydrated and had an outside company come to his home and administer an IV. The following day, Pincus experienced the severe chest pain and went to the ED. The cardiac MRI showed evidence of myopericarditis. Pincus was stable at discharge.\n \nToday, Pincus reports nonexertional chest discomfort. Pincus denies shortness of breath both at rest and on exertion. his exercise tolerance is good and Pincus is able to walk as far as he likes without becoming symptomatic.  Pincus is non currently on any cardiac agents.\n \nPast Medical History: Pincus has no past medical history on file.\n \nPast Surgical History: Pincus has no past surgical history on file.\n \nFamily history: \nNo premature coronary artery disease, or sudden cardiac death. \n \nSocial History:\nTobacco: None\nEtOH: Occasional alcohol use\nDrugs: None\nSupport system: Lives with family\n \nAllergies: \nPatient has no known allergies.\n \n \nCurrent Medications:\n\nCurrent Outpatient Medications\nMedication\tSig\tDispense\tRefill\n•\tcolchicine (COLCRYS) 0.6 mg tablet\tTake 1 tablet by mouth in the morning and 1 tablet in the evening.\t60 tablet\t1\n•\tmetoprolol succinate XL (TOPROL XL) 25 mg tablet extended release 24 hr\tTake 0.5 tablets by mouth in the morning.\t45 tablet\t2\n•\tmetoprolol tartrate (LOPRESSOR) 25 mg\tTake 1 tablet by mouth in the morning and 1 tablet in the evening. (Patient not taking: Reported on 9/9/2025)\t \t \n \n\nNo current facility-administered medications for this visit.\n \n \n\nReview of Systems\n \nROS: Reviewed and comprehensively negative, except as indicated in HPI\n \n\nPhysical Exam\n \nBP 130/84  | Pulse 76  | Ht 5' 5\" (1.651 m)  | Wt 77.1 kg (170 lb)  | SpO2 97%  | BMI 28.29 kg/m²  \n \nConstitutional: Awake, alert, and in no acute distress. Appears stated age, is well developed/nourished.\nEyes: Anicteric sclera. Intact extraocular movements. \nENMT: Moist mucous membranes. Throat clear.\nNeck: Supple. Jugular venous pressure was normal. There were no carotid bruits.\nCardiovascular: Heart sounds were regular, with normal S1 and S2, and no rubs, gallops or murmurs. \nRespiratory: Lungs were clear bilaterally, without wheezing or crackles\nGastrointestinal: Normal bowel sounds. Soft, non-tender and non-distended.\nExtremities: Legs were warm and well perfused, with no cyanosis, clubbing or edema.\nSkin: No rashes\nNeurologic: Orientated to time, place and person. Grossly non-focal motor examination. Normal speech. \nPsych: Appropriate mood and affect.\n \n\nDiagnostics\n \nCardiac MRI [08/25/2025]:\n1. Normal LV size [LVEDV= 132mL], normal wall thickness and normal LV systolic function\n[LVEF= 66%].\n2. Normal RV size [RVEDV = 177mL], normal wall thickness and normal RV systolic function\n[RVEF= 51%].\n3. Average myocardial T1 value is 944ms which is within normal limits.\n4. Average myocardial T2 values 57 ms at the level of the mid ventricle and 56 ms at the base,\nboth of which are borderline elevated.\n5. There is no evidence of edema on T2-weighted imaging.\n6. No significant valvular abnormalities are noted.\n7. Postcontrast images demonstrate subepicardial late gadolinium enhancement in the basal to\nmid anterolateral, inferior and inferolateral walls.\n \n\nAssessment and Plan\n \nAssessment: Pincus is a 25 y.o. male who has a history significant for myopericarditis \n \nRegarding his myopericarditis\n- EKG today [09/09/2025] - shows NSR, possible LA enlargement, T wave abnormality, consider inferior ischemia\n            - Possible Brugada syndrome\n-I reviewed the results of Pincus's cardiac MRI with him. \n            - Cardiac MRI [08/25/2025] -LV normal size and thickness, LV normal systolic function. LVEF 66%. No significant valvular abnormalities noted. Subepicardial late gadolinium enhancement in basal to mid anterolateral, inferior and inferolateral walls. Average myocardial T2 valvues are borderline elevated.\n- We will have Pincus wear a 2 week Event Monitor to assess for any significant arrhythmias, pauses, or AV block.  \n- We will check a echocardiogram to assess his LV size, function and valves. \n- We will check labs including Pro-BNP, ESR, and HS-CRP at follow up.\n- Start colchicine 0.6 mg BID\n            - We will consider stopping colchicine pending review of labs.\n- Start metoprolol succinate 12.5 mg dialy\n \nhis blood pressure today was elevated at 130/84 mmHg on arrival.\n \nWe discussed exercising for 30-45 minutes on most days of the week, maintaining a healthy weight and following a low-salt, heart-healthy diet. Otherwise, we will see Pincus back for an echo and review results of event monitor.\n \nPatient counseled on acute issues and verbalized understanding. \n \nScribe Attestation: By signing my name below, I, Zoe Ozols, attest that this documentation has been prepared under the direction and in the presence of Jeffrey Bander, MD. \nElectronically signed: Zoe Ozols, Scribe 9/9/2025\n \nProvider Attestation: I, Jeffrey Bander, MD personally performed the services in this documentation. All medical record entries made by the scribe were at my direction and in my presence. I have reviewed the chart and agree that the record reflects my personal performance and is accurate and complete. 9/9/2025 \n\n\n\nCosigned by:\tJeffrey Bander, MD at 09/12/25 1625\n\n\n \n\nOffice Visit on 9/9/2025\n \n\n \n\nRevision History\n \n\n \n\nDetailed Report\n \n\n \nNote shared with patient",
+      "customPrompt": "You are conducting a medical wellness check. \n\nClinical Context:\nZoe Ozols \nScribe\n \nProgress Notes    \nSigned\n \nEncounter Date: 9/9/2025\n\nSigned\t\n\n\nCARDIOLOGY AMBULATORY PROGRESS NOTE\n \n\nDate: 9/9/2025 \nPatient Name: Pincus Kaller\nDOB: 5/26/2000\nMRN: J474995\n \nContact Information:\nTelephone: 845-837-8147\nPCP: No primary care provider on file.\tAge: 25 y.o.\nGender: male\n \n \n \n \nHistory of Present Illness: Pincus Kaller is a 25 y.o. male with history significant for myopericarditis. he presents today to establish cardiovascular care after his ED visit [no report on file].\n \nPincus  presented to Bon Secours Health System ED on 08/28/2025 with severe chest pain. Earlier that we, Pincus reports feeling weak, having diarrhea, vomiting and a fever [102 degrees Farenheit]. Pincus thought he was dehydrated and had an outside company come to his home and administer an IV. The following day, Pincus experienced the severe chest pain and went to the ED. The cardiac MRI showed evidence of myopericarditis. Pincus was stable at discharge.\n \nToday, Pincus reports nonexertional chest discomfort. Pincus denies shortness of breath both at rest and on exertion. his exercise tolerance is good and Pincus is able to walk as far as he likes without becoming symptomatic.  Pincus is non currently on any cardiac agents.\n \nPast Medical History: Pincus has no past medical history on file.\n \nPast Surgical History: Pincus has no past surgical history on file.\n \nFamily history: \nNo premature coronary artery disease, or sudden cardiac death. \n \nSocial History:\nTobacco: None\nEtOH: Occasional alcohol use\nDrugs: None\nSupport system: Lives with family\n \nAllergies: \nPatient has no known allergies.\n \n \nCurrent Medications:\n\nCurrent Outpatient Medications\nMedication\tSig\tDispense\tRefill\n•\tcolchicine (COLCRYS) 0.6 mg tablet\tTake 1 tablet by mouth in the morning and 1 tablet in the evening.\t60 tablet\t1\n•\tmetoprolol succinate XL (TOPROL XL) 25 mg tablet extended release 24 hr\tTake 0.5 tablets by mouth in the morning.\t45 tablet\t2\n•\tmetoprolol tartrate (LOPRESSOR) 25 mg\tTake 1 tablet by mouth in the morning and 1 tablet in the evening. (Patient not taking: Reported on 9/9/2025)\t \t \n \n\nNo current facility-administered medications for this visit.\n \n \n\nReview of Systems\n \nROS: Reviewed and comprehensively negative, except as indicated in HPI\n \n\nPhysical Exam\n \nBP 130/84  | Pulse 76  | Ht 5' 5\" (1.651 m)  | Wt 77.1 kg (170 lb)  | SpO2 97%  | BMI 28.29 kg/m²  \n \nConstitutional: Awake, alert, and in no acute distress. Appears stated age, is well developed/nourished.\nEyes: Anicteric sclera. Intact extraocular movements. \nENMT: Moist mucous membranes. Throat clear.\nNeck: Supple. Jugular venous pressure was normal. There were no carotid bruits.\nCardiovascular: Heart sounds were regular, with normal S1 and S2, and no rubs, gallops or murmurs. \nRespiratory: Lungs were clear bilaterally, without wheezing or crackles\nGastrointestinal: Normal bowel sounds. Soft, non-tender and non-distended.\nExtremities: Legs were warm and well perfused, with no cyanosis, clubbing or edema.\nSkin: No rashes\nNeurologic: Orientated to time, place and person. Grossly non-focal motor examination. Normal speech. \nPsych: Appropriate mood and affect.\n \n\nDiagnostics\n \nCardiac MRI [08/25/2025]:\n1. Normal LV size [LVEDV= 132mL], normal wall thickness and normal LV systolic function\n[LVEF= 66%].\n2. Normal RV size [RVEDV = 177mL], normal wall thickness and normal RV systolic function\n[RVEF= 51%].\n3. Average myocardial T1 value is 944ms which is within normal limits.\n4. Average myocardial T2 values 57 ms at the level of the mid ventricle and 56 ms at the base,\nboth of which are borderline elevated.\n5. There is no evidence of edema on T2-weighted imaging.\n6. No significant valvular abnormalities are noted.\n7. Postcontrast images demonstrate subepicardial late gadolinium enhancement in the basal to\nmid anterolateral, inferior and inferolateral walls.\n \n\nAssessment and Plan\n \nAssessment: Pincus is a 25 y.o. male who has a history significant for myopericarditis \n \nRegarding his myopericarditis\n- EKG today [09/09/2025] - shows NSR, possible LA enlargement, T wave abnormality, consider inferior ischemia\n            - Possible Brugada syndrome\n-I reviewed the results of Pincus's cardiac MRI with him. \n            - Cardiac MRI [08/25/2025] -LV normal size and thickness, LV normal systolic function. LVEF 66%. No significant valvular abnormalities noted. Subepicardial late gadolinium enhancement in basal to mid anterolateral, inferior and inferolateral walls. Average myocardial T2 valvues are borderline elevated.\n- We will have Pincus wear a 2 week Event Monitor to assess for any significant arrhythmias, pauses, or AV block.  \n- We will check a echocardiogram to assess his LV size, function and valves. \n- We will check labs including Pro-BNP, ESR, and HS-CRP at follow up.\n- Start colchicine 0.6 mg BID\n            - We will consider stopping colchicine pending review of labs.\n- Start metoprolol succinate 12.5 mg dialy\n \nhis blood pressure today was elevated at 130/84 mmHg on arrival.\n \nWe discussed exercising for 30-45 minutes on most days of the week, maintaining a healthy weight and following a low-salt, heart-healthy diet. Otherwise, we will see Pincus back for an echo and review results of event monitor.\n \nPatient counseled on acute issues and verbalized understanding. \n \nScribe Attestation: By signing my name below, I, Zoe Ozols, attest that this documentation has been prepared under the direction and in the presence of Jeffrey Bander, MD. \nElectronically signed: Zoe Ozols, Scribe 9/9/2025\n \nProvider Attestation: I, Jeffrey Bander, MD personally performed the services in this documentation. All medical record entries made by the scribe were at my direction and in my presence. I have reviewed the chart and agree that the record reflects my personal performance and is accurate and complete. 9/9/2025 \n\n\n\nCosigned by:\tJeffrey Bander, MD at 09/12/25 1625\n\n\n \n\nOffice Visit on 9/9/2025\n \n\n \n\nRevision History\n \n\n \n\nDetailed Report\n \n\n \nNote shared with patient\n\n\nQuestions to ask during this call:\nBased on the pre-charting information for Pincus Kaller's follow-up appointment on 09/30/25, here are 4 important questions to ask during the call:\n\n## Pre-Visit Phone Questions\n\n**1. How have you been feeling since your last visit, and are there any new symptoms or concerns you'd like to discuss with the doctor?**\n\n**2. Are you currently taking any medications, and if so, have you experienced any side effects or issues with your current medication regimen?**\n\n**3. Have you had any recent medical tests, procedures, or visits to other healthcare providers since your last appointment that the doctor should know about?**\n\n**4. Do you have any specific questions or goals you'd like to address during tomorrow's follow-up visit at 12:00 PM?**\n\n---\n\n*These questions will help gather essential information about the patient's current status, medication compliance, interval medical history, and visit objectives to optimize the upcoming follow-up appointment.*\n\nMake sure to ask each question and document the responses.\n",
+      "callObjectives": "Based on the pre-charting information for Pincus Kaller's follow-up appointment on 09/30/25, here are 4 important questions to ask during the call:\n\n## Pre-Visit Phone Questions\n\n**1. How have you been feeling since your last visit, and are there any new symptoms or concerns you'd like to discuss with the doctor?**\n\n**2. Are you currently taking any medications, and if so, have you experienced any side effects or issues with your current medication regimen?**\n\n**3. Have you had any recent medical tests, procedures, or visits to other healthcare providers since your last appointment that the doctor should know about?**\n\n**4. Do you have any specific questions or goals you'd like to address during tomorrow's follow-up visit at 12:00 PM?**\n\n---\n\n*These questions will help gather essential information about the patient's current status, medication compliance, interval medical history, and visit objectives to optimize the upcoming follow-up appointment.*",
+      "consentToRecord": true,
+      "callHistory": [
+        {
+          "callId": "d20f8d8f-32c8-4b41-86b2-d7c67823f205",
+          "timestamp": "2025-09-28T16:32:32.405Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Understood. I'll proceed now. \n\nCalling Pincus Kaller to begin the wellness check and verify identity."
+                  }
+                ],
+                "timestamp": "2025-09-28T16:32:17.915Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T16:32:32.405Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T16:32:32.405Z"
+        },
+        {
+          "callId": "49e2a472-fbb1-4637-aad9-f22b289d0355",
+          "timestamp": "2025-09-28T16:36:38.720Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Pincus, it’s great to talk with you today. Let’s make sure I’ve got the right person—could you please confirm your date of birth for me? Once we have that, we’ll go through a few important questions about how you’ve been feeling, your medications, and anything else you want to cover before your appointment tomorrow."
+                  }
+                ],
+                "timestamp": "2025-09-28T16:35:57.642Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi there, it’s good to connect with you. Let’s start by confirming your identity. Could you tell me your date of birth, please?"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:36:13.865Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Pincus. Now that we’ve confirmed everything, let’s go ahead with our wellness check. \n\nFirst, how have you been feeling since your last visit? Are there any new"
+                  }
+                ],
+                "timestamp": "2025-09-28T16:36:25.395Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "No problem, let’s go step by step. Could you let me know your date of birth first, just to confirm? Once we have that, we’ll go through how you’ve been feeling and any updates on medications."
+                  }
+                ],
+                "timestamp": "2025-09-28T16:36:29.040Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 4,
+              "topics": [
+                "medication",
+                "appointment",
+                "feeling"
+              ],
+              "generatedAt": "2025-09-28T16:36:38.720Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T16:36:38.720Z"
+        }
+      ],
+      "createdAt": "2025-09-28T16:31:46.555Z",
+      "lastModified": "2025-09-28T16:35:39.121Z",
+      "lastContact": "2025-09-28T16:36:38.720Z"
+    },
+    {
+      "id": "de37e30e-36ac-430f-ae55-f85e50f21568",
+      "mrn": "H254763",
+      "name": "Gaon, Elazar",
+      "phoneNumber": "000000000000000",
+      "dateOfBirth": "2000-06-26",
+      "age": 25,
+      "gender": "male",
+      "conditions": [],
+      "medications": [],
+      "primaryConcern": "Hannah Noh \n \nProgress Notes   \nSigned\n \nEncounter Date: 8/20/2024\n\nSigned\t\n\n\nCARDIOLOGY AMBULATORY PROGRESS NOTE\n \n\nDate: 8/20/2024 \nPatient Name: Elazar Gaon\nDOB: 6/26/2000\nMRN: H254763\n \nContact In",
+      "clinicalNotes": "Hannah Noh \n \nProgress Notes   \nSigned\n \nEncounter Date: 8/20/2024\n\nSigned\t\n\n\nCARDIOLOGY AMBULATORY PROGRESS NOTE\n \n\nDate: 8/20/2024 \nPatient Name: Elazar Gaon\nDOB: 6/26/2000\nMRN: H254763\n \nContact Information:\nTelephone: 718-683-8161\nPCP: No primary care provider on file.\tAge: 24 y.o.\nGender: male\n \n \n \n \nHistory of Present Illness: Elazar Gaon is a 24 y.o. male with history significant for asthma and pericarditis. he presents today for follow up cardiovascular care. At this time, Elazar feels well. His exercise tolerance is difficult to assess because he reports walking only 15 minutes per day on a treadmill due to his schedule. He is currently only taking dutasteride, rilonacept 160 mg daily, and sertraline 200 mg BID. He denies any chest pain or shortness of breath, either at rest or exertion.\n \nPast Medical History: Pericarditis \n \nPast Surgical History: Elazar has no past surgical history on file.\n \nFamily history: \nNo premature coronary artery disease, or sudden cardiac death. \n \nSocial History:\nTobacco: Former smoker\nEtOH: Occasional alcohol use\nDrugs: None\nSupport system: Lives with family\n \nAllergies: \nPatient has no known allergies.\n \nCurrent Medications:\n\nCurrent Outpatient Medications\nMedication\tSig\tDispense\tRefill\n•\tRilonacept 220 mg recon soln\tInject 160 mg subcutaneously once a week. For the first week, give 2 injections of 160 mg (total 320 mg) on the same day in 2 different injection sites. After that only 160 mg weekly.\t12 each\t3\n•\tcolchicine, gout, (COLCRYS) 0.6 mg tablet\tTake 0.5 tablets by mouth once daily.\t90 tablet\t3\n•\tpredniSONE (DELTASONE) 5 mg tablet\tTake 1 tablet by mouth once daily. Take 10 mg daily for 7 days, followed by 5 mg daily for 7 days, followed by 2.5 mg daily for 7 days  Indications: pericarditis\t35 tablet\t0\n•\tsulfamethoxazole/trimethoprim (BACTRIM ORAL)\tTake  by mouth.\t \t \n•\tpantoprazole (PROTONIX) 40 mg tablet,delayed release (DR/EC)\tTake 1 tablet by mouth every morning before breakfast.\t90 tablet\t2\n•\tcholecalciferol (VITAMIN D3) 1,000 unit tablet\tTake 2 tablets by mouth once daily.\t180 tablet\t1\n•\tclonazePAM (KLONOPIN) 0.5 mg\tTake 1 tablet by mouth 2 times daily as needed for Anxiety. Max Daily Amount: 1 mg.\t30 tablet\t0\n•\tsertraline (ZOLOFT) 100 mg tablet\tTake 2 tablets by mouth once daily.\t90 tablet\t2\n•\tibuprofen (ADVIL,MOTRIN) 600 mg tablet\tTake 1 tablet by mouth in the morning and 1 tablet in the evening.\t \t \n•\tondansetron ODT (ZOFRAN ODT) 4 mg disintegrating tablet\tTake 1 tablet by mouth every 8 hours as needed for Nausea and Vomiting.\t30 tablet\t1\n•\tDUTASTERIDE ORAL\tTake  by mouth.\t \t \n \n\nNo current facility-administered medications for this visit.\n \n \n\nReview of Systems\n \nROS: Reviewed and comprehensively negative, except as indicated in HPI\n \n\nPhysical Exam\n \nBP 111/73  | Pulse 83  | Ht 5' 4\" (1.626 m)  | Wt 68 kg (150 lb)  | SpO2 97%  | BMI 25.75 kg/m²  \n \nConstitutional: Awake, alert, and in no acute distress. Appears stated age, is well developed/nourished.\nEyes: Anicteric sclera. Intact extraocular movements. \nENMT: Moist mucous membranes. Throat clear.\nNeck: Supple. Jugular venous pressure was normal. There were no carotid bruits.\nCardiovascular: Heart sounds were regular, with normal S1 and S2, and no rubs, gallops or murmurs. \nRespiratory: Lungs were clear bilaterally, without wheezing or crackles\nGastrointestinal: Normal bowel sounds. Soft, non-tender and non-distended.\nExtremities: Legs were warm and well perfused, with no cyanosis, clubbing or edema.\nSkin: No rashes\nNeurologic: Orientated to time, place and person. Grossly non-focal motor examination. Normal speech. \nPsych: Appropriate mood and affect.\n \n\nDiagnostics\n \nEchocardiogram 08/20/2024:\nLeft ventricle: The left ventricular cavity size is normal. The left ventricle is normal thickness. Left ventricular wall motion is normal. The visually estimated left ventricular ejection fraction is 65%. Normal LV diastolic function. \nRight ventricle: The right ventricle is normal in size. The right ventricular wall motion is normal. \nLeft atrium: The left atrium is normal in size. \nRight atrium: The right atrium is normal in size. \nMitral valve: The mitral valve is without prolapse or stenosis. No significant mitral regurgitation. \nAortic valve: The aortic valve is trileaflet. No significant stenosis or regurgitation. \nTricuspid valve: Structurally normal tricuspid valve without stenosis. There is trace tricuspid regurgitation. Insufficient tricuspid jet to quantitate pulmonary artery systolic pressure. \nPulmonic valve: The pulmonic valve is normal. \nPericardium: There is no significant pericardial effusion. \nAortic root: The aortic root appears normal in size. \nMiscellaneous: The IVC is normal in size with normal respiratory variation. \n \nEchocardiogram 10/31/2023:\nLeft ventricle: The left ventricular cavity size is normal. The left ventricle is normal thickness. Left\nventricular wall motion is normal. The visually estimated left ventricular ejection fraction is\n65%. Normal LV diastolic function.\nRight ventricle: The right ventricle is normal in size. The right ventricular wall motion is normal.\nLeft atrium: The left atrium is normal in size.\nRight atrium: The right atrium is normal in size.\nMitral valve: The mitral valve is without prolapse or stenosis. No significant mitral regurgitation.\nAortic valve: The aortic valve is trileaflet. No significant stenosis or regurgitation.\nTricuspid valve: Structurally normal tricuspid valve without stenosis. There is trace tricuspid regurgitation.\nInsufficient tricuspid jet to quantitate pulmonary artery systolic pressure.\nPulmonic valve: The pulmonic valve is normal.\nPericardium: There is no significant pericardial effusion.\nAortic root: The aortic root appears normal in size.\n \nEchocardiogram 08/15/2023: \nLimited echocardiogram done to assess for pericardial effusion.\nNormal LV function. A small pericardial effusion is present. No compression seen. \n \nEchocardiogram 07/19/2023: \nLeft ventricle: The left ventricular cavity size is normal. The left ventricle is normal thickness. Left ventricular wall motion is normal. The visually estimated left ventricular ejection fraction is 60%.\nRight ventricle: The right ventricle is normal in size. The right ventricular wall motion is normal.\nLeft atrium: The left atrium is normal in size.\nRight atrium: The right atrium is normal in size.\nMitral valve: The mitral valve is without prolapse or stenosis.\nAortic valve: The aortic valve is trileaflet.\nTricuspid valve: Structurally normal tricuspid valve without stenosis.\nPericardium: There is no significant pericardial effusion.\nAortic root: The aortic root appears normal in size.\nMiscellaneous: IVC is normal in size with normal respiratory variation. RA pressure is normal.\n \nEchocardiogram 06/27/2023:\nThe left ventricular cavity size is normal.  The left ventricle is normal thickness.  Left ventricular wall motion is normal. The visually estimated left ventricular ejection fraction is 60%. Normal LV diastolic function. The right ventricle is normal in size.  The right ventricular wall motion is normal. The left atrium is normal in size. The right atrium is normal in size. The mitral valve is without prolapse or stenosis. There is trivial mitral regurgitation. The aortic valve is trileaflet. No significant stenosis or regurgitation. Structurally normal tricuspid valve without stenosis. There is trace tricuspid regurgitation. Insufficient TR jet to estimate the RVSP. There is no significant pulmonic regurgitation seen. There is no significant pericardial effusion. The aortic root appears normal in size.\n \nCardiac MRI 07/03/2023: \n1. Normal left ventricular size (LVEDVi 79cc/m2). Normal left ventricular systolic function (LVEF 54%).\n2. Normal right ventricular size (RVEDVi 85cc/m2). Normal right ventricular systolic function (RVEF 53%). \n3. Mild thickening of the pericardium. Moderate circumferential pericardial effusion without evidence of chamber compression (measuring up to 1.2cm). Mild flattening of the interventricular septum on deep breathing sequences. \n4. On T2-weighted imaging, there is pericardial edema. No evidence of myocardial edema.\n5. On first-pass perfusion imaging, there is no resting perfusion defect.\n6. On delayed enhancement imaging, there is no evidence of myocardial scar/fibrosis.\n7. On T2-star imaging, there is no evidence of myocardial iron overload.\n8. No significant valvular disease visualized. \n9. Small bilateral pleural effusions. Sub-segmental atelectasis in the posterior lower lobes adjacent to the pleural effusions.\n \nNotable labs: \n- 02/29/2024: WBC 6.1 H/H 15.9/45.8 PLT 201 Na 140 K 3.7 BUN 14 Creat 0.99 ESR 2.0 HS-CRP 0.8\n- 10/31/2023: WBC 7.8 H/H 14.9/42.5 PLT 177 Na 140 K 3.7 BUN 15 Creat 0.98 ESR 5.0 HS-CRP 0.5  \n- 09/07/2023: WBC 8.8 H/H 14.3/46.1 PLT 161 Gluc 126 Na 140 K 4.4 BUN 15 Creat 0.86 CRP 4.46 ESR 3\n- 08/15/2023: WBC 11.6 H/H 13.7/42.1 PLT 302 Na 140 K 4.0 BUN 14 Creat 0.81 TC 191 TG 128 HDL 69 LDL 88 ESR 21 HS CRP 22.1\n- 07/19/2023: WBC 10.8 H/H 14.3/42.8 PLT 383 Na 140 K 4.1 BUN 24 Creat 1.01 ESR 10 HS-CRP 5.3 \n \n\nAssessment and Plan\n \nAssessment: Elazar is a 24 y.o. male who has no past medical history on file.\n \nBriefly, Mr. Gaon has a history significant for asthma and pericarditis .\n \nRegarding his pericarditis:\n- EKG today shows normal sinus rhythm.\n            - Compared to EKG [02/29/2024] - previously noted sinus tachycardia [102 bpm]\n- CMRI [07/2023] - LVEF of 54%. Mild thickening of pericardium. Moderate circumferential pericardial effusion without evidence of chamber compression (measuring up to 1.2cm). Mild flattening of the interventricular septum on deep breathing sequences. There is pericardial edema. No evidence of myocardial edema. Small bilateral pleural effusions. Sub-segmental atelectasis in the posterior lower lobes adjacent to the pleural effusions.\n- I reviewed the results of Elazar's TTE with him \n            - TTE [08/20/2024] - LV normal in size and function, LVEF 65%, no significant valvular abnormalities, no significant pericardial effusion\n- Compared to TTE [10/2023] unchanged.\n- ESR 10 [07/2023] -> 21 [08/2023] -> 2.0 [02/2024]\n- HS-CRP: 5.3 [07/2023] -> 22.1 [08/2023] -> 0.8 [02/2024]\n- Continue rilonocept injections 160 mg/2mL for 1 year [09/2024]\n            - Given Elazar's persistent pericarditis that did not improve with repeated colchicine and steroid therapy, we discussed that Elazar will need to continue rilonocept for 1 more year [08/2025].\n- Follow up with rheumatology  \n \nhis blood pressure today was normal at 111/73 mmHg on arrival. \n \nWe discussed exercising for 30-45 minutes on most days of the week, maintaining a healthy weight and following a low-salt, heart-healthy diet. Otherwise, we will see Elazar back in 3-6 months for a follow up.\n \nPatient counseled on acute issues and verbalized understanding.\n \nScribe Attestation: By signing my name below, I, Hannah Noh, attest that this documentation has been prepared under the direction and in the presence of Jeffrey Bander, MD. \nElectronically signed: Hannah Noh, Scribe 8/20/2024\n \nProvider Attestation: I, Jeffrey Bander, MD personally performed the services in this documentation. All medical record entries made by the scribe were at my direction and in my presence. I have reviewed the chart and agree that the record reflects my personal performance and is accurate and complete. 8/20/2024\n \n\n\n\nCosigned by:\tJeffrey Bander, MD at 08/20/24 1637\n**Pre Charting**  \nEncounter Date: 02/25/2025  \n\n**Patient Information**  \n- Name: Elazar Gaon  \n- DOB: 06/26/2000  \n- MRN: H254763  \n- Last Visit Date: 08/20/2024  \n- Reason for Follow-up: Follow-up cardiovascular care due to history of pericarditis  \n\n**Results Since Last Cardiology Visit [08/20/2024]**  \n- No recent results to review  \n\n**Lab Results**  \n\n**Lab Trends**  \n- ESR: 10 [07/2023] -> 21 [08/2023] -> 2.0 [02/2024]  \n- HS-CRP: 5.3 [07/2023] -> 22.1 [08/2023] -> 0.8 [02/2024]  \n  - The patient's ESR and HS-CRP values have significantly decreased, indicating a reduction in inflammation. Continue monitoring inflammatory markers to assess pericarditis management.\n\n- 02/29/2024: WBC 6.1 H/H 15.9/45.8 PLT 201 Gluc 93 Na 140 K 3.7 BUN 14 Creat 0.99 HS CRP 0.8 ESR 2  \n- 10/31/2023: WBC 7.8 H/H 14.9/42.5 PLT 177 Na 140 K 3.7 BUN 15 Creat 0.98 ESR 5.0 HS-CRP 0.5  \n- 09/07/2023: WBC 8.8 H/H 14.3/46.1 PLT 161 Gluc 126 Na 140 K 4.4 BUN 15 Creat 0.86 CRP 4.46 ESR 3  \n\n**Last Echocardiogram Result**  \n- Date: 08/20/2024  \n- Findings: Normal left ventricle size and function, LVEF 65%, no significant valvular disease, no significant pericardial effusion  \n\n**Phone Encounters**  \n- 02/21/2025: Patient reported pleural rub, midsternal chest discomfort when lying down, muffled heart sounds, and irregular rhythm. Given symptoms, concern for recurrent pericarditis or pericardial effusion. Recommended echocardiogram and visit with Dr. Bander.  \n\n**Outside Physician Notes**  \n- No outside physician notes available.  \n\n**Past Medical History**  \n- Asthma  \n- Pericarditis  \n\n**Current Medication List**  \n- Rilonacept 160 mg subcutaneously once a week  \n- Colchicine 0.6 mg tablet: Take 0.5 tablets by mouth once daily  \n- PredniSONE 5 mg tablet: Tapered dosage for pericarditis  \n- Pantoprazole 40 mg tablet: Take 1 tablet by mouth every morning before breakfast  \n- Cholecalciferol 1,000 unit tablet: Take 2 tablets by mouth once daily  \n- ClonazePAM 0.5 mg: Take 1 tablet by mouth 2 times daily as needed for anxiety  \n- Sertraline 100 mg tablet: Take 2 tablets by mouth once daily  \n- Ibuprofen 600 mg tablet: Take 1 tablet by mouth in the morning and 1 in the evening  \n- Ondansetron ODT 4 mg disintegrating tablet: Take 1 tablet by mouth every 8 hours as needed for nausea and vomiting  \n- Dutasteride ORAL: Dosage not specified  \n- Sulfamethoxazole/trimethoprim (BACTRIM ORAL): Dosage not specified  \n\n**Pericarditis**  \n- Recent EKG: Normal sinus rhythm  \n- Recent Imaging: CMRI [07/2023] - Mild thickening of pericardium, moderate circumferential pericardial effusion (1.2 cm), pericardial edema  \n- Recent Labs: ESR 2 [02/2024], HS-CRP 0.8 [02/2024]  \n- Medication: Continue rilonocept injections 160 mg/2mL for 1 year [09/2024]  \n- Follow-up: Rheumatology  \n\n**Recommendations**  \n- Consider echocardiogram to assess for recurrent pericardial effusion  \n- Review current medication regimen for pericarditis management  \n- Follow up with rheumatology as scheduled  \n- Address incomplete dosage information for Dutasteride and Sulfamethoxazole/trimethoprim  \n\n------------ END OF FILE ------------",
+      "customPrompt": "You are conducting a medical wellness check. \n\nClinical Context:\nHannah Noh \n \nProgress Notes   \nSigned\n \nEncounter Date: 8/20/2024\n\nSigned\t\n\n\nCARDIOLOGY AMBULATORY PROGRESS NOTE\n \n\nDate: 8/20/2024 \nPatient Name: Elazar Gaon\nDOB: 6/26/2000\nMRN: H254763\n \nContact Information:\nTelephone: 718-683-8161\nPCP: No primary care provider on file.\tAge: 24 y.o.\nGender: male\n \n \n \n \nHistory of Present Illness: Elazar Gaon is a 24 y.o. male with history significant for asthma and pericarditis. he presents today for follow up cardiovascular care. At this time, Elazar feels well. His exercise tolerance is difficult to assess because he reports walking only 15 minutes per day on a treadmill due to his schedule. He is currently only taking dutasteride, rilonacept 160 mg daily, and sertraline 200 mg BID. He denies any chest pain or shortness of breath, either at rest or exertion.\n \nPast Medical History: Pericarditis \n \nPast Surgical History: Elazar has no past surgical history on file.\n \nFamily history: \nNo premature coronary artery disease, or sudden cardiac death. \n \nSocial History:\nTobacco: Former smoker\nEtOH: Occasional alcohol use\nDrugs: None\nSupport system: Lives with family\n \nAllergies: \nPatient has no known allergies.\n \nCurrent Medications:\n\nCurrent Outpatient Medications\nMedication\tSig\tDispense\tRefill\n•\tRilonacept 220 mg recon soln\tInject 160 mg subcutaneously once a week. For the first week, give 2 injections of 160 mg (total 320 mg) on the same day in 2 different injection sites. After that only 160 mg weekly.\t12 each\t3\n•\tcolchicine, gout, (COLCRYS) 0.6 mg tablet\tTake 0.5 tablets by mouth once daily.\t90 tablet\t3\n•\tpredniSONE (DELTASONE) 5 mg tablet\tTake 1 tablet by mouth once daily. Take 10 mg daily for 7 days, followed by 5 mg daily for 7 days, followed by 2.5 mg daily for 7 days  Indications: pericarditis\t35 tablet\t0\n•\tsulfamethoxazole/trimethoprim (BACTRIM ORAL)\tTake  by mouth.\t \t \n•\tpantoprazole (PROTONIX) 40 mg tablet,delayed release (DR/EC)\tTake 1 tablet by mouth every morning before breakfast.\t90 tablet\t2\n•\tcholecalciferol (VITAMIN D3) 1,000 unit tablet\tTake 2 tablets by mouth once daily.\t180 tablet\t1\n•\tclonazePAM (KLONOPIN) 0.5 mg\tTake 1 tablet by mouth 2 times daily as needed for Anxiety. Max Daily Amount: 1 mg.\t30 tablet\t0\n•\tsertraline (ZOLOFT) 100 mg tablet\tTake 2 tablets by mouth once daily.\t90 tablet\t2\n•\tibuprofen (ADVIL,MOTRIN) 600 mg tablet\tTake 1 tablet by mouth in the morning and 1 tablet in the evening.\t \t \n•\tondansetron ODT (ZOFRAN ODT) 4 mg disintegrating tablet\tTake 1 tablet by mouth every 8 hours as needed for Nausea and Vomiting.\t30 tablet\t1\n•\tDUTASTERIDE ORAL\tTake  by mouth.\t \t \n \n\nNo current facility-administered medications for this visit.\n \n \n\nReview of Systems\n \nROS: Reviewed and comprehensively negative, except as indicated in HPI\n \n\nPhysical Exam\n \nBP 111/73  | Pulse 83  | Ht 5' 4\" (1.626 m)  | Wt 68 kg (150 lb)  | SpO2 97%  | BMI 25.75 kg/m²  \n \nConstitutional: Awake, alert, and in no acute distress. Appears stated age, is well developed/nourished.\nEyes: Anicteric sclera. Intact extraocular movements. \nENMT: Moist mucous membranes. Throat clear.\nNeck: Supple. Jugular venous pressure was normal. There were no carotid bruits.\nCardiovascular: Heart sounds were regular, with normal S1 and S2, and no rubs, gallops or murmurs. \nRespiratory: Lungs were clear bilaterally, without wheezing or crackles\nGastrointestinal: Normal bowel sounds. Soft, non-tender and non-distended.\nExtremities: Legs were warm and well perfused, with no cyanosis, clubbing or edema.\nSkin: No rashes\nNeurologic: Orientated to time, place and person. Grossly non-focal motor examination. Normal speech. \nPsych: Appropriate mood and affect.\n \n\nDiagnostics\n \nEchocardiogram 08/20/2024:\nLeft ventricle: The left ventricular cavity size is normal. The left ventricle is normal thickness. Left ventricular wall motion is normal. The visually estimated left ventricular ejection fraction is 65%. Normal LV diastolic function. \nRight ventricle: The right ventricle is normal in size. The right ventricular wall motion is normal. \nLeft atrium: The left atrium is normal in size. \nRight atrium: The right atrium is normal in size. \nMitral valve: The mitral valve is without prolapse or stenosis. No significant mitral regurgitation. \nAortic valve: The aortic valve is trileaflet. No significant stenosis or regurgitation. \nTricuspid valve: Structurally normal tricuspid valve without stenosis. There is trace tricuspid regurgitation. Insufficient tricuspid jet to quantitate pulmonary artery systolic pressure. \nPulmonic valve: The pulmonic valve is normal. \nPericardium: There is no significant pericardial effusion. \nAortic root: The aortic root appears normal in size. \nMiscellaneous: The IVC is normal in size with normal respiratory variation. \n \nEchocardiogram 10/31/2023:\nLeft ventricle: The left ventricular cavity size is normal. The left ventricle is normal thickness. Left\nventricular wall motion is normal. The visually estimated left ventricular ejection fraction is\n65%. Normal LV diastolic function.\nRight ventricle: The right ventricle is normal in size. The right ventricular wall motion is normal.\nLeft atrium: The left atrium is normal in size.\nRight atrium: The right atrium is normal in size.\nMitral valve: The mitral valve is without prolapse or stenosis. No significant mitral regurgitation.\nAortic valve: The aortic valve is trileaflet. No significant stenosis or regurgitation.\nTricuspid valve: Structurally normal tricuspid valve without stenosis. There is trace tricuspid regurgitation.\nInsufficient tricuspid jet to quantitate pulmonary artery systolic pressure.\nPulmonic valve: The pulmonic valve is normal.\nPericardium: There is no significant pericardial effusion.\nAortic root: The aortic root appears normal in size.\n \nEchocardiogram 08/15/2023: \nLimited echocardiogram done to assess for pericardial effusion.\nNormal LV function. A small pericardial effusion is present. No compression seen. \n \nEchocardiogram 07/19/2023: \nLeft ventricle: The left ventricular cavity size is normal. The left ventricle is normal thickness. Left ventricular wall motion is normal. The visually estimated left ventricular ejection fraction is 60%.\nRight ventricle: The right ventricle is normal in size. The right ventricular wall motion is normal.\nLeft atrium: The left atrium is normal in size.\nRight atrium: The right atrium is normal in size.\nMitral valve: The mitral valve is without prolapse or stenosis.\nAortic valve: The aortic valve is trileaflet.\nTricuspid valve: Structurally normal tricuspid valve without stenosis.\nPericardium: There is no significant pericardial effusion.\nAortic root: The aortic root appears normal in size.\nMiscellaneous: IVC is normal in size with normal respiratory variation. RA pressure is normal.\n \nEchocardiogram 06/27/2023:\nThe left ventricular cavity size is normal.  The left ventricle is normal thickness.  Left ventricular wall motion is normal. The visually estimated left ventricular ejection fraction is 60%. Normal LV diastolic function. The right ventricle is normal in size.  The right ventricular wall motion is normal. The left atrium is normal in size. The right atrium is normal in size. The mitral valve is without prolapse or stenosis. There is trivial mitral regurgitation. The aortic valve is trileaflet. No significant stenosis or regurgitation. Structurally normal tricuspid valve without stenosis. There is trace tricuspid regurgitation. Insufficient TR jet to estimate the RVSP. There is no significant pulmonic regurgitation seen. There is no significant pericardial effusion. The aortic root appears normal in size.\n \nCardiac MRI 07/03/2023: \n1. Normal left ventricular size (LVEDVi 79cc/m2). Normal left ventricular systolic function (LVEF 54%).\n2. Normal right ventricular size (RVEDVi 85cc/m2). Normal right ventricular systolic function (RVEF 53%). \n3. Mild thickening of the pericardium. Moderate circumferential pericardial effusion without evidence of chamber compression (measuring up to 1.2cm). Mild flattening of the interventricular septum on deep breathing sequences. \n4. On T2-weighted imaging, there is pericardial edema. No evidence of myocardial edema.\n5. On first-pass perfusion imaging, there is no resting perfusion defect.\n6. On delayed enhancement imaging, there is no evidence of myocardial scar/fibrosis.\n7. On T2-star imaging, there is no evidence of myocardial iron overload.\n8. No significant valvular disease visualized. \n9. Small bilateral pleural effusions. Sub-segmental atelectasis in the posterior lower lobes adjacent to the pleural effusions.\n \nNotable labs: \n- 02/29/2024: WBC 6.1 H/H 15.9/45.8 PLT 201 Na 140 K 3.7 BUN 14 Creat 0.99 ESR 2.0 HS-CRP 0.8\n- 10/31/2023: WBC 7.8 H/H 14.9/42.5 PLT 177 Na 140 K 3.7 BUN 15 Creat 0.98 ESR 5.0 HS-CRP 0.5  \n- 09/07/2023: WBC 8.8 H/H 14.3/46.1 PLT 161 Gluc 126 Na 140 K 4.4 BUN 15 Creat 0.86 CRP 4.46 ESR 3\n- 08/15/2023: WBC 11.6 H/H 13.7/42.1 PLT 302 Na 140 K 4.0 BUN 14 Creat 0.81 TC 191 TG 128 HDL 69 LDL 88 ESR 21 HS CRP 22.1\n- 07/19/2023: WBC 10.8 H/H 14.3/42.8 PLT 383 Na 140 K 4.1 BUN 24 Creat 1.01 ESR 10 HS-CRP 5.3 \n \n\nAssessment and Plan\n \nAssessment: Elazar is a 24 y.o. male who has no past medical history on file.\n \nBriefly, Mr. Gaon has a history significant for asthma and pericarditis .\n \nRegarding his pericarditis:\n- EKG today shows normal sinus rhythm.\n            - Compared to EKG [02/29/2024] - previously noted sinus tachycardia [102 bpm]\n- CMRI [07/2023] - LVEF of 54%. Mild thickening of pericardium. Moderate circumferential pericardial effusion without evidence of chamber compression (measuring up to 1.2cm). Mild flattening of the interventricular septum on deep breathing sequences. There is pericardial edema. No evidence of myocardial edema. Small bilateral pleural effusions. Sub-segmental atelectasis in the posterior lower lobes adjacent to the pleural effusions.\n- I reviewed the results of Elazar's TTE with him \n            - TTE [08/20/2024] - LV normal in size and function, LVEF 65%, no significant valvular abnormalities, no significant pericardial effusion\n- Compared to TTE [10/2023] unchanged.\n- ESR 10 [07/2023] -> 21 [08/2023] -> 2.0 [02/2024]\n- HS-CRP: 5.3 [07/2023] -> 22.1 [08/2023] -> 0.8 [02/2024]\n- Continue rilonocept injections 160 mg/2mL for 1 year [09/2024]\n            - Given Elazar's persistent pericarditis that did not improve with repeated colchicine and steroid therapy, we discussed that Elazar will need to continue rilonocept for 1 more year [08/2025].\n- Follow up with rheumatology  \n \nhis blood pressure today was normal at 111/73 mmHg on arrival. \n \nWe discussed exercising for 30-45 minutes on most days of the week, maintaining a healthy weight and following a low-salt, heart-healthy diet. Otherwise, we will see Elazar back in 3-6 months for a follow up.\n \nPatient counseled on acute issues and verbalized understanding.\n \nScribe Attestation: By signing my name below, I, Hannah Noh, attest that this documentation has been prepared under the direction and in the presence of Jeffrey Bander, MD. \nElectronically signed: Hannah Noh, Scribe 8/20/2024\n \nProvider Attestation: I, Jeffrey Bander, MD personally performed the services in this documentation. All medical record entries made by the scribe were at my direction and in my presence. I have reviewed the chart and agree that the record reflects my personal performance and is accurate and complete. 8/20/2024\n \n\n\n\nCosigned by:\tJeffrey Bander, MD at 08/20/24 1637\n**Pre Charting**  \nEncounter Date: 02/25/2025  \n\n**Patient Information**  \n- Name: Elazar Gaon  \n- DOB: 06/26/2000  \n- MRN: H254763  \n- Last Visit Date: 08/20/2024  \n- Reason for Follow-up: Follow-up cardiovascular care due to history of pericarditis  \n\n**Results Since Last Cardiology Visit [08/20/2024]**  \n- No recent results to review  \n\n**Lab Results**  \n\n**Lab Trends**  \n- ESR: 10 [07/2023] -> 21 [08/2023] -> 2.0 [02/2024]  \n- HS-CRP: 5.3 [07/2023] -> 22.1 [08/2023] -> 0.8 [02/2024]  \n  - The patient's ESR and HS-CRP values have significantly decreased, indicating a reduction in inflammation. Continue monitoring inflammatory markers to assess pericarditis management.\n\n- 02/29/2024: WBC 6.1 H/H 15.9/45.8 PLT 201 Gluc 93 Na 140 K 3.7 BUN 14 Creat 0.99 HS CRP 0.8 ESR 2  \n- 10/31/2023: WBC 7.8 H/H 14.9/42.5 PLT 177 Na 140 K 3.7 BUN 15 Creat 0.98 ESR 5.0 HS-CRP 0.5  \n- 09/07/2023: WBC 8.8 H/H 14.3/46.1 PLT 161 Gluc 126 Na 140 K 4.4 BUN 15 Creat 0.86 CRP 4.46 ESR 3  \n\n**Last Echocardiogram Result**  \n- Date: 08/20/2024  \n- Findings: Normal left ventricle size and function, LVEF 65%, no significant valvular disease, no significant pericardial effusion  \n\n**Phone Encounters**  \n- 02/21/2025: Patient reported pleural rub, midsternal chest discomfort when lying down, muffled heart sounds, and irregular rhythm. Given symptoms, concern for recurrent pericarditis or pericardial effusion. Recommended echocardiogram and visit with Dr. Bander.  \n\n**Outside Physician Notes**  \n- No outside physician notes available.  \n\n**Past Medical History**  \n- Asthma  \n- Pericarditis  \n\n**Current Medication List**  \n- Rilonacept 160 mg subcutaneously once a week  \n- Colchicine 0.6 mg tablet: Take 0.5 tablets by mouth once daily  \n- PredniSONE 5 mg tablet: Tapered dosage for pericarditis  \n- Pantoprazole 40 mg tablet: Take 1 tablet by mouth every morning before breakfast  \n- Cholecalciferol 1,000 unit tablet: Take 2 tablets by mouth once daily  \n- ClonazePAM 0.5 mg: Take 1 tablet by mouth 2 times daily as needed for anxiety  \n- Sertraline 100 mg tablet: Take 2 tablets by mouth once daily  \n- Ibuprofen 600 mg tablet: Take 1 tablet by mouth in the morning and 1 in the evening  \n- Ondansetron ODT 4 mg disintegrating tablet: Take 1 tablet by mouth every 8 hours as needed for nausea and vomiting  \n- Dutasteride ORAL: Dosage not specified  \n- Sulfamethoxazole/trimethoprim (BACTRIM ORAL): Dosage not specified  \n\n**Pericarditis**  \n- Recent EKG: Normal sinus rhythm  \n- Recent Imaging: CMRI [07/2023] - Mild thickening of pericardium, moderate circumferential pericardial effusion (1.2 cm), pericardial edema  \n- Recent Labs: ESR 2 [02/2024], HS-CRP 0.8 [02/2024]  \n- Medication: Continue rilonocept injections 160 mg/2mL for 1 year [09/2024]  \n- Follow-up: Rheumatology  \n\n**Recommendations**  \n- Consider echocardiogram to assess for recurrent pericardial effusion  \n- Review current medication regimen for pericarditis management  \n- Follow up with rheumatology as scheduled  \n- Address incomplete dosage information for Dutasteride and Sulfamethoxazole/trimethoprim  \n\n------------ END OF FILE ------------\n\n\nQuestions to ask during this call:\nBased on the pre-charting information for Elazar Gaon's follow-up appointment today, here are 4 essential questions for the Twilio agent to ask:\n\n## Pre-Visit Call Questions\n\n**1. Symptom Update Question:**\n\"Since your last visit, have you experienced any new symptoms or changes in your current condition that you'd like to discuss with the doctor today?\"\n\n**2. Medication Status Question:**\n\"Are you currently taking any medications, and if so, have you had any issues with your prescriptions or experienced any side effects since your last appointment?\"\n\n**3. Follow-up Preparation Question:**\n\"What specific concerns or questions do you want to make sure we address during today's follow-up visit?\"\n\n**4. Logistics Confirmation:**\n\"Can you confirm you're still planning to attend your 12:45 PM appointment today, and do you have any transportation or scheduling concerns we should know about?\"\n\n---\n*These questions will help ensure the provider is prepared for the most relevant follow-up discussion and can address the patient's primary concerns efficiently during the visit.*\n\nMake sure to ask each question and document the responses.\n",
+      "callObjectives": "Based on the pre-charting information for Elazar Gaon's follow-up appointment today, here are 4 essential questions for the Twilio agent to ask:\n\n## Pre-Visit Call Questions\n\n**1. Symptom Update Question:**\n\"Since your last visit, have you experienced any new symptoms or changes in your current condition that you'd like to discuss with the doctor today?\"\n\n**2. Medication Status Question:**\n\"Are you currently taking any medications, and if so, have you had any issues with your prescriptions or experienced any side effects since your last appointment?\"\n\n**3. Follow-up Preparation Question:**\n\"What specific concerns or questions do you want to make sure we address during today's follow-up visit?\"\n\n**4. Logistics Confirmation:**\n\"Can you confirm you're still planning to attend your 12:45 PM appointment today, and do you have any transportation or scheduling concerns we should know about?\"\n\n---\n*These questions will help ensure the provider is prepared for the most relevant follow-up discussion and can address the patient's primary concerns efficiently during the visit.*",
+      "consentToRecord": true,
+      "callHistory": [],
+      "createdAt": "2025-09-28T16:47:24.592Z",
+      "lastModified": "2025-09-28T16:47:24.592Z",
+      "lastContact": null
     }
   ],
-  "lastUpdated": "2025-09-26T10:17:47.640Z"
+  "lastUpdated": "2025-09-28T16:56:17.810Z"
 }
