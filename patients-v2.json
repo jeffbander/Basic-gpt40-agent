@@ -1,82 +1,26 @@
 {
   "patients": [
     {
-      "id": "550e8400-e29b-41d4-a716-446655440001",
-      "mrn": "MRN-2025-001",
-      "name": "John Smith",
+      "id": "da5823b3-b341-4758-9eb7-f30e001ae9a3",
+      "mrn": "2342432432",
+      "name": "jeff banderish",
       "phoneNumber": "6465565559",
-      "dateOfBirth": "1952-03-15",
-      "age": 72,
+      "dateOfBirth": "1976-11-29",
+      "age": 48,
       "gender": "male",
-      "conditions": [
-        "Type 2 Diabetes",
-        "Hypertension",
-        "Mild COPD"
-      ],
-      "medications": [
-        "Metformin 1000mg twice daily",
-        "Lisinopril 20mg once daily",
-        "Albuterol inhaler as needed"
-      ],
-      "primaryConcern": "Blood glucose monitoring and medication adherence",
-      "customPrompt": "",
-      "callObjectives": [
-        "Check blood glucose levels and trends",
-        "Verify medication compliance",
-        "Ask about any breathing difficulties",
-        "Remind about upcoming appointment if needed",
-        "Document any new symptoms or concerns"
-      ],
+      "primaryConcern": "HTN",
+      "customPrompt": "You are a compassionate medical AI assistant conducting a wellness check. Be empathetic, speak clearly, and document important health information. Ask about symptoms, medication adherence, and overall wellbeing. If emergency symptoms are mentioned, advise calling 911.",
+      "conditions": [],
+      "medications": [],
+      "callObjectives": [],
       "consentToRecord": true,
-      "createdAt": "2025-01-01T10:00:00Z",
-      "lastModified": "2025-09-25T09:29:52.085Z",
-      "lastContact": "2025-09-26T10:17:47.640Z",
+      "createdAt": "2025-09-28T21:44:56.095Z",
+      "lastModified": "2025-09-29T00:05:48.476Z",
+      "lastContact": "2025-09-30T22:19:09.013Z",
       "callHistory": [
         {
-          "timestamp": "2025-09-25T09:43:11.881Z",
-          "transcript": {
-            "conversation": [],
-            "buffer": [],
-            "summary": {
-              "totalExchanges": 0,
-              "topics": [],
-              "generatedAt": "2025-09-25T09:43:11.881Z"
-            }
-          },
-          "duration": null,
-          "endTime": "2025-09-25T09:43:11.881Z"
-        },
-        {
-          "timestamp": "2025-09-26T01:43:34.801Z",
-          "transcript": {
-            "conversation": [],
-            "buffer": [],
-            "summary": {
-              "totalExchanges": 0,
-              "topics": [],
-              "generatedAt": "2025-09-26T01:43:34.801Z"
-            }
-          },
-          "duration": null,
-          "endTime": "2025-09-26T01:43:34.801Z"
-        },
-        {
-          "timestamp": "2025-09-26T02:00:17.890Z",
-          "transcript": {
-            "conversation": [],
-            "buffer": [],
-            "summary": {
-              "totalExchanges": 0,
-              "topics": [],
-              "generatedAt": "2025-09-26T02:00:17.890Z"
-            }
-          },
-          "duration": null,
-          "endTime": "2025-09-26T02:00:17.890Z"
-        },
-        {
           "callId": null,
-          "timestamp": "2025-09-26T10:17:47.640Z",
+          "timestamp": "2025-09-29T00:06:12.340Z",
           "transcript": {
             "conversation": [
               {
@@ -84,100 +28,565 @@
                 "content": [
                   {
                     "type": "output_audio",
-                    "transcript": "Hello, Mr. Smith! It's great to speak with you today. I hope you're doing well. Before we get started, could you please confirm your date of birth for me? That way we can make sure everything is correct and move forward with our wellness check."
+                    "transcript": "Hello Jeff Banderish! It’s great to speak with you today. Let’s start by verifying your identity. Could you please share your date of birth for confirmation? Once we’ve confirmed that, we’ll go through a wellness check together, including how you’re feeling, any symptoms, and your medication routine."
                   }
                 ],
-                "timestamp": "2025-09-26T10:15:52.777Z"
+                "timestamp": "2025-09-29T00:06:06.042Z"
               }
             ],
             "buffer": [],
             "summary": {
               "totalExchanges": 1,
-              "topics": [],
-              "generatedAt": "2025-09-26T10:17:47.640Z"
+              "topics": [
+                "medication",
+                "symptom",
+                "feeling"
+              ],
+              "generatedAt": "2025-09-29T00:06:12.340Z"
             }
           },
           "duration": null,
-          "endTime": "2025-09-26T10:17:47.640Z"
-        }
-      ]
-    },
-    {
-      "id": "550e8400-e29b-41d4-a716-446655440002",
-      "mrn": "MRN-2025-002",
-      "name": "Ilana Bander",
-      "phoneNumber": "9179035489",
-      "dateOfBirth": "1982-04-13",
-      "age": 42,
-      "gender": "female",
-      "conditions": [],
-      "medications": [],
-      "primaryConcern": "Stress from work and kids",
-      "customPrompt": "You are speaking with Ilana who has Stress from working at Atria. Be especially attentive to any signs of stress retention, shortness of breath, or chest discomfort. Always ask about her about palpitations   Be encouraging about her progress.",
-      "callObjectives": [
-        "Ask about stress ",
-        "ask if the audt is over and if she got more equitiy ",
-        "Inquire about shortness of breath or chest pain",
-        "Ask if Blanka is a dooing a better job and be supportive cleaing ladies are hard ot find",
-        "Assess activity tolerance"
-      ],
-      "consentToRecord": true,
-      "createdAt": "2025-01-01T10:00:00Z",
-      "lastModified": "2025-09-25T10:02:04.487Z",
-      "lastContact": "2025-09-25T10:11:51.270Z",
-      "callHistory": [
-        {
-          "timestamp": "2025-09-25T10:02:57.849Z",
-          "transcript": {
-            "conversation": [],
-            "buffer": [],
-            "summary": {
-              "totalExchanges": 0,
-              "topics": [],
-              "generatedAt": "2025-09-25T10:02:57.849Z"
-            }
-          },
-          "duration": null,
-          "endTime": "2025-09-25T10:02:57.849Z"
+          "endTime": "2025-09-29T00:06:12.340Z"
         },
         {
-          "timestamp": "2025-09-25T10:11:51.270Z",
+          "callId": null,
+          "timestamp": "2025-09-30T22:19:09.013Z",
           "transcript": {
-            "conversation": [],
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi there, Jeff Banderish. It’s great to connect with you today. Could you share your date of birth with me, just to confirm your identity? Once we have that, we’ll go through a wellness check together, talking about how you’re feeling, your medications, and your overall well-being."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:16:52.703Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Jeff, it’s really nice to talk with you. Could you please tell me your date of"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:17:00.563Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Jeff. Just to confirm, could you share the year of your birth as well? That way we can be sure we’ve got everything correct before we continue with the wellness check."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:17:04.225Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Perfect, thank you for that confirmation, Jeff. So, you were born on October 30th, 2000. Now let’s proceed with our wellness check. How have you been feeling lately? Are you experiencing any symptoms or discomfort that you'd like to talk about?"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:17:21.707Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm really sorry to hear that, Jeff. Chest pain and shortness of breath can be serious. I strongly recommend that you seek immediate medical attention or call 911. This could be an emergency. Please don’t wait."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:17:37.582Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm really sorry to hear that, Jeff. I understand you're sharing something important. Using substances like that can really affect your health, including causing chest pain and shortness of breath. It’s important to address this. How are you feeling right now, at this very moment?"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:17:52.432Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I’m here with you, Jeff. Let’s take this step by step. Right now, I want to make sure you’re safe. Are you feeling"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:02.979Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm here for you,"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:03.823Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "You're not alone, Jeff. Let’s take a deep breath together. I want to understand exactly how you're feeling right now. Are you having any chest pain or shortness of breath at this moment?"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:07.090Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm really concerned about your wellbeing, Jeff. Using cocaine can seriously harm your health, especially with the chest pain and shortness of breath you mentioned. It’s really important to talk to a healthcare professional as soon as possible. Let’s focus on how you're feeling right now. Are these symptoms happening at this moment, or are you feeling stable right now?"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:26.382Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm here to focus on you and your wellbeing, Jeff. My role is to support you in staying healthy and safe. Right now, I’m concerned about the symptoms you mentioned. Let’s focus on how you're feeling physically and emotionally, and if you’re ready, we can talk about steps to get you the right support."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:33.798Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm here to focus on you and your wellbeing, Jeff. My role is to support you in staying healthy and safe. Right now, I’m concerned about the symptoms you mentioned. Let’s focus on how you're feeling physically and emotionally, and if you’re ready, we can talk about steps to get you the right support."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:34.351Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Jeff. I’m here to listen and support you. Let's take it one step at a time. \n\n"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:38.216Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Jeff, I'm here for you, and my"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:40.701Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "It sounds like you're dealing with a lot, Jeff. Let’s focus on your health right now. Are you currently experiencing any chest pain or shortness of breath at this very moment? That’s really important for us to know."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:46.484Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Jeff. I'm here to support you. If you want to take a moment or need a break, that's okay. Just let me know how you'd like to proceed when you're ready."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:18:53.893Z"
+              }
+            ],
             "buffer": [],
             "summary": {
-              "totalExchanges": 0,
-              "topics": [],
-              "generatedAt": "2025-09-25T10:11:51.270Z"
+              "totalExchanges": 16,
+              "topics": [
+                "medication",
+                "feeling",
+                "symptom",
+                "pain"
+              ],
+              "generatedAt": "2025-09-30T22:19:09.013Z"
             }
           },
           "duration": null,
-          "endTime": "2025-09-25T10:11:51.270Z"
+          "endTime": "2025-09-30T22:19:09.013Z"
         }
       ]
     },
     {
-      "id": "6cbd509d-ad34-450d-ad7f-da0894659af8",
-      "mrn": "TEST-WEBHOOK-001",
-      "name": "Test, Patient",
-      "phoneNumber": "5555555555",
-      "dateOfBirth": "1970-01-01",
-      "age": 55,
+      "id": "f9d97422-236c-4183-8d60-7c14ac6ba43c",
+      "mrn": "45645645",
+      "name": "adiv korn",
+      "phoneNumber": "2014107927",
+      "dateOfBirth": "2010-01-01",
+      "age": null,
       "gender": "male",
+      "primaryConcern": "",
+      "customPrompt": "You are a compassionate medical AI assistant conducting a wellness check.\n        Be empathetic, speak clearly, and document important health information.\n        Ask about symptoms, medication adherence, and overall wellbeing.\n        If emergency symptoms are mentioned, advise calling 911.",
       "conditions": [],
       "medications": [],
-      "primaryConcern": "This is a test of the webhook integration",
-      "customPrompt": "You are conducting a medical wellness check. \n\nClinical Context:\nThis is a test of the webhook integration\n\nDuring this call, please ensure you:\n1. Test objective 1\n2. Test objective 2\n",
-      "callObjectives": [
-        "Test objective 1",
-        "Test objective 2"
-      ],
-      "consentToRecord": true,
-      "createdAt": "2025-09-26T02:38:00.651Z",
-      "lastModified": "2025-09-26T02:38:00.651Z",
-      "callHistory": [],
-      "lastContact": null
+      "callObjectives": [],
+      "consentToRecord": false,
+      "createdAt": "2025-09-29T00:15:09.762Z",
+      "lastModified": "2025-09-29T00:15:09.762Z",
+      "lastContact": "2025-09-29T00:20:05.837Z",
+      "callHistory": [
+        {
+          "callId": null,
+          "timestamp": "2025-09-29T00:19:27.989Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi there! It's great to connect with you. Could you please confirm your date"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:15:32.898Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Adiv Korn, I hope you're doing well. Before we move forward, could you please share your date of birth so we can verify your identity? This will help us proceed with the wellness check and make sure everything is accurate."
+                  }
+                ],
+                "timestamp": "2025-09-29T00:15:42.061Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "It seems there's some confusion."
+                  }
+                ],
+                "timestamp": "2025-09-29T00:18:44.450Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hello Adiv Korn, I’m here to help with your wellness check. Before we begin, could you please confirm your date of birth for verification? Once we have that, we’ll go through your symptoms, medications, and overall wellbeing."
+                  }
+                ],
+                "timestamp": "2025-09-29T00:18:54.859Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "It sounds like there might be some overlap with a voicemail system. Let’s proceed directly. Adiv Korn, can you confirm your date of birth for verification? That way we can continue with your wellness check and address any health concerns you might have."
+                  }
+                ],
+                "timestamp": "2025-09-29T00:19:07.359Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "It seems like there's a repeating prompt. Let’s focus on your wellness check. Adiv Korn, could you please tell me your date of birth? That will help us confirm your identity and move forward with your health questions."
+                  }
+                ],
+                "timestamp": "2025-09-29T00:19:20.208Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 6,
+              "topics": [
+                "medication",
+                "symptom"
+              ],
+              "generatedAt": "2025-09-29T00:19:27.989Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-29T00:19:27.989Z"
+        },
+        {
+          "callId": null,
+          "timestamp": "2025-09-29T00:20:05.837Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Of course.\n\nHello there, Adiv Korn! It’s really good to connect with"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:17:59.727Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Adiv, it’s great to talk with you today. Could you please confirm your date of birth for me? That way, we can proceed with your wellness check and make sure everything’s on track for you."
+                  }
+                ],
+                "timestamp": "2025-09-29T00:18:03.073Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Adiv. No problem at all. We can take it step by step. Could you share your date of birth with me, so we can verify everything and move forward with the wellness check?"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:18:16.672Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Adiv. That matches what I have on file. Let’s go ahead and start with the wellness check. First, how have you been feeling overall—any new symptoms or concerns you’ve noticed recently?"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:18:33.008Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm really"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:18:52.696Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Adiv, that sounds serious. If you’re experiencing episodes where you’re collapsing or having trouble breathing, it’s important to get medical help right away. Have you had any recent episodes like that? Are you feeling safe right now?"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:18:57.519Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm really sorry to hear that, Adiv. That sounds very concerning. If you're experiencing another episode right now, it’s important to get immediate help. You may need to call 911 or have someone near you assist. Please let me know if you're safe and how you're feeling right now."
+                  }
+                ],
+                "timestamp": "2025-09-29T00:19:19.267Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm here for you,"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:19:37.822Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Absolutely,"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:19:48.238Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Adiv"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:19:57.067Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Got it, Adiv. Let’s focus on your wellness check now. Can you tell me if you’ve had"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:19:58.986Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Sure, Adiv. Let’s move forward with a few important questions. \n\nFirst,"
+                  }
+                ],
+                "timestamp": "2025-09-29T00:20:00.759Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 12,
+              "topics": [
+                "symptom",
+                "feeling"
+              ],
+              "generatedAt": "2025-09-29T00:20:05.837Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-29T00:20:05.837Z"
+        }
+      ]
+    },
+    {
+      "id": "65fec07e-393a-444c-bb14-13328a050d0b",
+      "mrn": "",
+      "name": "samantha zakow",
+      "phoneNumber": "8454892236",
+      "dateOfBirth": "2001-08-29",
+      "age": null,
+      "gender": "female",
+      "primaryConcern": "",
+      "customPrompt": "Samantha's having trouble with mental health and anxiety due to workplace errors and stress. She's dealing with a lot with Erin. She sometimes drinks too much alcohol. When talking about Mount Sinai West, please follow up with her about her mental health and discuss Dancing with the Stars - it sometimes calms her down. ",
+      "conditions": [],
+      "medications": [],
+      "callObjectives": [],
+      "consentToRecord": false,
+      "createdAt": "2025-09-30T22:21:23.668Z",
+      "lastModified": "2025-09-30T22:21:23.668Z",
+      "lastContact": "2025-09-30T22:23:19.192Z",
+      "callHistory": [
+        {
+          "callId": null,
+          "timestamp": "2025-09-30T22:23:19.192Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Samantha Zakow, it’s great to connect with you. To make sure everything is secure, could you share your date of birth with me? Then we can dive into that wellness check and talk through how you're feeling."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:21:43.668Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Sure thing! Let's start whenever you're ready. Please go ahead and tell me your date of birth, and then we can check in on how you're doing today."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:21:51.023Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Got it. Let's take it step by step. Could you share your date of birth with me, Samantha? That way, we can move forward and do a proper wellness check together."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:21:53.586Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Samantha. I’ve got your date of birth as August 29, 1987. Now, let’s check in on how you're feeling. I know there’s been some stress at work and some anxiety. How have things been lately?"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:22:15.162Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm really sorry to hear that, Samantha. It sounds like you're going through a really tough time. Can you tell me a bit more about what's been happening? I'm here to help you work through it. And maybe we can also chat a little about something that might bring you some comfort, like Dancing with the Stars."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:22:30.506Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "It's okay, take a deep breath. I'm here with you. Let’s talk about what’s been the hardest part recently. Has it been more about the workplace errors, or maybe the stress with Erin? We can take it one step at a time."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:22:49.779Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "No worries, Samantha. I'm here to support you. We don’t need Dr. Bander right now—we can just talk through how you’re feeling. How’s your anxiety been today? And remember, if you feel up to it, we can talk about something that relaxes you, like Dancing with the Stars."
+                  }
+                ],
+                "timestamp": "2025-09-30T22:23:07.129Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "You're doing great, Samantha. Let's take a moment to breathe. How about we chat about Dancing with the Stars for a bit? Did you catch any of the latest performances?"
+                  }
+                ],
+                "timestamp": "2025-09-30T22:23:16.867Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 8,
+              "topics": [
+                "feeling"
+              ],
+              "generatedAt": "2025-09-30T22:23:19.192Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-30T22:23:19.192Z"
+        }
+      ]
     }
   ],
-  "lastUpdated": "2025-09-26T10:17:47.640Z"
+  "lastUpdated": "2025-09-30T22:23:19.192Z"
 }

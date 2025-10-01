@@ -1,0 +1,226 @@
+{
+  "patients": [
+    {
+      "id": "1ab4aae0-4e91-49c8-8398-226a7422fda0",
+      "mrn": "TEST-WEBHOOK-002",
+      "name": "Test Patient",
+      "phoneNumber": "5555551234",
+      "dateOfBirth": "1980-01-01",
+      "age": 45,
+      "gender": "male",
+      "conditions": [],
+      "medications": [],
+      "primaryConcern": "This is a test webhook integration",
+      "customPrompt": "You are conducting a medical wellness check. \n\nClinical Context:\nThis is a test webhook integration\n\nDuring this call, please ensure you:\n1. Test objective 1\n2. Test objective 2\n",
+      "callObjectives": [
+        "Test objective 1",
+        "Test objective 2"
+      ],
+      "consentToRecord": true,
+      "createdAt": "2025-09-28T21:41:22.756Z",
+      "lastModified": "2025-09-28T21:41:22.756Z",
+      "callHistory": [],
+      "lastContact": null
+    },
+    {
+      "id": "da5823b3-b341-4758-9eb7-f30e001ae9a3",
+      "mrn": "2342432432",
+      "name": "jeff banderish",
+      "phoneNumber": "6465565559",
+      "dateOfBirth": "1976-11-29",
+      "age": null,
+      "gender": "male",
+      "primaryConcern": "",
+      "customPrompt": "You are a compassionate medical AI assistant conducting a wellness check.\n        Be empathetic, speak clearly, and document important health information.\n        Ask about symptoms, medication adherence, and overall wellbeing.\n        If emergency symptoms are mentioned, advise calling 911.",
+      "conditions": [],
+      "medications": [],
+      "callObjectives": [],
+      "consentToRecord": false,
+      "createdAt": "2025-09-28T21:44:56.095Z",
+      "lastModified": "2025-09-28T21:44:56.095Z",
+      "lastContact": "2025-09-28T23:04:51.765Z",
+      "callHistory": [
+        {
+          "callId": null,
+          "timestamp": "2025-09-28T21:55:54.665Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hello Jeff Banderish! It’s great to connect with you today. Could you please confirm your date of birth for me? Once we’ve got that, we’ll dive right into your wellness check and talk about how you’re feeling, your medications, and your overall wellbeing."
+                  }
+                ],
+                "timestamp": "2025-09-28T21:54:38.574Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Jeff. I’ve got your date of birth as November 29, 1976. Let’s go ahead and check in on how you’re feeling today. Are you experiencing any symptoms or discomfort right now?"
+                  }
+                ],
+                "timestamp": "2025-09-28T21:54:47.402Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I’m glad to hear that. Now let’s talk about your medications. Are you taking all your medications as prescribed?"
+                  }
+                ],
+                "timestamp": "2025-09-28T21:55:04.624Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for letting me know. It's important to discuss that carefully. Cocaine use can have serious health effects, especially if you're on other medications."
+                  }
+                ],
+                "timestamp": "2025-09-28T21:55:15.041Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Jeff. Let's take this step by step. Can you tell me more about how often you're using cocaine and any effects you’ve noticed on your body or mood?"
+                  }
+                ],
+                "timestamp": "2025-09-28T21:55:19.055Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for sharing that."
+                  }
+                ],
+                "timestamp": "2025-09-28T21:55:32.010Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I hear you, Jeff. Even if it feels good at times, using cocaine can have serious long-term effects on your heart, blood pressure, and mental health. Are you noticing any physical symptoms, like palpitations, trouble breathing, or mood swings?"
+                  }
+                ],
+                "timestamp": "2025-09-28T21:55:36.725Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm really glad you're sharing this. Your health is our top priority. Could you describe those symptoms a bit more? For example, how often are you feeling palpitations or mood swings, and how severe are they?"
+                  }
+                ],
+                "timestamp": "2025-09-28T21:55:52.826Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 8,
+              "topics": [
+                "medication",
+                "feeling",
+                "symptom",
+                "blood pressure"
+              ],
+              "generatedAt": "2025-09-28T21:55:54.665Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T21:55:54.665Z"
+        },
+        {
+          "callId": null,
+          "timestamp": "2025-09-28T23:00:07.775Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hello Jeff Banderish, it's great to connect with you today. Could you please confirm your date of birth for me? That will help us make sure everything is accurate as we go through"
+                  }
+                ],
+                "timestamp": "2025-09-28T23:00:02.823Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T23:00:07.775Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T23:00:07.775Z"
+        },
+        {
+          "callId": null,
+          "timestamp": "2025-09-28T23:04:31.950Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Jeff Banderish, it’s great to talk with you. I want to make sure I have the right person—could you please tell me your date of birth? Once we’ve confirmed your identity,"
+                  }
+                ],
+                "timestamp": "2025-09-28T23:04:27.084Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T23:04:31.950Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T23:04:31.950Z"
+        },
+        {
+          "callId": null,
+          "timestamp": "2025-09-28T23:04:51.765Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Jeff Banderish, it’s great to hear from you. I hope you’re doing well. Could you please confirm your date of birth for me, just to make sure I’m talking to the right person? Then we’ll go ahead with the wellness check"
+                  }
+                ],
+                "timestamp": "2025-09-28T23:04:46.678Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 1,
+              "topics": [],
+              "generatedAt": "2025-09-28T23:04:51.765Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-09-28T23:04:51.765Z"
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2025-09-28T23:04:51.765Z"
+}

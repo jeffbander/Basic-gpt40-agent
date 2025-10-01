@@ -44,7 +44,7 @@ class PatientManager {
         this.mrnIndex = new Map(); // MRN to patient ID mapping
         this.callSessions = new Map();
         this.callTranscripts = new Map(); // Store full transcripts
-        this.loadData();
+        // loadData() is called async in startServer()
     }
 
     async loadData() {
@@ -1094,11 +1094,23 @@ fastify.get('/api/audit', async (request, reply) => {
 });
 
 // Start server
-fastify.listen({ port: PORT, host: '0.0.0.0' }, (err) => {
-    if (err) {
-        console.error(err);
+async function startServer() {
+    try {
+        console.log('Starting server...');
+
+        // Initialize patient data first
+        console.log('Loading patient data...');
+        await patientManager.loadData();
+        console.log('Patient data loaded successfully');
+
+        console.log('Starting Fastify server...');
+        await fastify.listen({ port: PORT, host: '0.0.0.0' });
+        console.log(`Medical Outbound Calling System V2 running on port ${PORT}`);
+        console.log(`Dashboard: http://localhost:${PORT}/patient-dashboard-v2.html`);
+    } catch (err) {
+        console.error('Server startup error:', err);
         process.exit(1);
     }
-    console.log(`Medical Outbound Calling System V2 running on port ${PORT}`);
-    console.log(`Dashboard: http://localhost:${PORT}/patient-dashboard-v2.html`);
-});
+}
+
+startServer();
