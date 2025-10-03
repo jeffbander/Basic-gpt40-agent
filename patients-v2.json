@@ -16,7 +16,7 @@
       "consentToRecord": true,
       "createdAt": "2025-09-28T21:44:56.095Z",
       "lastModified": "2025-09-29T00:05:48.476Z",
-      "lastContact": "2025-09-30T22:19:09.013Z",
+      "lastContact": "2025-10-03T12:16:05.377Z",
       "callHistory": [
         {
           "callId": null,
@@ -227,7 +227,191 @@
             }
           },
           "duration": null,
-          "endTime": "2025-09-30T22:19:09.013Z"
+          "endTime": "2025-09-30T22:19:09.013Z",
+          "detailedAnalysis": {
+            "summary": "The call involved a wellness check with patient Jeff Banderish. The patient reported chest pain and shortness of breath, and also admitted to using cocaine. The assistant expressed concern for the patient's well-being and recommended immediate medical attention.",
+            "medicalFindings": {
+              "symptoms": [
+                "chest pain",
+                "shortness of breath"
+              ],
+              "medications": [],
+              "concerns": [
+                "cocaine use",
+                "HTN"
+              ],
+              "emergencyIndicators": [
+                "chest pain",
+                "shortness of breath"
+              ]
+            },
+            "patientResponse": {
+              "engagement": "high",
+              "cooperation": "cooperative",
+              "mentalState": "The patient appears to be distressed and possibly under the influence of substances."
+            },
+            "recommendations": [
+              "Immediate medical attention due to chest pain and shortness of breath",
+              "Consultation with a substance abuse counselor or program",
+              "Regular monitoring of HTN"
+            ],
+            "riskAssessment": {
+              "level": "high",
+              "reasoning": "The patient is at high risk due to reported substance use, chest pain, and shortness of breath. These symptoms could indicate a serious health issue such as a heart attack, especially in the context of reported cocaine use."
+            },
+            "keyQuotes": [
+              "Chest pain and shortness of breath can be serious.",
+              "Using cocaine can seriously harm your health, especially with the chest pain and shortness of breath you mentioned."
+            ],
+            "nextSteps": [
+              "Immediate medical intervention",
+              "Follow-up call to ensure patient sought medical attention",
+              "Referral to substance abuse counseling or treatment program"
+            ],
+            "generatedAt": "2025-10-03T02:59:49.292Z",
+            "model": "gpt-4"
+          }
+        },
+        {
+          "callId": null,
+          "timestamp": "2025-10-03T12:16:05.377Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Of course.\n\nHello Jeff Banderish, it’s great to connect with you. Could you please confirm your date of birth for me? Once we have that, we’ll go ahead and start our wellness check to see how you’re doing, talk about any symptoms you might have, how you’re managing medications, and your overall wellbeing."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:13:55.081Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Jeff, it’s really good"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:13:58.409Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Hi Jeff! It’s really good to talk to you. Could you please confirm your date of birth for me? That’ll help us make sure everything’s correct, and then we’ll go ahead with the wellness check, okay?"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:14:02.374Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Jeff. Let's keep it simple. Could you please share your date of birth? Then we’ll move right on to the wellness check."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:14:08.276Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you for your patience. Let’s go ahead and move forward. Could you quickly share your date of birth? Then we’ll jump right into checking how"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:14:16.729Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Jeff. I’ve got that noted: November 29, 1976. \n\nLet’s start the wellness check. How have you been feeling lately? Any symptoms or concerns you’d like to talk about?"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:14:21.633Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Thank you, Jeff. I’ve got that noted: November 29, 1976. Now, let’s focus on how you’re feeling today. Are you experiencing any symptoms or anything unusual, like fatigue, pain, or changes in your health?"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:14:33.607Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I understand, Jeff. Let’s keep it simple and clear. How are you feeling today? Any specific symptoms or concerns you’d like to talk about right now?"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:14:50.126Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I’m here to help, Jeff. Go ahead and let me know how you've been feeling. Any pain, dizziness, trouble breathing,"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:15:00.908Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I'm sorry you're experiencing chest pain. Chest pain can be very serious. It's important to stop any substance use that could be contributing. If you’re having chest pain right now, I strongly recommend seeking immediate medical attention or calling 911. Let’s focus on your safety and well-being."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:15:11.763Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "I hear that you’re thinking about a dog to help keep you calm. That can be a great source of comfort. But right now, it’s really important that we address the chest pain you mentioned. Are you feeling that chest pain right now? If so, I strongly recommend you seek immediate medical attention. Once we ensure your health is stable, we can talk more about ways to help you stay calm and supported."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:15:43.553Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "Jeff, a chest pain that's 9 out of 10 with sweating could be very serious. I strongly recommend you call 911 or get emergency help immediately. This could be a sign of something very urgent, and your safety is the top priority."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:15:59.864Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 12,
+              "topics": [
+                "medication",
+                "symptom",
+                "feeling",
+                "pain"
+              ],
+              "generatedAt": "2025-10-03T12:16:05.377Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-10-03T12:16:05.377Z"
         }
       ]
     },
@@ -586,7 +770,123 @@
           "endTime": "2025-09-30T22:23:19.192Z"
         }
       ]
+    },
+    {
+      "id": "7eeb9915-8a77-4ec8-b371-0e9d9840909d",
+      "mrn": "78876655",
+      "name": "efrat gaon",
+      "phoneNumber": "9174851535",
+      "dateOfBirth": "1998-09-01",
+      "age": null,
+      "gender": "male",
+      "primaryConcern": "",
+      "customPrompt": "follow up how she fasted and her headaches and say  not otwrry about PET meeting.",
+      "conditions": [],
+      "medications": [],
+      "callObjectives": [],
+      "consentToRecord": false,
+      "createdAt": "2025-10-03T12:09:07.643Z",
+      "lastModified": "2025-10-03T12:09:07.643Z",
+      "lastContact": "2025-10-03T12:13:28.686Z",
+      "callHistory": [
+        {
+          "callId": null,
+          "timestamp": "2025-10-03T12:13:28.686Z",
+          "transcript": {
+            "conversation": [
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "שלום אפרת גאון! איזה כיף לפגוש אותך. בואי נאמת מי את – תוכלי בבקשה לומר לי את תאריך הלידה שלך? אחרי שנבדוק את זה, נמשיך לבדוק איך את מרגישה, איך הצום עבר, מה עם כאבי הראש, ולא לדאוג לגבי הפגישה עם הפ.י.ת. מוכנה?"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:11:55.865Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "היי אפרת, איזה כיף לשמוע אותך. אני כאן כדי לעזור לך. לפני שנתחיל, תוכלי בבקשה להגיד לי מה תאריך הלידה שלך, כדי שנוכל לוודא? אחרי זה נדבר על איך היה הצום, איך את מרגישה, במיוחד עם כאבי הראש, ונבדוק שהכול בסדר. קדימה, בואי נתחיל."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:12:01.916Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "בסדר גמור, תודה שאישרת. עכשיו בואי נעבור לבדיקת ה"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:12:20.464Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "יופי. אז בואי נתחיל עם איך היה הצום. איך הרגשת במהלך הצום? היה לך קשה? ומה עם כאבי הראש – הם השתפרו או שעוד מציקים לך? אני כאן איתך, ואת לא צריכה לדאוג לגבי הפגישה עם הפ.י.ת – נטפל בזה יחד. איך המצב עכשיו?"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:12:25.119Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "את צודקת, אני כאן ומקשיב לך בשקט. איך את מרגישה עכשיו? קחי את הזמן וספרי לי, אני פה להקשיב ולתמוך."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:12:49.588Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "אני מבין, אז בואי נבדוק יחד. איך עבר עלייך הצום? האם היו לך כאבי ראש חזקים או שהם נחלשו קצת? אני כאן כדי להקשיב למה שעובר עלייך, ולא לדאוג לגבי הפגישה עם הפ.י.ת. – נחשוב יחד איך להתקדם."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:12:59.198Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "הבנתי, אז את אומרת שהצום היה לא פשוט, והיו כאבי ראש שעוד מציקים. חשוב לדעת איך את מרגישה עכשיו – האם הכאב נר"
+                  }
+                ],
+                "timestamp": "2025-10-03T12:13:07.680Z"
+              },
+              {
+                "role": "assistant",
+                "content": [
+                  {
+                    "type": "output_audio",
+                    "transcript": "אני שומע שהכאב באמת חזק וממשיך כל הזמן. זה בטח מאוד מתסכל. אני כאן כדי לעזור. בואי נחשוב יחד – מה עוזר לך בדרך כלל עם כאב ראש כזה? למשל, לנוח קצת בחדר שקט, לשתות מים או לקחת משהו שיעזור. ספרי לי, ונראה איך אפשר להקל על הכאב הזה."
+                  }
+                ],
+                "timestamp": "2025-10-03T12:13:21.648Z"
+              }
+            ],
+            "buffer": [],
+            "summary": {
+              "totalExchanges": 8,
+              "topics": [],
+              "generatedAt": "2025-10-03T12:13:28.686Z"
+            }
+          },
+          "duration": null,
+          "endTime": "2025-10-03T12:13:28.686Z"
+        }
+      ]
     }
   ],
-  "lastUpdated": "2025-09-30T22:23:19.192Z"
+  "lastUpdated": "2025-10-03T12:16:05.377Z"
 }

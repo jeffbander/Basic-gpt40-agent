@@ -789,13 +789,216 @@ fastify.register(async (fastify) => {
 
 // Helper function to generate call summary
 function generateCallSummary(transcript) {
-    // Basic summary - in production, you might use AI to generate this
+    // Basic summary - detailed analysis happens separately via API
     return {
         totalExchanges: transcript.length,
         topics: extractTopics(transcript),
         generatedAt: new Date().toISOString()
     };
 }
+
+// Enhanced post-call analysis (runs independently after call ends)
+async function generateDetailedCallAnalysis(transcript, patientData) {
+    try {
+        // Extract conversation text from transcript
+        const conversationText = transcript.map(entry => {
+            if (entry.content && entry.content[0] && entry.content[0].transcript) {
+                return `${entry.role}: ${entry.content[0].transcript}`;
+            }
+            return '';
+        }).filter(text => text.length > 0).join('\n');
+
+        if (!conversationText.trim()) {
+            return {
+                error: 'No conversation content found for analysis',
+                generatedAt: new Date().toISOString()
+            };
+        }
+
+        const analysisPrompt = `You are a medical AI assistant analyzing a wellness check phone call transcript.
+
+Patient Information:
+- Name: ${patientData.name}
+- MRN: ${patientData.mrn}
+- Age: ${patientData.age || 'Not specified'}
+- Gender: ${patientData.gender || 'Not specified'}
+- Primary Concern: ${patientData.primaryConcern || 'General wellness check'}
+
+Call Transcript:
+${conversationText}
+
+Please provide a detailed medical analysis in the following JSON format:
+{
+  "summary": "Brief overview of the call",
+  "medicalFindings": {
+    "symptoms": ["list of symptoms mentioned"],
+    "medications": ["medications discussed"],
+    "concerns": ["health concerns raised"],
+    "emergencyIndicators": ["any emergency symptoms mentioned"]
+  },
+  "patientResponse": {
+    "engagement": "high/medium/low",
+    "cooperation": "cooperative/somewhat cooperative/uncooperative",
+    "mentalState": "description of patient's mental state"
+  },
+  "recommendations": [
+    "list of follow-up recommendations"
+  ],
+  "riskAssessment": {
+    "level": "low/medium/high",
+    "reasoning": "explanation of risk level"
+  },
+  "keyQuotes": ["important patient statements"],
+  "nextSteps": ["recommended next steps for care team"]
+}
+
+Only return valid JSON. Focus on medical accuracy and patient safety.`;
+
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'gpt-4',
+                messages: [
+                    { role: 'system', content: 'You are a medical AI assistant analyzing patient call transcripts.' },
+                    { role: 'user', content: analysisPrompt }
+                ],
+                temperature: 0.3,
+                max_tokens: 2000
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`OpenAI API error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        const analysisText = result.choices[0].message.content;
+
+        // Parse the JSON response
+        let analysis;
+        try {
+            analysis = JSON.parse(analysisText);
+        } catch (parseError) {
+            // If JSON parsing fails, return raw text
+            analysis = {
+                summary: analysisText,
+                error: 'Failed to parse structured analysis',
+                rawAnalysis: analysisText
+            };
+        }
+
+        analysis.generatedAt = new Date().toISOString();
+        analysis.model = 'gpt-4';
+
+        return analysis;
+
+    } catch (error) {
+        console.error('Error generating detailed call analysis:', error);
+        return {
+            error: `Analysis failed: ${error.message}`,
+            generatedAt: new Date().toISOString()
+        };
+    }
+}
+
+// API endpoint to generate detailed analysis for completed calls
+fastify.post('/api/calls/:callId/analyze', async (request, reply) => {
+    try {
+        const { callId } = request.params;
+
+        // Find the call transcript
+        let foundTranscript = null;
+        let foundPatient = null;
+
+        for (const [patientId, patient] of patientManager.patients.entries()) {
+            for (const callHistory of patient.callHistory || []) {
+                if (callHistory.callId === callId || callHistory.timestamp === callId) {
+                    foundTranscript = callHistory.transcript;
+                    foundPatient = patient;
+                    break;
+                }
+            }
+            if (foundTranscript) break;
+        }
+
+        if (!foundTranscript || !foundPatient) {
+            return reply.status(404).send({ error: 'Call transcript not found' });
+        }
+
+        // Generate detailed analysis
+        const analysis = await generateDetailedCallAnalysis(
+            foundTranscript.conversation || [],
+            foundPatient
+        );
+
+        // Optionally save the analysis back to the call record
+        if (analysis && !analysis.error) {
+            for (const [patientId, patient] of patientManager.patients.entries()) {
+                for (const callHistory of patient.callHistory || []) {
+                    if (callHistory.callId === callId || callHistory.timestamp === callId) {
+                        callHistory.detailedAnalysis = analysis;
+                        break;
+                    }
+                }
+            }
+            await patientManager.saveData();
+        }
+
+        reply.send({
+            success: true,
+            callId,
+            patientName: foundPatient.name,
+            patientMRN: foundPatient.mrn,
+            analysis
+        });
+
+    } catch (error) {
+        console.error('Error in call analysis endpoint:', error);
+        reply.status(500).send({
+            error: 'Failed to analyze call',
+            message: error.message
+        });
+    }
+});
+
+// API endpoint to get list of calls available for analysis
+fastify.get('/api/calls/analyzable', async (request, reply) => {
+    try {
+        const analyzableCalls = [];
+
+        for (const [patientId, patient] of patientManager.patients.entries()) {
+            for (const callHistory of patient.callHistory || []) {
+                if (callHistory.transcript && callHistory.transcript.conversation) {
+                    analyzableCalls.push({
+                        callId: callHistory.callId || callHistory.timestamp,
+                        patientName: patient.name,
+                        patientMRN: patient.mrn,
+                        timestamp: callHistory.timestamp,
+                        hasAnalysis: !!callHistory.detailedAnalysis,
+                        conversationLength: callHistory.transcript.conversation.length
+                    });
+                }
+            }
+        }
+
+        reply.send({
+            success: true,
+            totalCalls: analyzableCalls.length,
+            calls: analyzableCalls.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        });
+
+    } catch (error) {
+        console.error('Error getting analyzable calls:', error);
+        reply.status(500).send({
+            error: 'Failed to get call list',
+            message: error.message
+        });
+    }
+});
 
 function extractTopics(transcript) {
     // Simple keyword extraction - enhance as needed
