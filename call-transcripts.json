@@ -3,139 +3,41 @@
     "patientId": "da5823b3-b341-4758-9eb7-f30e001ae9a3",
     "mrn": "2342432432",
     "patientName": "jeff banderish",
-    "conversation": [
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Of course.\n\nHello Jeff Banderish, it’s great to connect with you. Could you please confirm your date of birth for me? Once we have that, we’ll go ahead and start our wellness check to see how you’re doing, talk about any symptoms you might have, how you’re managing medications, and your overall wellbeing."
-          }
-        ],
-        "timestamp": "2025-10-03T12:13:55.081Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Hi Jeff, it’s really good"
-          }
-        ],
-        "timestamp": "2025-10-03T12:13:58.409Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Hi Jeff! It’s really good to talk to you. Could you please confirm your date of birth for me? That’ll help us make sure everything’s correct, and then we’ll go ahead with the wellness check, okay?"
-          }
-        ],
-        "timestamp": "2025-10-03T12:14:02.374Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "I understand, Jeff. Let's keep it simple. Could you please share your date of birth? Then we’ll move right on to the wellness check."
-          }
-        ],
-        "timestamp": "2025-10-03T12:14:08.276Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Thank you for your patience. Let’s go ahead and move forward. Could you quickly share your date of birth? Then we’ll jump right into checking how"
-          }
-        ],
-        "timestamp": "2025-10-03T12:14:16.729Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Thank you, Jeff. I’ve got that noted: November 29, 1976. \n\nLet’s start the wellness check. How have you been feeling lately? Any symptoms or concerns you’d like to talk about?"
-          }
-        ],
-        "timestamp": "2025-10-03T12:14:21.633Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Thank you, Jeff. I’ve got that noted: November 29, 1976. Now, let’s focus on how you’re feeling today. Are you experiencing any symptoms or anything unusual, like fatigue, pain, or changes in your health?"
-          }
-        ],
-        "timestamp": "2025-10-03T12:14:33.607Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "I understand, Jeff. Let’s keep it simple and clear. How are you feeling today? Any specific symptoms or concerns you’d like to talk about right now?"
-          }
-        ],
-        "timestamp": "2025-10-03T12:14:50.126Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "I’m here to help, Jeff. Go ahead and let me know how you've been feeling. Any pain, dizziness, trouble breathing,"
-          }
-        ],
-        "timestamp": "2025-10-03T12:15:00.908Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "I'm sorry you're experiencing chest pain. Chest pain can be very serious. It's important to stop any substance use that could be contributing. If you’re having chest pain right now, I strongly recommend seeking immediate medical attention or calling 911. Let’s focus on your safety and well-being."
-          }
-        ],
-        "timestamp": "2025-10-03T12:15:11.763Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "I hear that you’re thinking about a dog to help keep you calm. That can be a great source of comfort. But right now, it’s really important that we address the chest pain you mentioned. Are you feeling that chest pain right now? If so, I strongly recommend you seek immediate medical attention. Once we ensure your health is stable, we can talk more about ways to help you stay calm and supported."
-          }
-        ],
-        "timestamp": "2025-10-03T12:15:43.553Z"
-      },
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Jeff, a chest pain that's 9 out of 10 with sweating could be very serious. I strongly recommend you call 911 or get emergency help immediately. This could be a sign of something very urgent, and your safety is the top priority."
-          }
-        ],
-        "timestamp": "2025-10-03T12:15:59.864Z"
-      }
-    ],
+    "conversation": [],
     "buffer": [],
     "summary": {
-      "totalExchanges": 12,
-      "topics": [
-        "medication",
-        "symptom",
-        "feeling",
-        "pain"
-      ],
-      "generatedAt": "2025-10-03T12:16:05.377Z"
+      "totalExchanges": 0,
+      "topics": [],
+      "generatedAt": "2025-10-09T02:15:14.300Z"
     },
-    "savedAt": "2025-10-03T12:16:05.377Z"
+    "enhanced": {
+      "fullTranscript": {
+        "realtime": [],
+        "conversationItems": [],
+        "audioTranscriptions": [],
+        "responseTranscripts": [],
+        "metadata": {
+          "callId": null,
+          "patientId": "da5823b3-b341-4758-9eb7-f30e001ae9a3",
+          "patientMRN": "2342432432",
+          "startTime": 1759976110316,
+          "duration": 3984,
+          "performanceMetrics": {
+            "totalEvents": 0,
+            "transcriptionEvents": 0,
+            "responseEvents": 0,
+            "errorCount": 0,
+            "avgProcessingTime": 2.6375435169256894e-10
+          },
+          "errorLog": []
+        }
+      },
+      "transcriptionSuccessRate": 100,
+      "totalEvents": 0,
+      "errorCount": 0,
+      "audioTranscriptionCount": 0,
+      "responseCount": 0
+    },
+    "savedAt": "2025-10-09T02:15:14.300Z"
   }
 }
