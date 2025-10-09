@@ -1806,6 +1806,9 @@ fastify.post('/recording-status', async (request, reply) => {
     reply.send({ received: true });
 });
 
+// Import call management system
+import { callManagerWebhookHandler } from './call-management/api/webhook-handler.js';
+
 // Webhook endpoint for external agents to trigger calls
 fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
     console.log('[WEBHOOK] Received agent trigger request:', JSON.stringify(request.body, null, 2));
@@ -1817,6 +1820,28 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
         // Generate parsing report for debugging
         const parsingReport = agentParser.generateParsingReport(request.body, parsedData);
         console.log('[WEBHOOK] Parsing report:', JSON.stringify(parsingReport, null, 2));
+
+        // NEW: Process through call management system for intelligent scheduling
+        try {
+            const callManagementResult = await callManagerWebhookHandler.handleWebhook(
+                request.body,
+                parsedData,
+                agentParser,
+                request
+            );
+
+            // If call management handled it (queued/scheduled), return management response
+            if (callManagementResult.success && callManagementResult.status !== 'queued') {
+                console.log('[WEBHOOK] Call scheduled by management system:', callManagementResult.webhookCallId);
+                return reply.send(callManagementResult);
+            }
+
+            // If queued for immediate processing, continue with existing flow
+            console.log('[WEBHOOK] Call queued for immediate processing, continuing with existing flow');
+        } catch (callMgmtError) {
+            // If call management fails, continue with existing flow as fallback
+            console.warn('[WEBHOOK] Call management error, falling back to direct processing:', callMgmtError.message);
+        }
 
         // Enhanced error handling with parsing report
         if (!parsedData.phoneNumber) {
@@ -1994,10 +2019,21 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
     }
 });
 
-// Webhook status check endpoint
+// Enhanced webhook status check endpoint with call management integration
 fastify.get('/api/webhook/status/:webhookCallId', async (request, reply) => {
     const { webhookCallId } = request.params;
 
+    // First check if this is managed by the call management system
+    try {
+        const managedStatus = await callManagerWebhookHandler.getWebhookStatus(webhookCallId);
+        if (managedStatus.success) {
+            return reply.send(managedStatus);
+        }
+    } catch (error) {
+        console.warn('[WEBHOOK-STATUS] Call management status check failed, checking legacy system:', error.message);
+    }
+
+    // Fallback to legacy system for backward compatibility
     const webhookCall = activeWebhookCalls.get(webhookCallId);
 
     if (!webhookCall) {
@@ -2329,6 +2365,38 @@ As an expert in Twilio Media Streams and GPT-4o Realtime API integration, please
 
 Focus on production-grade solutions that maintain low-latency audio while ensuring reliable transcription capture.`;
 }
+
+// Call management system health check
+fastify.get('/api/call-management/health', async (request, reply) => {
+    try {
+        const health = await callManagerWebhookHandler.healthCheck();
+        reply.send(health);
+    } catch (error) {
+        reply.status(500).send({
+            status: 'unhealthy',
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
+    }
+});
+
+// Call management queue status
+fastify.get('/api/call-management/queue-stats', async (request, reply) => {
+    try {
+        const stats = await callManagerWebhookHandler.schedulingEngine.getQueueStats();
+        reply.send({
+            success: true,
+            stats,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        reply.status(500).send({
+            success: false,
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
+    }
+});
 
 // Test endpoint to verify transcription system configuration
 fastify.get('/api/transcription/test-config', async (request, reply) => {

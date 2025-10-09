@@ -7,7 +7,9 @@
     "start:inbound": "node index.js",
     "start:outbound": "node outbound-medical.js",
     "start:medical": "node outbound-medical-v2.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test",
+    "test:headed": "playwright test --project=chromium-headed",
+    "test:call": "playwright test tests/medical-call-test.spec.js --project=chromium-headed"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +18,15 @@
     "@fastify/formbody": "^8.0.0",
     "@fastify/static": "^8.2.0",
     "@fastify/websocket": "^11.0.0",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "fastify": "^5.0.0",
+    "node-cron": "^4.2.1",
+    "sqlite3": "^5.1.7",
     "twilio": "^5.9.0",
     "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.1"
   }
 }
