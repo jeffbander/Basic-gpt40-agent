@@ -1,39 +1,43 @@
 {
-  "undefined": {
-    "patientId": "550e8400-e29b-41d4-a716-446655440001",
-    "mrn": "MRN-2025-001",
-    "patientName": "John Smith",
+  "null": {
+    "patientId": "da5823b3-b341-4758-9eb7-f30e001ae9a3",
+    "mrn": "2342432432",
+    "patientName": "jeff banderish",
     "conversation": [],
     "buffer": [],
     "summary": {
       "totalExchanges": 0,
       "topics": [],
-      "generatedAt": "2025-09-26T02:00:17.890Z"
+      "generatedAt": "2025-10-09T02:15:14.300Z"
     },
-    "savedAt": "2025-09-26T02:00:17.890Z"
-  },
-  "null": {
-    "patientId": "550e8400-e29b-41d4-a716-446655440001",
-    "mrn": "MRN-2025-001",
-    "patientName": "John Smith",
-    "conversation": [
-      {
-        "role": "assistant",
-        "content": [
-          {
-            "type": "output_audio",
-            "transcript": "Hello, Mr. Smith! It's great to speak with you today. I hope you're doing well. Before we get started, could you please confirm your date of birth for me? That way we can make sure everything is correct and move forward with our wellness check."
-          }
-        ],
-        "timestamp": "2025-09-26T10:15:52.777Z"
-      }
-    ],
-    "buffer": [],
-    "summary": {
-      "totalExchanges": 1,
-      "topics": [],
-      "generatedAt": "2025-09-26T10:17:47.640Z"
+    "enhanced": {
+      "fullTranscript": {
+        "realtime": [],
+        "conversationItems": [],
+        "audioTranscriptions": [],
+        "responseTranscripts": [],
+        "metadata": {
+          "callId": null,
+          "patientId": "da5823b3-b341-4758-9eb7-f30e001ae9a3",
+          "patientMRN": "2342432432",
+          "startTime": 1759976110316,
+          "duration": 3984,
+          "performanceMetrics": {
+            "totalEvents": 0,
+            "transcriptionEvents": 0,
+            "responseEvents": 0,
+            "errorCount": 0,
+            "avgProcessingTime": 2.6375435169256894e-10
+          },
+          "errorLog": []
+        }
+      },
+      "transcriptionSuccessRate": 100,
+      "totalEvents": 0,
+      "errorCount": 0,
+      "audioTranscriptionCount": 0,
+      "responseCount": 0
     },
-    "savedAt": "2025-09-26T10:17:47.640Z"
+    "savedAt": "2025-10-09T02:15:14.300Z"
   }
 }
