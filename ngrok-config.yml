@@ -1,0 +1,25 @@
+version: "2"
+authtoken: 31wbk8kVUqHXH8umAHFOnOlR1Dg_3Cd2PSnnJZA5W9qY8FFtK
+region: us
+
+tunnels:
+  medical-app:
+    proto: http
+    addr: 5051
+    subdomain: ""
+    inspect: true
+    bind_tls: true
+
+  heartvoice-monitor:
+    proto: http
+    addr: 3004
+    subdomain: ""
+    inspect: true
+    bind_tls: true
+
+  heartvoice-websocket:
+    proto: http
+    addr: 8080
+    subdomain: ""
+    inspect: true
+    bind_tls: true

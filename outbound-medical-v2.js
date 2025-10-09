@@ -13,7 +13,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env'), override: true });
+
+console.log('========================================');
+console.log('ENVIRONMENT VARIABLES LOADED FROM:', path.join(__dirname, '.env'));
+console.log('BASE_URL:', process.env.BASE_URL);
+console.log('PORT:', process.env.PORT);
+console.log('========================================');
 
 const { OPENAI_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER } = process.env;
 
@@ -1725,6 +1731,38 @@ fastify.post('/call-status', async (request, reply) => {
                     console.log(`[WEBHOOK] Call ${CallStatus} for webhook ${webhookCallId} (CallSid: ${CallSid})`);
 
                     if (isFailureState) {
+                        // Send failure notification to agent if callback URL is provided
+                        if (webhookCall.agentCallbackUrl && webhookNotificationService.isValidWebhookUrl(webhookCall.agentCallbackUrl)) {
+                            const callOutcome = webhookNotificationService.prepareFailureOutcome(
+                                webhookCallId,
+                                {
+                                    id: webhookCall.patientId,
+                                    name: webhookCall.patientName,
+                                    phoneNumber: webhookCall.phoneNumber
+                                },
+                                CallStatus,
+                                1, // First attempt failed
+                                ErrorCode ? `Twilio Error ${ErrorCode}: ${ErrorMessage || ''}` : ErrorMessage || null
+                            );
+
+                            const notificationMethod = CallStatus === 'no-answer'
+                                ? webhookNotificationService.sendNoAnswerNotification
+                                : webhookNotificationService.sendFailureNotification;
+
+                            // Send notification asynchronously
+                            notificationMethod.call(webhookNotificationService, webhookCall.agentCallbackUrl, callOutcome)
+                                .then(result => {
+                                    if (result.success) {
+                                        console.log(`[WEBHOOK-NOTIFY] ✅ ${CallStatus} notification sent to agent for ${webhookCallId}`);
+                                    } else {
+                                        console.log(`[WEBHOOK-NOTIFY] ❌ Failed to notify agent for ${webhookCallId}: ${result.lastError}`);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error(`[WEBHOOK-NOTIFY] ❌ Error sending ${CallStatus} notification: ${error.message}`);
+                                });
+                        }
+
                         // For failed calls, resolve with failure information
                         if (webhookCall.resolve) {
                             webhookCall.resolve({
@@ -1746,6 +1784,36 @@ fastify.post('/call-status', async (request, reply) => {
                         if (transcript) {
                             patientManager.callTranscripts.set(webhookCallId, transcript);
                             patientManager.saveTranscripts();
+                        }
+
+                        // Send success notification to agent if callback URL is provided
+                        if (webhookCall.agentCallbackUrl && webhookNotificationService.isValidWebhookUrl(webhookCall.agentCallbackUrl)) {
+                            const callOutcome = webhookNotificationService.prepareSuccessOutcome(
+                                webhookCallId,
+                                {
+                                    id: webhookCall.patientId,
+                                    name: webhookCall.patientName,
+                                    phoneNumber: webhookCall.phoneNumber
+                                },
+                                {
+                                    callSid: CallSid,
+                                    duration: CallDuration
+                                },
+                                transcript
+                            );
+
+                            // Send notification asynchronously
+                            webhookNotificationService.sendSuccessNotification(webhookCall.agentCallbackUrl, callOutcome)
+                                .then(result => {
+                                    if (result.success) {
+                                        console.log(`[WEBHOOK-NOTIFY] ✅ Success notification sent to agent for ${webhookCallId}`);
+                                    } else {
+                                        console.log(`[WEBHOOK-NOTIFY] ❌ Failed to notify agent for ${webhookCallId}: ${result.lastError}`);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error(`[WEBHOOK-NOTIFY] ❌ Error sending success notification: ${error.message}`);
+                                });
                         }
 
                         // Resolve the webhook promise
@@ -1808,6 +1876,7 @@ fastify.post('/recording-status', async (request, reply) => {
 
 // Import call management system
 import { callManagerWebhookHandler } from './call-management/api/webhook-handler.js';
+import { webhookNotificationService } from './webhook-notification-service.js';
 
 // Webhook endpoint for external agents to trigger calls
 fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
@@ -1949,12 +2018,24 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
         // Generate unique webhook call ID to track this specific call
         const webhookCallId = `webhook-${crypto.randomUUID()}`;
 
+        // Extract agent callback URL for post-call notifications
+        const agentCallbackUrl = request.body.callbackUrl || request.body.callback_url || request.body.webhookUrl;
+
         // Create a promise that will resolve when the call completes
         const callCompletePromise = new Promise((resolve, reject) => {
-            activeWebhookCalls.set(webhookCallId, { resolve, reject, startTime: Date.now() });
+            activeWebhookCalls.set(webhookCallId, {
+                resolve,
+                reject,
+                startTime: Date.now(),
+                patientId: patient.id,
+                patientName: patient.name,
+                phoneNumber: patient.phoneNumber,
+                agentCallbackUrl: agentCallbackUrl,
+                originalWebhookData: request.body
+            });
 
             // Set timeout of 5 minutes for the call
-            setTimeout(() => {
+            setTimeout(async () => {
                 if (activeWebhookCalls.has(webhookCallId)) {
                     const webhookCall = activeWebhookCalls.get(webhookCallId);
                     const callSid = webhookCall.callSid || 'unknown';
@@ -1963,6 +2044,36 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
                     console.log(`[WEBHOOK] ⏰ TIMEOUT: Webhook ${webhookCallId} exceeded 5 minutes`);
                     console.log(`[WEBHOOK] ⏰ Call details: CallSid=${callSid}, PatientId=${patientId}`);
                     console.log(`[WEBHOOK] ⏰ This likely indicates a call that connected but never completed or failed to send status webhooks`);
+
+                    // Send timeout notification to agent if callback URL is available
+                    if (webhookCall.agentCallbackUrl) {
+                        const callOutcome = webhookNotificationService.prepareFailureOutcome(
+                            webhookCallId,
+                            {
+                                id: webhookCall.patientId,
+                                name: webhookCall.patientName,
+                                phoneNumber: webhookCall.phoneNumber
+                            },
+                            'timeout',
+                            1,
+                            `Call exceeded 5 minute timeout. CallSid: ${callSid}. Check if call is still active in Twilio console.`
+                        );
+
+                        try {
+                            const notificationResult = await webhookNotificationService.sendFailureNotification(
+                                webhookCall.agentCallbackUrl,
+                                callOutcome
+                            );
+
+                            if (notificationResult.success) {
+                                console.log(`[WEBHOOK-NOTIFY] ✅ Timeout notification sent to agent for ${webhookCallId}`);
+                            } else {
+                                console.log(`[WEBHOOK-NOTIFY] ❌ Failed to send timeout notification to agent: ${notificationResult.lastError}`);
+                            }
+                        } catch (error) {
+                            console.log(`[WEBHOOK-NOTIFY] ❌ Error sending timeout notification: ${error.message}`);
+                        }
+                    }
 
                     activeWebhookCalls.delete(webhookCallId);
                     reject(new Error(`Call timeout - exceeded 5 minutes. CallSid: ${callSid}, PatientId: ${patientId}. Check if call is still active in Twilio console.`));
@@ -2451,6 +2562,41 @@ fastify.get('/api/transcription/test-config', async (request, reply) => {
             message: error.message
         });
     }
+});
+
+// Webhook URL Info Endpoint - for external agents to query current URLs
+fastify.get('/api/webhook-info', async (request, reply) => {
+    const baseUrl = process.env.BASE_URL || 'http://localhost:5051';
+
+    reply.send({
+        timestamp: new Date().toISOString(),
+        baseUrl: baseUrl,
+        webhookEndpoints: {
+            agentTrigger: `${baseUrl}/api/webhook/agent-trigger`,
+            callStatus: `${baseUrl}/call-status`,
+            recordingStatus: `${baseUrl}/recording-status`,
+            webhookStatus: `${baseUrl}/api/webhook/status/:webhookCallId`
+        },
+        payloadExample: {
+            phoneNumber: "+16465565559",
+            patientName: "John Doe",
+            patientId: "MRN12345",
+            message: "Routine wellness check",
+            callbackUrl: "https://your-agent-url.com/callback"
+        },
+        supportedFields: {
+            phone: ["phone", "phoneNumber", "phone_number", "Phone", "patient.phone"],
+            name: ["name", "patientName", "patient_name", "patient.name"],
+            mrn: ["mrn", "patientId", "patient_id", "id"],
+            notes: ["message", "notes", "instructions", "PPD_demo"]
+        },
+        notes: [
+            "This endpoint updates automatically when BASE_URL changes",
+            "External agents can query this endpoint to get current webhook URLs",
+            "Use the agentTrigger endpoint to initiate outbound calls",
+            "Provide a callbackUrl in your payload to receive call status updates"
+        ]
+    });
 });
 
 // Start server
