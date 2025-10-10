@@ -1,0 +1,57 @@
+{
+  "version": 2,
+  "name": "medical-ai-calling-system",
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "outbound-medical-v2.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "index.js"
+    },
+    {
+      "src": "/incoming-call",
+      "dest": "index.js"
+    },
+    {
+      "src": "/media-stream",
+      "dest": "index.js"
+    },
+    {
+      "src": "/health",
+      "dest": "index.js"
+    },
+    {
+      "src": "/outbound/(.*)",
+      "dest": "outbound-medical-v2.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
+    }
+  ],
+  "env": {
+    "OPENAI_API_KEY": "@openai-api-key",
+    "TWILIO_ACCOUNT_SID": "@twilio-account-sid",
+    "TWILIO_AUTH_TOKEN": "@twilio-auth-token",
+    "TWILIO_PHONE_NUMBER": "@twilio-phone-number",
+    "USE_FIRESTORE": "true",
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "index.js": {
+      "maxDuration": 300
+    },
+    "outbound-medical-v2.js": {
+      "maxDuration": 300
+    }
+  },
+  "regions": ["iad1"]
+}

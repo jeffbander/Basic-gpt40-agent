@@ -1,0 +1,79 @@
+# Vercel ignore file - exclude from deployment
+
+# Local development files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+call-management/database/*.db
+
+# Node modules
+node_modules/
+
+# Tests
+tests/
+playwright-report/
+test-results/
+*.spec.js
+test-*.js
+playwright.config.js
+
+# Git
+.git/
+.github/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Documentation
+*.md
+!README.md
+
+# Batch scripts (Windows-specific)
+*.bat
+
+# Build files
+build/
+dist/
+
+# Firebase local files
+firebase-service-account.json
+.firebase/
+firebase-debug.log
+
+# Patient data (HIPAA compliance)
+patients*.json
+call-transcripts.json
+patient-dashboard*.html
+
+# ngrok
+ngrok
+ngrok.exe
+
+# Specify files
+.specify/
