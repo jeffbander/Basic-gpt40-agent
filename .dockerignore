@@ -1,0 +1,60 @@
+# Dependencies
+node_modules
+npm-debug.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+.specify
+
+# Testing
+tests
+test-*.js
+playwright-report
+test-results
+playwright.config.js
+
+# Documentation
+*.md
+AUDIO_STATIC_FIX.md
+TRANSCRIPTION_SYSTEM_GUIDE.md
+VERCEL_TROUBLESHOOTING.md
+VERCEL_ENV_VARIABLES.txt
+
+# Local scripts
+launch-medical-app.bat
+start-server.bat
+update-ngrok-urls.js
+update-all-ngrok-urls.js
+
+# Build artifacts
+dist
+build
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+vercel.json
+
+# Local data files (we're using Firestore now)
+patients-v2.json
+call-transcripts.json
+archived-patients.json

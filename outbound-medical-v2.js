@@ -9,6 +9,7 @@ import { promises as fs } from 'fs';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import admin from 'firebase-admin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,7 +22,7 @@ console.log('BASE_URL:', process.env.BASE_URL);
 console.log('PORT:', process.env.PORT);
 console.log('========================================');
 
-const { OPENAI_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER } = process.env;
+const { OPENAI_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, USE_FIRESTORE, FIREBASE_SERVICE_ACCOUNT_JSON } = process.env;
 
 if (!OPENAI_API_KEY || !TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_PHONE_NUMBER) {
     console.error('Missing required environment variables.');
@@ -29,6 +30,22 @@ if (!OPENAI_API_KEY || !TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_PHON
 }
 
 const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+// Initialize Firebase Admin SDK
+let db = null;
+if (USE_FIRESTORE === 'true') {
+    try {
+        const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT_JSON);
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount)
+        });
+        db = admin.firestore();
+        console.log('✅ Firestore initialized successfully');
+    } catch (error) {
+        console.error('❌ Error initializing Firestore:', error.message);
+        console.log('⚠️  Falling back to file system storage');
+    }
+}
 
 const fastify = Fastify();
 fastify.register(fastifyFormBody);
@@ -45,15 +62,49 @@ const TEMPERATURE = 0.6;
 
 // Enhanced Patient Manager with MRN and Call Transcripts
 class PatientManager {
-    constructor() {
+    constructor(firestoreDb = null) {
         this.patients = new Map();
         this.mrnIndex = new Map(); // MRN to patient ID mapping
         this.callSessions = new Map();
         this.callTranscripts = new Map(); // Store full transcripts
+        this.db = firestoreDb;
+        this.useFirestore = !!firestoreDb;
         // loadData() is called async in startServer()
     }
 
     async loadData() {
+        if (this.useFirestore) {
+            await this.loadFromFirestore();
+        } else {
+            await this.loadFromFileSystem();
+        }
+    }
+
+    async loadFromFirestore() {
+        try {
+            // Load patients
+            const patientsSnapshot = await this.db.collection('patients').get();
+            patientsSnapshot.forEach(doc => {
+                const patient = { id: doc.id, ...doc.data() };
+                this.patients.set(patient.id, patient);
+                if (patient.mrn) {
+                    this.mrnIndex.set(patient.mrn, patient.id);
+                }
+            });
+            console.log(`✅ Loaded ${this.patients.size} patients from Firestore`);
+
+            // Load call transcripts
+            const transcriptsSnapshot = await this.db.collection('callTranscripts').get();
+            transcriptsSnapshot.forEach(doc => {
+                this.callTranscripts.set(doc.id, doc.data());
+            });
+            console.log(`✅ Loaded ${this.callTranscripts.size} call transcripts from Firestore`);
+        } catch (error) {
+            console.error('❌ Error loading from Firestore:', error);
+        }
+    }
+
+    async loadFromFileSystem() {
         // Load patients
         try {
             const data = await fs.readFile('patients-v2.json', 'utf8');
@@ -84,16 +135,26 @@ class PatientManager {
     }
 
     async saveData() {
-        const patientsData = {
-            patients: Array.from(this.patients.values()),
-            lastUpdated: new Date().toISOString()
-        };
-        await fs.writeFile('patients-v2.json', JSON.stringify(patientsData, null, 2));
+        if (this.useFirestore) {
+            // Firestore auto-saves on each operation, no batch save needed
+            return;
+        } else {
+            const patientsData = {
+                patients: Array.from(this.patients.values()),
+                lastUpdated: new Date().toISOString()
+            };
+            await fs.writeFile('patients-v2.json', JSON.stringify(patientsData, null, 2));
+        }
     }
 
     async saveTranscripts() {
-        const transcripts = Object.fromEntries(this.callTranscripts);
-        await fs.writeFile('call-transcripts.json', JSON.stringify(transcripts, null, 2));
+        if (this.useFirestore) {
+            // Firestore auto-saves on each operation, no batch save needed
+            return;
+        } else {
+            const transcripts = Object.fromEntries(this.callTranscripts);
+            await fs.writeFile('call-transcripts.json', JSON.stringify(transcripts, null, 2));
+        }
     }
 
     validateMRN(mrn, excludePatientId = null) {
@@ -104,7 +165,7 @@ class PatientManager {
         return { valid: true };
     }
 
-    addPatient(patientData) {
+    async addPatient(patientData) {
         // Validate MRN
         if (patientData.mrn) {
             const mrnValidation = this.validateMRN(patientData.mrn);
@@ -128,11 +189,17 @@ class PatientManager {
 
         this.patients.set(id, newPatient);
         this.mrnIndex.set(newPatient.mrn, id);
-        this.saveData();
+
+        if (this.useFirestore) {
+            await this.db.collection('patients').doc(id).set(newPatient);
+        } else {
+            await this.saveData();
+        }
+
         return newPatient;
     }
 
-    updatePatient(id, updates) {
+    async updatePatient(id, updates) {
         const patient = this.patients.get(id);
         if (!patient) return null;
 
@@ -153,11 +220,17 @@ class PatientManager {
             lastModified: new Date().toISOString()
         };
         this.patients.set(id, updatedPatient);
-        this.saveData();
+
+        if (this.useFirestore) {
+            await this.db.collection('patients').doc(id).set(updatedPatient);
+        } else {
+            await this.saveData();
+        }
+
         return updatedPatient;
     }
 
-    deletePatient(id) {
+    async deletePatient(id) {
         const patient = this.patients.get(id);
         if (!patient) return false;
 
@@ -168,11 +241,17 @@ class PatientManager {
 
         // Archive call history before deletion (optional)
         if (patient.callHistory.length > 0) {
-            this.archivePatientCalls(patient);
+            await this.archivePatientCalls(patient);
         }
 
         this.patients.delete(id);
-        this.saveData();
+
+        if (this.useFirestore) {
+            await this.db.collection('patients').doc(id).delete();
+        } else {
+            await this.saveData();
+        }
+
         return true;
     }
 
@@ -191,12 +270,17 @@ class PatientManager {
         };
 
         try {
-            const existingArchive = await fs.readFile('archived-patients.json', 'utf8')
-                .then(data => JSON.parse(data))
-                .catch(() => []);
+            if (this.useFirestore) {
+                const archiveId = `${patient.id}-${Date.now()}`;
+                await this.db.collection('archivedPatients').doc(archiveId).set(archiveData);
+            } else {
+                const existingArchive = await fs.readFile('archived-patients.json', 'utf8')
+                    .then(data => JSON.parse(data))
+                    .catch(() => []);
 
-            existingArchive.push(archiveData);
-            await fs.writeFile('archived-patients.json', JSON.stringify(existingArchive, null, 2));
+                existingArchive.push(archiveData);
+                await fs.writeFile('archived-patients.json', JSON.stringify(existingArchive, null, 2));
+            }
         } catch (error) {
             console.error('Error archiving patient data:', error);
         }
@@ -256,7 +340,7 @@ class PatientManager {
         return basePrompt;
     }
 
-    recordCallSession(patientId, sessionData) {
+    async recordCallSession(patientId, sessionData) {
         const patient = this.patients.get(patientId);
         if (!patient) return;
 
@@ -271,17 +355,28 @@ class PatientManager {
 
         // Save transcript separately for efficient storage
         if (sessionData.transcript) {
-            this.callTranscripts.set(callRecord.callId, {
+            const transcriptData = {
                 patientId,
                 mrn: patient.mrn,
                 patientName: patient.name,
                 ...sessionData.transcript,
                 savedAt: new Date().toISOString()
-            });
-            this.saveTranscripts();
+            };
+            this.callTranscripts.set(callRecord.callId, transcriptData);
+
+            if (this.useFirestore) {
+                await this.db.collection('callTranscripts').doc(callRecord.callId).set(transcriptData);
+            } else {
+                await this.saveTranscripts();
+            }
         }
 
-        this.saveData();
+        if (this.useFirestore) {
+            await this.db.collection('patients').doc(patientId).set(patient);
+        } else {
+            await this.saveData();
+        }
+
         return callRecord.callId;
     }
 
@@ -300,7 +395,7 @@ class PatientManager {
     }
 }
 
-const patientManager = new PatientManager();
+const patientManager = new PatientManager(db);
 
 // Call Recording Configuration
 const ENABLE_RECORDING = process.env.ENABLE_RECORDING === 'true';
@@ -787,7 +882,7 @@ fastify.get('/api/patients/:id', async (request, reply) => {
 
 fastify.post('/api/patients', async (request, reply) => {
     try {
-        const patient = patientManager.addPatient(request.body);
+        const patient = await patientManager.addPatient(request.body);
         logAuditEvent('PATIENT_CREATED', { patientId: patient.id, mrn: patient.mrn });
         reply.send(patient);
     } catch (error) {
@@ -797,7 +892,7 @@ fastify.post('/api/patients', async (request, reply) => {
 
 fastify.put('/api/patients/:id', async (request, reply) => {
     try {
-        const patient = patientManager.updatePatient(request.params.id, request.body);
+        const patient = await patientManager.updatePatient(request.params.id, request.body);
         if (!patient) {
             reply.status(404).send({ error: 'Patient not found' });
             return;
@@ -810,7 +905,7 @@ fastify.put('/api/patients/:id', async (request, reply) => {
 });
 
 fastify.delete('/api/patients/:id', async (request, reply) => {
-    const deleted = patientManager.deletePatient(request.params.id);
+    const deleted = await patientManager.deletePatient(request.params.id);
     if (!deleted) {
         reply.status(404).send({ error: 'Patient not found' });
         return;
@@ -1150,11 +1245,24 @@ fastify.register(async (fastify) => {
         // Initialize enhanced transcription manager
         const transcriptionManager = new TranscriptionManager(callId, patientId, patient);
 
-        const openAiWs = new WebSocket(`wss://api.openai.com/v1/realtime?model=gpt-realtime&temperature=${TEMPERATURE}`, {
-            headers: {
-                Authorization: `Bearer ${OPENAI_API_KEY}`,
-            }
-        });
+        console.log('[OPENAI] Creating WebSocket connection to OpenAI Realtime API...');
+        console.log('[OPENAI] API Key present:', !!OPENAI_API_KEY);
+        console.log('[OPENAI] API Key length:', OPENAI_API_KEY?.length);
+
+        let openAiWs;
+        try {
+            openAiWs = new WebSocket(`wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01`, {
+                headers: {
+                    Authorization: `Bearer ${OPENAI_API_KEY}`,
+                }
+            });
+            console.log('[OPENAI] WebSocket object created successfully, readyState:', openAiWs.readyState);
+        } catch (error) {
+            console.error('[OPENAI] ❌ FAILED to create WebSocket:', error);
+            console.error('[OPENAI] Error details:', error.message, error.stack);
+            connection.close();
+            return;
+        }
 
         // Process buffered audio once OpenAI is ready
         const flushAudioBuffer = () => {
@@ -1180,7 +1288,7 @@ fastify.register(async (fastify) => {
                 type: 'session.update',
                 session: {
                     type: 'realtime',
-                    model: "gpt-realtime",
+                    model: "gpt-4o-realtime-preview-2024-10-01",
                     output_modalities: ["audio"],
                     audio: {
                         input: {
@@ -1221,7 +1329,7 @@ fastify.register(async (fastify) => {
         };
 
         openAiWs.on('open', () => {
-            console.log('Connected to OpenAI Realtime API');
+            console.log('[OPENAI] ✅ Connected to OpenAI Realtime API');
             openAiReady = true;
 
             // Small delay to ensure connection stability before session initialization
@@ -1366,7 +1474,7 @@ fastify.register(async (fastify) => {
             }
         });
 
-        connection.on('close', () => {
+        connection.on('close', async () => {
             console.log(`[AUDIO] Connection closing. Final buffer size: ${audioBuffer.length} packets`);
 
             if (openAiWs.readyState === WebSocket.OPEN) openAiWs.close();
@@ -1404,7 +1512,7 @@ fastify.register(async (fastify) => {
                 transcriptionMetrics: fullTranscript.metadata.performanceMetrics
             };
 
-            patientManager.recordCallSession(patientId, sessionData);
+            await patientManager.recordCallSession(patientId, sessionData);
 
             logAuditEvent('CALL_ENDED', {
                 patientId,
@@ -1428,7 +1536,9 @@ fastify.register(async (fastify) => {
         });
 
         openAiWs.on('error', (error) => {
-            console.error('[OPENAI] WebSocket error:', error.message);
+            console.error('[OPENAI] ❌ WebSocket error:', error);
+            console.error('[OPENAI] Error message:', error.message);
+            console.error('[OPENAI] Error stack:', error.stack);
             transcriptionManager.logError('openai_websocket_error', error);
 
             logAuditEvent('OPENAI_WEBSOCKET_ERROR', {
@@ -1985,7 +2095,7 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
             }
 
             // Add patient to system
-            patientManager.addPatient(patient);
+            await patientManager.addPatient(patient);
             console.log(`[WEBHOOK] Created new patient: ${patient.mrn}`);
         } else {
             // Update existing patient with new information
@@ -2011,7 +2121,7 @@ fastify.post('/api/webhook/agent-trigger', async (request, reply) => {
             }
 
             patient.lastModified = new Date().toISOString();
-            patientManager.updatePatient(patient.id, patient);
+            await patientManager.updatePatient(patient.id, patient);
             console.log(`[WEBHOOK] Updated existing patient: ${patient.mrn}`);
         }
 
