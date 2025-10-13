@@ -145,3 +145,20 @@ dist
 *.db-shm
 *.db-wal
 .env*.local
+
+# VS Code settings (personal IDE configurations)
+.vscode/
+
+# Playwright test results and reports
+playwright-report/
+test-results/
+test-results.json
+
+# Specify AI tool files
+.specify/
+
+# Production environment files (may contain secrets)
+.env.production
+
+# Environment variable files with API keys and secrets
+VERCEL_ENV_VARIABLES.txt

@@ -12,7 +12,12 @@
     "update:all-ngrok": "node update-all-ngrok-urls.js",
     "test": "playwright test",
     "test:headed": "playwright test --project=chromium-headed",
-    "test:call": "playwright test tests/medical-call-test.spec.js --project=chromium-headed"
+    "test:call": "playwright test tests/medical-call-test.spec.js --project=chromium-headed",
+    "test:audio-full": "playwright test tests/twilio-audio-full.spec.js",
+    "test:audio-utils": "playwright test tests/audio-utils.test.js",
+    "test:e2e-calls": "playwright test tests/e2e-call-flows.spec.js",
+    "test:edge-cases": "playwright test tests/edge-cases.spec.js",
+    "test:audio-all": "playwright test tests/twilio-audio-full.spec.js tests/audio-utils.test.js tests/e2e-call-flows.spec.js tests/edge-cases.spec.js"
   },
   "keywords": [],
   "author": "",
